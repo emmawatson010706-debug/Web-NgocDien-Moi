@@ -640,7 +640,7 @@ img { max-width: 100%; display: block; }
           <img src="logo-text.png" alt="Xóm Ngọc Điền" style="height: 45px; width: auto; display: block;">
         </a>
         <p>Cổng thông tin cộng đồng phi lợi nhuận, lưu giữ ký ức văn hóa và thúc đẩy chuyển đổi số nông thôn vùng Hưng Nguyên – Nghệ An.</p>
-        <p style="margin-top:10px;">📞 0914 58 75 75 &nbsp;|&nbsp; 📧 tinnhanhonline247@gmail.com</p>
+        <p style="margin-top:10px;">📞 0914 58 75 75  |  📧 tinnhanhonline247@gmail.com</p>
       </div>
       <div class="footer-cols">
         <div class="footer-col">
@@ -667,7 +667,7 @@ img { max-width: 100%; display: block; }
     </div>
     <hr class="footer-divider">
     <div class="footer-bottom">
-      <div class="copyright">© 2026 Xóm Ngọc Điền · Hưng Nguyên · Nghệ An &nbsp;|&nbsp; Xây dựng bởi ❤️ <a href="#">Thái Lão</a></div>
+      <div class="copyright">© 2026 Xóm Ngọc Điền · Hưng Nguyên · Nghệ An  |  Xây dựng bởi ❤️ <a href="#">Thái Lão</a></div>
       <div class="footer-social">
         <a href="#" class="social-btn">📘</a>
         <a href="#" class="social-btn">📺</a>
@@ -927,56 +927,37 @@ img { max-width: 100%; display: block; }
   });
   document.getElementById('searchInput')?.addEventListener('keypress',function(e){if(e.key==='Enter') document.getElementById('searchBtn').click();});
 
-  // LOGIC GỬI GÓP Ý
+  // LOGIC GỬI GÓP Ý CHUYỂN THẲNG QUA ZALO CÁ NHÂN
   document.getElementById('sendFeedbackBtn')?.addEventListener('click', function(e) {
       e.preventDefault();
-      var name = document.getElementById('feedbackName').value.trim() || 'Ẩn danh';
+      var name = document.getElementById('feedbackName').value.trim() || 'Một người dân';
       var msg = document.getElementById('feedbackMsg').value.trim();
-      var btn = document.getElementById('sendFeedbackBtn');
 
-      if (!msg) { alert('Vui lòng nhập nội dung góp ý.'); return; }
+      // Link Zalo cá nhân của đại ca
+      var zaloLink = 'https://zalo.me/0914587575';
 
-      var originalText = btn.innerText;
-      btn.innerText = 'Đang gửi...';
-      btn.disabled = true;
+      if (!msg) { 
+          // Nếu bà con lười gõ trên web mà bấm gửi luôn -> Mở Zalo cho bà con tự chat
+          window.open(zaloLink, '_blank'); 
+          return; 
+      }
 
-      var fb=JSON.parse(localStorage.getItem('ngocdien_feedbacks')||'[]');
-      fb.unshift({name:name,msg:msg,date:new Date().toLocaleString()});
-      localStorage.setItem('ngocdien_feedbacks',JSON.stringify(fb));
-
-      fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-          },
-          body: JSON.stringify({
-              access_key: 'ĐẠI_CA_DÁN_MÃ_ACCESS_KEY_VÀO_ĐÂY', 
-              name: name,
-              message: msg,
-              subject: 'Góp ý mới từ ' + name + ' - Xóm Ngọc Điền',
-              from_name: 'Cổng thông tin Ngọc Điền'
-          })
-      })
-      .then(async (response) => {
-          let json = await response.json();
-          if (response.status == 200) {
-              alert('Cảm ơn ' + name + '! Góp ý của bạn đã được gửi thành công đến Ban quản trị.');
-              document.getElementById('feedbackMsg').value = '';
-              document.getElementById('feedbackName').value = '';
-          } else {
-              console.log(response);
-              alert('Có lỗi xảy ra, vui lòng thử lại sau.');
-          }
-      })
-      .catch(error => {
-          console.log(error);
-          alert('Có lỗi mạng, vui lòng kiểm tra kết nối.');
-      })
-      .finally(() => {
-          btn.innerText = originalText;
-          btn.disabled = false;
+      // Gom chữ lại cho đẹp
+      var fullMessage = "Góp ý từ " + name + ":\n" + msg;
+      
+      // Tuyệt chiêu: Copy sẵn nội dung bà con vừa gõ vào bộ nhớ máy
+      navigator.clipboard.writeText(fullMessage).then(function() {
+          alert("✅ Đã copy nội dung!\n\nHệ thống sẽ mở Zalo của Admin (0914 58 75 75).\nBà con chỉ cần bấm DÁN (Paste) vào khung chat và GỬI nhé!");
+          window.open(zaloLink, '_blank');
+      }).catch(function() {
+          // Đề phòng điện thoại nào cùi bắp chặn copy thì vẫn mở Zalo
+          alert("Hệ thống sẽ chuyển sang Zalo của Admin.\nBà con vui lòng gõ lại nội dung để gửi cho Ban quản trị nhé!");
+          window.open(zaloLink, '_blank');
       });
+      
+      // Xóa trắng ô nhập trên web cho gọn gàng
+      document.getElementById('feedbackMsg').value = '';
+      document.getElementById('feedbackName').value = '';
   });
 </script>
 </body>
