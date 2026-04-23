@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Đọc truyện đêm khuya - Podcast | Xóm Ngọc Điền</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,600&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS (Giữ nguyên bản gốc)
+═══════════════════════════════════════ */
+:root {
+  --red:        #C0231A;
+  --red-deep:   #7A1410;
+  --red-mid:    #A01D16;
+  --red-pale:   #FAECEA;
+  --gold:       #B8882A;
+  --gold-light: #F9F1E1;
+  --ink:        #181410;
+  --ink-2:      #332A1E;
+  --ink-3:      #5C4F3E;
+  --ink-4:      #8A7B6A;
+  --cream:      #F8F5F0;
+  --cream-2:    #F0EBE3;
+  --white:      #FFFFFF;
+  --border:     #DDD5C8;
+  --border-2:   #EAE4DC;
+
+  --ff-head:    'Playfair Display', Georgia, serif;
+  --ff-serif:   'Lora', Georgia, serif;
+  --ff-sans:    'Be Vietnam Pro', sans-serif;
+
+  --r-xs: 6px;
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+
+  --sh-sm: 0 2px 8px rgba(24,20,16,.06);
+  --sh-md: 0 6px 24px rgba(24,20,16,.10);
+  --sh-lg: 0 16px 48px rgba(24,20,16,.14);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body { background: var(--cream); font-family: var(--ff-sans); color: var(--ink); line-height: 1.6; font-size: 15px; overflow-x: hidden; width: 100%; position: relative; }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+.container { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+
+/* TOP BAR & MASTHEAD & NAVBAR & TICKER (Giữ nguyên) */
+.topbar { background: var(--ink); padding: 7px 0; font-size: 12px; color: #8A7B6A; }
+.topbar-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
+.topbar-left { display: flex; align-items: center; gap: 16px; }
+.topbar-sep { color: #3D3020; }
+.topbar-right { display: flex; gap: 16px; }
+.topbar a { color: #A09080; transition: color .15s; }
+.topbar a:hover { color: var(--gold); }
+
+.masthead { background: var(--white); border-bottom: 1px solid var(--border-2); padding: 18px 0 14px; }
+.masthead-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+.logo { display: flex; align-items: center; gap: 16px; }
+.search-box { display: flex; align-items: center; border: 1.5px solid var(--border); border-radius: 40px; overflow: hidden; background: var(--cream); transition: border-color .2s, box-shadow .2s; }
+.search-box:focus-within { border-color: var(--red); box-shadow: 0 0 0 3px rgba(192,35,26,.1); }
+.search-box input { padding: 9px 16px; border: none; background: transparent; width: 210px; outline: none; font-size: 13.5px; font-family: var(--ff-sans); color: var(--ink); }
+.search-box button { background: var(--red); border: none; padding: 0 18px; height: 38px; color: white; font-weight: 600; font-size: 12.5px; cursor: pointer; font-family: var(--ff-sans); transition: background .2s; width: auto; border-radius: 0; letter-spacing: .3px; }
+
+.navbar { background: var(--red); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 12px rgba(192,35,26,.3); }
+.nav-inner { max-width: 1280px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; white-space: nowrap; }
+.nav-inner::-webkit-scrollbar { display: none; }
+.navbar a { display: inline-block; padding: 13px 14px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,.88); white-space: nowrap; border-bottom: 2.5px solid transparent; transition: color .15s, border-color .15s; letter-spacing: .2px; }
+.navbar a:hover { color: #fff; border-bottom-color: rgba(255,255,255,.5); }
+.navbar a.nav-admin { margin-left: auto; background: rgba(0,0,0,.18); border-radius: var(--r-xs); padding: 8px 14px; margin-top: 5px; margin-bottom: 5px; color: rgba(255,255,255,.9); border-bottom: none; }
+.navbar a.nav-admin:hover { background: rgba(0,0,0,.3); color: #fff; }
+
+.ticker-bar { background: var(--gold); padding: 8px 0; overflow: hidden; }
+.ticker-inner { display: flex; align-items: center; }
+.ticker-label { background: var(--red); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: 1px; padding: 4px 14px; white-space: nowrap; flex-shrink: 0; margin-right: 16px; border-radius: 0 var(--r-xs) var(--r-xs) 0; }
+.ticker-track { overflow: hidden; flex: 1; }
+.ticker-items { display: flex; gap: 48px; animation: ticker 28s linear infinite; width: max-content; }
+.ticker-items span { font-size: 13px; font-weight: 600; color: var(--ink); white-space: nowrap; }
+.ticker-items span::before { content: '◆'; margin-right: 8px; color: var(--red); font-size: 8px; }
+@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* PAGE HEADER (Dành riêng cho trang con) */
+.page-header { padding: 40px 0 30px; border-bottom: 1px solid var(--border-2); margin-bottom: 40px; text-align: center; }
+.page-title { font-family: var(--ff-head); font-size: 36px; color: var(--red); font-weight: 700; margin-bottom: 12px; }
+.page-subtitle { font-family: var(--ff-serif); font-size: 16px; color: var(--ink-3); font-style: italic; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+
+/* PODCAST LIST CSS */
+.podcast-list { display: flex; flex-direction: column; gap: 24px; }
+.podcast-card { background: var(--white); border-radius: var(--r-md); border: 1px solid var(--border-2); padding: 24px; display: flex; gap: 28px; align-items: center; transition: box-shadow 0.2s, transform 0.2s; }
+.podcast-card:hover { box-shadow: var(--sh-md); transform: translateY(-3px); }
+.podcast-cover { width: 180px; height: 180px; border-radius: var(--r-sm); background-size: cover; background-position: center; flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.1); position: relative; }
+.podcast-cover::after { content: '🎙️'; position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.9); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+.podcast-details { flex: 1; }
+.podcast-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.tag { background: var(--red-pale); color: var(--red); font-size: 10px; font-weight: 700; letter-spacing: .5px; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; }
+.podcast-date { font-size: 12px; color: var(--ink-4); }
+.podcast-name { font-family: var(--ff-head); font-size: 22px; font-weight: 700; color: var(--ink); margin-bottom: 8px; line-height: 1.3; }
+.podcast-desc { font-size: 14px; color: var(--ink-3); margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+/* Tùy chỉnh thanh Audio */
+audio { width: 100%; height: 44px; outline: none; border-radius: 40px; }
+audio::-webkit-media-controls-panel { background-color: var(--cream-2); }
+audio::-webkit-media-controls-play-button { background-color: var(--gold); border-radius: 50%; }
+audio::-webkit-media-controls-current-time-display, audio::-webkit-media-controls-time-remaining-display { color: var(--ink); font-family: var(--ff-sans); font-size: 13px; }
+
+/* LAYOUT & SIDEBAR (Giữ nguyên) */
+.page-layout { display: grid; grid-template-columns: 1fr 340px; gap: 32px; margin-bottom: 60px; }
+.sidebar { display: flex; flex-direction: column; gap: 22px; }
+.sb-block { background: var(--white); border-radius: var(--r-md); border: 1px solid var(--border-2); overflow: hidden; }
+.sb-head { padding: 13px 18px 11px; border-bottom: 1px solid var(--border-2); display: flex; align-items: center; gap: 8px; }
+.sb-head-bar { width: 3px; height: 16px; background: var(--red); border-radius: 2px; flex-shrink: 0; }
+.sb-head-title { font-family: var(--ff-head); font-size: 14.5px; font-weight: 700; color: var(--ink); }
+.sb-body { padding: 16px 18px; }
+.sb-input, .sb-textarea { width: 100%; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: var(--r-sm); margin-bottom: 9px; font-size: 13px; font-family: var(--ff-sans); color: var(--ink); background: var(--cream); outline: none; transition: border-color .2s; }
+.sb-input:focus, .sb-textarea:focus { border-color: var(--red); }
+.sb-textarea { resize: vertical; min-height: 72px; }
+.btn-submit { width: 100%; background: var(--red); color: #fff; border: none; padding: 10px 16px; border-radius: 40px; font-weight: 700; font-size: 13px; cursor: pointer; font-family: var(--ff-sans); transition: background .2s, transform .15s; }
+.btn-submit:hover { background: var(--red-deep); transform: translateY(-1px); }
+.btn-submit:disabled { background: var(--ink-4); cursor: not-allowed; transform: none; }
+.admin-phone-bar { margin-top: 12px; background: var(--red-pale); border-radius: 40px; padding: 8px 14px; text-align: center; font-size: 12.5px; font-weight: 700; color: var(--red); }
+.trend-item { display: flex; gap: 12px; align-items: flex-start; padding: 11px 0; border-bottom: 1px solid var(--border-2); }
+.trend-item:last-child { border-bottom: none; padding-bottom: 0; }
+.trend-num { font-family: var(--ff-head); font-size: 20px; font-weight: 900; color: var(--red); min-width: 26px; line-height: 1.1; opacity: .85; }
+.trend-title { font-size: 13.5px; font-weight: 500; color: var(--ink); line-height: 1.42; transition: color .15s; }
+.trend-title:hover { color: var(--red); }
+.trend-meta { font-size: 11px; color: var(--ink-4); margin-top: 3px; }
+.policy-item { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--border-2); }
+.policy-item:last-child { border-bottom: none; padding-bottom: 0; }
+.policy-ico { width: 34px; height: 34px; background: var(--gold-light); border-radius: var(--r-xs); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+.policy-text { font-size: 13.5px; font-weight: 500; color: var(--ink); transition: color .15s;}
+.policy-text:hover { color: var(--red); }
+.policy-sub { font-size: 11px; color: var(--ink-4); }
+.zalo-qr { background: var(--cream-2); border-radius: var(--r-sm); text-align: center; color: var(--ink-4); font-size: 13px; margin-bottom: 12px; border: 1px dashed var(--border); display: flex; align-items: center; justify-content: center; }
+.btn-zalo { display: block; background: #0A8F4B; color: #fff; text-align: center; padding: 10px 16px; border-radius: 40px; font-weight: 700; font-size: 13px; transition: background .2s, transform .15s; }
+.btn-zalo:hover { background: #077A3F; transform: translateY(-1px); }
+
+/* FOOTER (Giữ nguyên) */
+.footer { background: var(--ink); color: #7A6E62; padding: 52px 0 28px; font-size: 13px; }
+.footer-top { display: flex; align-items: flex-start; gap: 48px; margin-bottom: 40px; flex-wrap: wrap; }
+.footer-brand { min-width: 220px; flex: 1.2; }
+.footer-brand h2 { font-family: var(--ff-head); font-size: 22px; color: var(--red); margin-bottom: 6px; }
+.footer-brand p { color: #6A5E52; line-height: 1.7; margin-top: 8px; font-size: 12.5px; }
+.footer-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; flex: 2; }
+.footer-col h4 { font-family: var(--ff-head); font-size: 14px; color: #C8BDB0; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid #2D2620; }
+.footer-col a, .footer-col p { display: block; color: #7A6E62; line-height: 2.1; transition: color .15s; }
+.footer-col a:hover { color: var(--gold); }
+.footer-divider { border: none; border-top: 1px solid #2D2620; margin-bottom: 22px; }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.copyright { font-size: 12px; color: #5A4E42; line-height: 1.7; }
+.copyright a { color: var(--gold); }
+.footer-social { display: flex; gap: 10px; }
+.social-btn { width: 32px; height: 32px; background: #2A2018; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; transition: background .15s; }
+.social-btn:hover { background: var(--red); }
+
+/* RESPONSIVE */
+@media (max-width: 1100px) {
+  .page-layout { grid-template-columns: 1fr; }
+  .sidebar { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+}
+@media (max-width: 780px) {
+  .topbar { font-size: 11px; padding: 8px 0; text-align: center; }
+  .topbar-inner { justify-content: center; flex-wrap: nowrap; overflow: hidden; }
+  .topbar-left { gap: 6px; white-space: nowrap; justify-content: center; width: 100%; }
+  .topbar-right { display: none; }
+  .masthead-inner { flex-direction: column; align-items: center; gap: 14px; width: 100%; box-sizing: border-box; }
+  .logo { justify-content: center; width: 100%; margin: 0 auto; display: flex; }
+  .search-box { width: 100%; max-width: 450px; box-sizing: border-box; display: flex; }
+  .search-box input { width: 100%; flex: 1; }
+  .sidebar { grid-template-columns: 1fr; }
+  .footer-top { flex-direction: column; gap: 28px; }
+  .footer-cols { grid-template-columns: repeat(2, 1fr); }
+  
+  /* Chỉnh lại thẻ Podcast trên Mobile */
+  .podcast-card { flex-direction: column; gap: 16px; padding: 16px; text-align: center; }
+  .podcast-cover { width: 100%; height: 200px; }
+  .podcast-meta { justify-content: center; }
+}
+@media (max-width: 560px) {
+  .container { padding: 0 15px; }
+  .footer-cols { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container topbar-inner">
+    <div class="topbar-left">
+      <span class="date" id="todayDate"></span>
+      <span class="topbar-sep">|</span>
+      <span>📍 Hưng Nguyên – Nghệ An</span>
+    </div>
+    <div class="topbar-right">
+      <a href="admin/index.html">⚙ Quản trị</a>
+      <a href="gop-y.html">✉ Góp ý</a>
+      <a href="#">🔔 Thông báo</a>
+    </div>
+  </div>
+</div>
+
+<div class="masthead">
+  <div class="container masthead-inner">
+    <div class="logo">
+      <a href="index.html" style="display: block; text-decoration: none; line-height: 0;">
+        <img src="logo-text.png" alt="Xóm Ngọc Điền" style="height: 58px; width: auto; display: block;">
+      </a>
+    </div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Tìm bài viết, tư liệu...">
+      <button id="searchBtn">🔍 Tìm kiếm</button>
+    </div>
+  </div>
+</div>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html">Trang chủ</a>
+    <a href="gioi-thieu.html">Giới thiệu</a>
+    <a href="lich-su.html">Lịch sử</a>
+    <a href="le-hoi.html">Lễ hội</a>
+    <a href="tin-tuc.html">Tin tức</a>
+    <a href="nguoi-ngoc-dien.html">Người Ngọc Điền</a>
+    <a href="van-chuong.html">Văn chương</a>
+    <a href="huong-uoc.html">Hương ước 1883</a>
+    <a href="di-tich.html">Di tích</a>
+    <a href="chinh-sach.html">Chính sách</a>
+    <a href="chuyen-doi-so.html">Chuyển đổi số</a>
+    <a href="thu-vien.html">Thư viện</a>
+    <a href="ban-do.html">Bản đồ</a>
+    <a href="gop-y.html">Góp ý</a>
+    <a href="admin/index.html" class="nav-admin">⚙ Quản trị</a>
+  </div>
+</nav>
+
+<div class="ticker-bar">
+  <div class="container ticker-inner">
+    <div class="ticker-label">TIN MỚI</div>
+    <div class="ticker-track">
+      <div class="ticker-items" id="dynamicTickerItems"></div>
+    </div>
+  </div>
+</div>
+
+<div class="page-header">
+    <div class="container">
+        <h1 class="page-title">🎙️ Đọc truyện đêm khuya</h1>
+        <p class="page-subtitle">"Mời bà con pha ấm chè xanh, ngả lưng lắng nghe những giai thoại, vần thơ và câu chuyện bình dị về xóm Ngọc Điền quê mình."</p>
+    </div>
+</div>
+
+<div class="container page-layout">
+  
+  <div class="podcast-list" id="mainPodcastList">
+      
+      <div class="podcast-card">
+          <div class="podcast-cover" style="background-image: url('https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=400&q=80');"></div>
+          <div class="podcast-details">
+              <div class="podcast-meta">
+                  <span class="tag" style="background:var(--gold-light); color:var(--gold);">Văn Chương</span>
+                  <span class="podcast-date">Cập nhật: Hôm nay</span>
+              </div>
+              <h3 class="podcast-name">Đêm Kinh Dịch - Bài thơ hoài niệm một thời gian khó</h3>
+              <p class="podcast-desc">Giọng đọc: Thái Lão | Câu chuyện về những đêm đông giá rét, người làng quây quần bên bếp lửa nhai củ khoai lùi, bàn chuyện thế thái nhân tình...</p>
+              
+              <audio controls controlsList="nodownload">
+                  <source src="link_bai_mp3_cua_dai_ca.mp3" type="audio/mpeg">
+                  Trình duyệt của bạn không hỗ trợ phát âm thanh.
+              </audio>
+          </div>
+      </div>
+
+      <div class="podcast-card">
+          <div class="podcast-cover" style="background-image: url('https://images.unsplash.com/photo-1516280440502-a2f267793ce5?auto=format&fit=crop&w=400&q=80');"></div>
+          <div class="podcast-details">
+              <div class="podcast-meta">
+                  <span class="tag">Giai Thoại</span>
+                  <span class="podcast-date">Cập nhật: Hôm qua</span>
+              </div>
+              <h3 class="podcast-name">Giai thoại Làng Ngọc Điền: Người anh hùng gánh gạo</h3>
+              <p class="podcast-desc">Kể về cụ Hồ Nam Tấn, người đã dùng đôi quang gánh cứu đói cả một chi họ trong năm Ất Dậu lịch sử. Chuyện được truyền miệng qua 3 đời...</p>
+              
+              <audio controls controlsList="nodownload">
+                  <source src="link_bai_mp3_cua_dai_ca_2.mp3" type="audio/mpeg">
+              </audio>
+          </div>
+      </div>
+
+      <div class="podcast-card">
+          <div class="podcast-cover" style="background-image: url('https://images.unsplash.com/photo-1498837167922-41c46bf8e84f?auto=format&fit=crop&w=400&q=80');"></div>
+          <div class="podcast-details">
+              <div class="podcast-meta">
+                  <span class="tag" style="background:#E0F2FE; color:#2563EB;">Tản Mạn</span>
+                  <span class="podcast-date">Cập nhật: Tuần trước</span>
+              </div>
+              <h3 class="podcast-name">Tản mạn: Chuyến đò ngang qua bến sông Lam chiều ấy</h3>
+              <p class="podcast-desc">Những ký ức vụn vặt của người con xa xứ mỗi lần nhớ về chuyến đò ngang năm 2000, nơi tiễn những lứa học trò xóm Ngọc Điền lên phố huyện...</p>
+              
+              <audio controls controlsList="nodownload">
+                  <source src="link_bai_mp3_cua_dai_ca_3.mp3" type="audio/mpeg">
+              </audio>
+          </div>
+      </div>
+
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sb-block">
+      <div class="sb-head"><div class="sb-head-bar"></div><span class="sb-head-title">💬 Góp ý &amp; Phản ánh</span></div>
+      <div class="sb-body">
+        <input class="sb-input" type="text" id="feedbackName" placeholder="Họ tên (hoặc ẩn danh)">
+        <textarea class="sb-textarea" id="feedbackMsg" rows="3" placeholder="Nội dung góp ý, hiến kế..."></textarea>
+        <button class="btn-submit" id="sendFeedbackBtn">Gửi ý kiến</button>
+        <div class="admin-phone-bar">📞 Quản trị viên: 0914 58 75 75</div>
+      </div>
+    </div>
+
+    <div class="sb-block">
+      <div class="sb-head"><div class="sb-head-bar" style="background:#0A8F4B;"></div><span class="sb-head-title">📱 Kết nối Zalo xóm</span></div>
+      <div class="sb-body">
+        <div class="zalo-qr" style="padding: 8px;">
+            <img src="zalo-qr.jpg" alt="Mã QR Zalo Xóm Ngọc Điền" style="width: 100%; max-width: 180px; height: auto; border-radius: 8px; margin: 0 auto; display: block;">
+        </div>
+        <a href="https://zalo.me/g/i8vuebonziplqy2c06ux" target="_blank" rel="noopener noreferrer" class="btn-zalo">Tham gia nhóm Zalo →</a>
+      </div>
+    </div>
+
+    <div class="sb-block">
+      <div class="sb-head"><div class="sb-head-bar"></div><span class="sb-head-title">📈 Xem nhiều nhất</span></div>
+      <div class="sb-body" id="xemNhieuNhatList">
+        <div class="trend-item"><span class="trend-num">1</span><div><a href="lich-su.html" class="trend-title">Lịch sử hình thành xóm Ngọc Điền</a><div class="trend-meta">3.4k lượt xem</div></div></div>
+        <div class="trend-item"><span class="trend-num">2</span><div><a href="nguoi-ngoc-dien.html" class="trend-title">Danh sách 42 liệt sỹ xóm Ngọc Điền</a><div class="trend-meta">2.8k lượt xem</div></div></div>
+        <div class="trend-item"><span class="trend-num">3</span><div><a href="nguoi-ngoc-dien.html" class="trend-title">Mẹ Việt Nam Anh hùng Trần Thị B</a><div class="trend-meta">1.9k lượt xem</div></div></div>
+      </div>
+    </div>
+
+    <div class="sb-block admin-sb">
+      <div class="sb-head"><div class="sb-head-bar" style="background:var(--gold);"></div><span class="sb-head-title" style="color:var(--red);">👤 Quản trị viên</span></div>
+      <div class="sb-body">
+        <p>Trang web xây dựng và vận hành bởi <strong>Thái Lão</strong> — người con của xóm, với mong muốn lưu giữ ký ức và thúc đẩy chuyển đổi số nông thôn.</p>
+        <p style="margin-top:8px;">📧 <a href="mailto:tinnhanhonline247@gmail.com">tinnhanhonline247@gmail.com</a></p>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<div class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" style="display: inline-block; margin-bottom: 12px; text-decoration: none;">
+          <img src="logo-text.png" alt="Xóm Ngọc Điền" style="height: 45px; width: auto; display: block;">
+        </a>
+        <p>Cổng thông tin cộng đồng phi lợi nhuận, lưu giữ ký ức văn hóa và thúc đẩy chuyển đổi số nông thôn vùng Hưng Nguyên – Nghệ An.</p>
+        <p style="margin-top:10px;">📞 0914 58 75 75 &nbsp;|&nbsp; 📧 tinnhanhonline247@gmail.com</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Về chúng tôi</h4>
+          <a href="gioi-thieu.html">Giới thiệu xóm</a>
+          <a href="lich-su.html">Lịch sử hình thành</a>
+        </div>
+        <div class="footer-col">
+          <h4>Kho tư liệu</h4>
+          <a href="huong-uoc.html">Hương ước 1883</a>
+          <a href="ban-do.html">Bản đồ xóm</a>
+        </div>
+        <div class="footer-col">
+          <h4>Kết nối</h4>
+          <p>Zalo: XomNgocDien</p>
+          <p>Hotline: 0914 58 75 75</p>
+        </div>
+      </div>
+    </div>
+    <hr class="footer-divider">
+    <div class="footer-bottom">
+      <div class="copyright">© 2026 Xóm Ngọc Điền · Hưng Nguyên · Nghệ An &nbsp;|&nbsp; Xây dựng bởi ❤️ <a href="#">Thái Lão</a></div>
+    </div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+<script>
+  function updateClock() {
+    var now = new Date();
+    var optionsDate = { timeZone: 'Asia/Ho_Chi_Minh', weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' };
+    var optionsTime = { timeZone: 'Asia/Ho_Chi_Minh', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+    var clockElement = document.getElementById('todayDate');
+    if(clockElement) clockElement.textContent = now.toLocaleDateString('vi-VN', optionsDate) + ' - ' + now.toLocaleTimeString('vi-VN', optionsTime);
+  }
+  updateClock(); setInterval(updateClock, 1000);
+
+  (function initDynamicTicker() {
+      const tickerContainer = document.getElementById('dynamicTickerItems');
+      if (!tickerContainer || typeof getPostsByCategory !== 'function') return;
+      const tinTucPosts = getPostsByCategory('tin-tuc');
+      if (tinTucPosts.length === 0) return;
+      let spansHtml = tinTucPosts.slice(0, 5).reverse().map(post => 
+          `<span style="cursor:pointer; transition: color 0.15s;" onmouseenter="this.style.color='var(--red)'" onmouseleave="this.style.color='var(--ink)'" onclick="if(typeof viewPost==='function') viewPost('${post.id}')">${post.title}</span>`
+      ).join('');
+      tickerContainer.innerHTML = spansHtml + spansHtml;
+  })();
+
+  // LOGIC GỬI GÓP Ý (Giữ nguyên)
+  document.getElementById('sendFeedbackBtn')?.addEventListener('click', function(e) {
+      e.preventDefault();
+      var name = document.getElementById('feedbackName').value.trim() || 'Ẩn danh';
+      var msg = document.getElementById('feedbackMsg').value.trim();
+      var btn = document.getElementById('sendFeedbackBtn');
+      if (!msg) { alert('Vui lòng nhập nội dung góp ý.'); return; }
+      var originalText = btn.innerText; btn.innerText = 'Đang gửi...'; btn.disabled = true;
+
+      fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+              access_key: 'ĐẠI_CA_DÁN_MÃ_ACCESS_KEY_VÀO_ĐÂY', // Nhớ dán lại mã nhé đại ca
+              name: name, message: msg, subject: 'Góp ý mới từ ' + name, from_name: 'Cổng thông tin Ngọc Điền'
+          })
+      })
+      .then(async (res) => { if (res.status == 200) { alert('Gửi thành công!'); document.getElementById('feedbackMsg').value=''; } })
+      .finally(() => { btn.innerText = originalText; btn.disabled = false; });
+  });
+</script>
+</body>
+</html>

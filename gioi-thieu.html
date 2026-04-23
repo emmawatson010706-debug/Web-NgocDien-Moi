@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Giới thiệu Xóm Ngọc Điền | Không gian lưu giữ hồn quê</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,600&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS ĐỒNG BỘ
+═══════════════════════════════════════ */
+:root {
+  --red:        #C0231A;
+  --red-deep:   #7A1410;
+  --red-pale:   #FAECEA;
+  --gold:       #B8882A;
+  --gold-light: #F9F1E1;
+  --ink:        #181410;
+  --ink-3:      #5C4F3E;
+  --ink-4:      #8A7B6A;
+  --cream:      #F8F5F0;
+  --white:      #FFFFFF;
+  --border:     #DDD5C8;
+  --border-2:   #EAE4DC;
+
+  --ff-head:    'Playfair Display', Georgia, serif;
+  --ff-serif:   'Lora', Georgia, serif;
+  --ff-sans:    'Be Vietnam Pro', sans-serif;
+  
+  --r-xs: 6px;
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 20px;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body { background: var(--cream); font-family: var(--ff-sans); color: var(--ink); line-height: 1.6; font-size: 15px; }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+.container { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+
+/* HEADER & NAVBAR CHUẨN */
+.topbar { background: var(--ink); padding: 7px 0; font-size: 12px; color: #8A7B6A; }
+.topbar-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
+.topbar-left { display: flex; align-items: center; gap: 16px; }
+.topbar-sep { color: #3D3020; }
+.topbar-right { display: flex; gap: 16px; }
+.topbar a { color: #A09080; transition: color .15s; }
+.topbar a:hover { color: var(--gold); }
+
+.masthead { background: var(--white); border-bottom: 1px solid var(--border-2); padding: 18px 0 14px; }
+.masthead-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+.logo img { height: 58px; width: auto; display: block; }
+.search-box { display: flex; align-items: center; border: 1.5px solid var(--border); border-radius: 40px; overflow: hidden; background: var(--cream); transition: border-color .2s; }
+.search-box:focus-within { border-color: var(--red); }
+.search-box input { padding: 9px 16px; border: none; background: transparent; width: 210px; outline: none; font-size: 13.5px; font-family: var(--ff-sans); }
+.search-box button { background: var(--red); border: none; padding: 0 18px; height: 38px; color: white; font-weight: 600; font-size: 12.5px; cursor: pointer; transition: background .2s; }
+.search-box button:hover { background: var(--red-deep); }
+
+.navbar { background: var(--red); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 12px rgba(192,35,26,.3); }
+.nav-container { max-width: 1280px; margin: 0 auto; display: flex; align-items: stretch; position: relative; }
+.nav-btn { background: rgba(0,0,0,0.15); color: #fff; border: none; font-size: 14px; width: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; flex-shrink: 0; }
+.nav-btn:hover { background: rgba(0,0,0,0.3); }
+.nav-inner { flex: 1; padding: 0 10px; display: flex; align-items: center; overflow-x: auto; white-space: nowrap; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.nav-inner::-webkit-scrollbar { display: none; }
+.nav-inner a { display: inline-block; padding: 13px 14px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,.88); white-space: nowrap; border-bottom: 2.5px solid transparent; transition: color .15s, border-color .15s; }
+.nav-inner a:hover { color: #fff; border-bottom-color: rgba(255,255,255,.5); }
+.nav-inner a.active { color: #fff; border-bottom-color: #fff; }
+.nav-inner a.nav-admin { margin-left: auto; background: rgba(0,0,0,.18); border-radius: var(--r-xs); padding: 8px 14px; margin-top: 5px; margin-bottom: 5px; border: none; color: #fff; }
+
+/* BỐ CỤC BÀI ĐỌC (TRANG BÁO) */
+.page-wrapper { max-width: 900px; margin: 40px auto; background: var(--white); border-radius: var(--r-lg); box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--border-2); min-height: 600px; padding: 50px 60px; position: relative; }
+.loading-state { text-align: center; padding: 100px 0; color: var(--ink-4); font-style: italic; font-size: 16px; }
+#articleReader { display: none; }
+.article-header { border-bottom: 2px solid var(--border-2); padding-bottom: 24px; margin-bottom: 30px; text-align: center;}
+.article-tag { display: inline-block; background: var(--red-pale); color: var(--red); font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 40px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+.article-title { font-family: var(--ff-head); font-size: 34px; color: var(--ink); line-height: 1.3; font-weight: 800; margin-bottom: 16px; }
+.article-meta { font-size: 13px; color: var(--ink-4); display: flex; align-items: center; justify-content: center; gap: 16px; }
+.article-meta span { display: flex; align-items: center; gap: 6px; }
+.article-hero-img { width: 100%; border-radius: var(--r-md); margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); aspect-ratio: 16/9; object-fit: cover; }
+.article-body { font-family: var(--ff-serif); font-size: 18px; color: var(--ink-2); line-height: 1.8; text-align: justify; }
+.article-body p { margin-bottom: 20px; }
+.article-body img { max-width: 100%; border-radius: var(--r-sm); margin: 24px auto; display: block; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.article-author-box { margin-top: 40px; padding: 24px; background: #FCFAF6; border: 1px solid var(--border-2); border-left: 4px solid var(--gold); border-radius: var(--r-sm); font-size: 15px; color: var(--ink-3); font-style: italic; display: flex; justify-content: space-between; align-items: center;}
+.article-author-box strong { font-family: var(--ff-head); font-size: 18px; color: var(--red-deep); font-style: normal; display: block; margin-bottom: 4px;}
+
+/* FOOTER */
+.footer { background: var(--ink); color: #7A6E62; padding: 52px 0 28px; font-size: 13px; margin-top: 40px; }
+.footer-top { display: flex; flex-wrap: wrap; gap: 48px; margin-bottom: 40px; }
+.footer-brand { flex: 1.2; min-width: 220px; }
+.footer-brand img { height: 45px; margin-bottom: 12px; }
+.footer-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; flex: 2; }
+.footer-col h4 { font-family: var(--ff-head); font-size: 14px; color: #C8BDB0; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid #2D2620; }
+.footer-col a { display: block; color: #7A6E62; line-height: 2.1; transition: color .15s; }
+
+@media (max-width: 780px) {
+  .topbar { padding: 8px 0; }
+  .topbar-inner { flex-wrap: nowrap; overflow: hidden; }
+  .topbar-left { display: flex; align-items: center; justify-content: center; width: 100%; gap: 6px; font-size: 10px; white-space: nowrap; overflow: hidden; }
+  .topbar-left span { text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
+  .topbar-right { display: none; }
+  .masthead-inner { flex-direction: column; align-items: center; gap: 14px; }
+  .logo { justify-content: center; }
+  .search-box { width: 100%; max-width: 450px; }
+  .search-box input { width: 100%; flex: 1; }
+  .page-wrapper { margin: 20px 10px; padding: 30px 20px; min-height: auto; }
+  .article-title { font-size: 26px; }
+  .article-body { font-size: 16px; }
+  .article-author-box { flex-direction: column; text-align: center; gap: 10px; }
+  .footer-cols { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) { .footer-cols { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container topbar-inner">
+    <div class="topbar-left">
+      <span class="date" id="todayDate"></span>
+      <span class="topbar-sep">|</span>
+      <span>📍 Hưng Nguyên – Nghệ An</span>
+    </div>
+    <div class="topbar-right">
+      <a href="admin/index.html">⚙ Quản trị</a>
+      <a href="gop-y.html">✉ Góp ý</a>
+    </div>
+  </div>
+</div>
+
+<div class="masthead">
+  <div class="container masthead-inner">
+    <div class="logo">
+      <a href="index.html" style="display: block; text-decoration: none; line-height: 0;">
+        <img src="logo-text.png" alt="Xóm Ngọc Điền" style="height: 58px; width: auto; display: block;">
+      </a>
+    </div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Tìm bài viết, tư liệu...">
+      <button id="searchBtn">🔍 Tìm kiếm</button>
+    </div>
+  </div>
+</div>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <button class="nav-btn" id="navBtnLeft">❮</button>
+    <div class="nav-inner" id="navInner">
+      <a href="index.html">Trang chủ</a>
+      <a href="gioi-thieu.html" class="active">Giới thiệu</a>
+      <a href="nguoi-ngoc-dien.html">Người Ngọc Điền</a>
+      <a href="lich-su.html">Lịch sử</a>
+      <a href="tin-tuc.html">Tin tức</a>
+      <a href="le-hoi.html">Lễ hội</a>
+      <a href="van-chuong.html">Tiếng làng</a>
+      <a href="huong-uoc.html">Hương ước 1883</a>
+      <a href="di-tich.html">Di tích</a>
+      <a href="chinh-sach.html">Chính sách</a>
+      <a href="chuyen-doi-so.html">Chuyển đổi số</a>
+      <a href="thu-vien.html">Thư viện</a>
+      <a href="ban-do.html">Bản đồ</a>
+      <a href="admin/index.html" class="nav-admin">⚙ Quản trị</a>
+    </div>
+    <button class="nav-btn" id="navBtnRight">❯</button>
+  </div>
+</nav>
+
+<div class="page-wrapper">
+    <div id="loadingState" class="loading-state">
+        <div style="font-size: 40px; margin-bottom: 10px;">📜</div>
+        Đang hút dữ liệu bài viết...
+    </div>
+    <div id="articleReader">
+        </div>
+</div>
+
+<div class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html"><img src="logo-text.png" alt="Xóm Ngọc Điền"></a>
+        <p>Cổng thông tin cộng đồng phi lợi nhuận, lưu giữ ký ức văn hóa và thúc đẩy chuyển đổi số nông thôn vùng Hưng Nguyên – Nghệ An.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Về chúng tôi</h4>
+          <a href="gioi-thieu.html">Giới thiệu xóm</a>
+          <a href="lich-su.html">Lịch sử hình thành</a>
+          <a href="admin/index.html">Ban quản trị</a>
+        </div>
+        <div class="footer-col">
+          <h4>Kho tư liệu</h4>
+          <a href="huong-uoc.html">Hương ước 1883</a>
+          <a href="nguoi-ngoc-dien.html">Tư liệu liệt sỹ</a>
+        </div>
+        <div class="footer-col">
+          <h4>Kết nối</h4>
+          <a href="#">Zalo: XomNgocDien</a>
+          <a href="#">Facebook: @ngocdienque</a>
+        </div>
+      </div>
+    </div>
+    <div style="border-top: 1px solid #2D2620; margin-bottom: 20px;"></div>
+    <div style="text-align: center; font-size: 12px; color: #5A4E42;">
+      © 2026 Xóm Ngọc Điền · Nghệ An | Xây dựng bởi ❤️ Thái Lão
+    </div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+<script>
+    // Cập nhật ngày giờ
+    function updateClock() {
+        var now = new Date();
+        var clockElement = document.getElementById('todayDate');
+        if(clockElement) clockElement.textContent = now.toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' });
+    }
+    updateClock(); setInterval(updateClock, 1000);
+
+    // THANH NAVBAR CHẠY TỰ ĐỘNG
+    (function initNavAutoScroll() {
+        const navInner = document.getElementById('navInner');
+        const btnLeft = document.getElementById('navBtnLeft');
+        const btnRight = document.getElementById('navBtnRight');
+        let scrollInterval; let isHovered = false; let isManualScrolling = false;
+        function startScroll() {
+            if (scrollInterval) clearInterval(scrollInterval);
+            scrollInterval = setInterval(() => {
+                if (!isHovered && !isManualScrolling && navInner.scrollWidth > navInner.clientWidth) {
+                    navInner.scrollLeft += 1;
+                    if (navInner.scrollLeft >= navInner.scrollWidth - navInner.clientWidth - 1) navInner.scrollLeft = 0;
+                }
+            }, 30); 
+        }
+        navInner.addEventListener('mouseenter', () => isHovered = true);
+        navInner.addEventListener('mouseleave', () => isHovered = false);
+        navInner.addEventListener('touchstart', () => isHovered = true);
+        navInner.addEventListener('touchend', () => { setTimeout(() => isHovered = false, 2000); });
+        btnLeft.addEventListener('click', () => { isManualScrolling = true; navInner.scrollBy({ left: -200, behavior: 'smooth' }); setTimeout(() => isManualScrolling = false, 500); });
+        btnRight.addEventListener('click', () => { isManualScrolling = true; navInner.scrollBy({ left: 200, behavior: 'smooth' }); setTimeout(() => isManualScrolling = false, 500); });
+        startScroll();
+    })();
+
+    // ══════════════════════════════════════════════════════════════
+    // MA THUẬT: HÚT BÀI VIẾT TỪ FILE POSTS.JSON BƠM LÊN WEB
+    // ══════════════════════════════════════════════════════════════
+    document.addEventListener('DOMContentLoaded', async () => {
+        const loadingState = document.getElementById('loadingState');
+        const articleReader = document.getElementById('articleReader');
+        
+        let posts = [];
+        
+        // BƯỚC 1: Kiểm tra xem bộ nhớ đệm có bài chưa
+        try {
+            posts = JSON.parse(localStorage.getItem('ngocdien_posts')) || [];
+        } catch(e) {}
+
+        // BƯỚC 2: NẾU CHƯA CÓ -> TỰ ĐỘNG HÚT TỪ FILE posts.json CỦA ĐẠI CA
+        if (posts.length === 0) {
+            try {
+                const res = await fetch('posts.json');
+                if (res.ok) {
+                    posts = await res.json();
+                    // Lưu luôn vào máy để các trang khác (Trang chủ, Tiếng làng) đều có bài
+                    localStorage.setItem('ngocdien_posts', JSON.stringify(posts));
+                }
+            } catch(e) {
+                console.log("Không tìm thấy file posts.json");
+            }
+        }
+
+        // BƯỚC 3: Tìm bài viết đại ca đã làm
+        const introPost = posts.find(p => p.category === 'gioi-thieu');
+
+        if (introPost) {
+            loadingState.style.display = 'none';
+            articleReader.style.display = 'block';
+
+            // XỬ LÝ LỖI DÍNH CỤC: Phục hồi lại các đoạn Enter xuống dòng của đại ca
+            let formattedContent = introPost.content.replace(/\n/g, '<br><br>');
+
+            let videoHtml = '';
+            if (introPost.video && introPost.video.includes('youtube.com')) {
+                videoHtml = `<div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; max-width:100%; border-radius:10px; margin-bottom:30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <iframe src="${introPost.video}" style="position:absolute; top:0; left:0; width:100%; height:100%; border:none;" allowfullscreen></iframe>
+                </div>`;
+            }
+
+            let heroImgHtml = '';
+            if (introPost.image && !videoHtml) { 
+                heroImgHtml = `<img src="${introPost.image}" alt="${introPost.title}" class="article-hero-img">`;
+            }
+
+            let displayViews = (introPost.views || Math.floor(Math.random() * 50) + 1) + 1000;
+
+            articleReader.innerHTML = `
+                <div class="article-header">
+                    <span class="article-tag">Giới thiệu xóm</span>
+                    <h1 class="article-title">${introPost.title}</h1>
+                    <div class="article-meta">
+                        <span>📅 Cập nhật: ${introPost.date || 'Gần đây'}</span>
+                        <span style="color:var(--gold);">🔥 ${displayViews.toLocaleString('vi-VN')} lượt xem</span>
+                    </div>
+                </div>
+                
+                ${videoHtml}
+                ${heroImgHtml}
+
+                <div class="article-body">
+                    ${formattedContent}
+                </div>
+
+                <div class="article-author-box">
+                    <div>
+                        <strong>Tác giả: ${introPost.author || 'Ban quản trị'}</strong>
+                        Tư liệu được đóng góp và xác thực bởi các bậc cao niên trong xóm Ngọc Điền.
+                    </div>
+                    <div style="font-size:30px; opacity:0.2;">✍️</div>
+                </div>
+            `;
+        } else {
+            loadingState.innerHTML = `
+                <div style="font-size: 40px; margin-bottom: 10px;">⚠️</div>
+                <strong style="color: var(--red); font-size: 18px;">Chưa tìm thấy bài viết</strong><br>
+                <span style="font-size: 14px;">Xin hãy đăng bài "Giới thiệu" trong trang Quản trị.</span>
+            `;
+        }
+    });
+
+    document.getElementById('searchBtn')?.addEventListener('click',function(){
+        var kw=document.getElementById('searchInput').value.toLowerCase().trim();
+        if(!kw) return;
+        var posts = JSON.parse(localStorage.getItem('ngocdien_posts')) || [];
+        var res=posts.filter(function(p){return p.title.toLowerCase().includes(kw)||p.content.toLowerCase().includes(kw);});
+        alert(res.length?'Tìm thấy '+res.length+' bài:\n'+res.map(function(p){return p.title;}).join('\n'):'Không tìm thấy kết quả nào.');
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Ngọc Điền - Lịch sử xóm</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700&family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="header">
+    <div class="container header-inner">
+        <div class="logo">
+            <a href="index.html" style="display: block; text-decoration: none; line-height: 0;">
+                <img src="logo-text.png" alt="Xóm Ngọc Điền" style="height: 52px; width: auto; display: block;">
+            </a>
+        </div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Tìm kiếm...">
+            <button id="searchBtn">Tìm</button>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    
+    <h1 style="color:#DA251D; margin: 20px 0;">📜 Bản đồ</h1>
+    <div id="postsContainer" class="news-grid"></div>
+</div>
+
+<div class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col"><h4>Giới thiệu</h4><p>Về xóm Ngọc Điền</p><p>Lịch sử</p><p>Ban quản trị</p></div>
+            <div class="footer-col"><h4>Lưu trữ</h4><p>Hương ước 1883</p><p>Tư liệu liệt sỹ</p><p>Bản đồ</p></div>
+            <div class="footer-col"><h4>Kết nối</h4><p>Zalo: XomNgocDien</p><p>Facebook: @ngocdien</p><p>Hotline: 0914 58 75 75</p></div>
+            <div class="footer-col"><h4>Hỗ trợ</h4><p>Hướng dẫn</p><p>Góp ý</p><p>Điều khoản</p></div>
+        </div>
+        <div class="copyright">© 2026 Xóm Ngọc Điền - Hưng Nguyên - Nghệ An. Xây dựng bởi ❤️ Thái Lão.</div>
+    </div>
+</div>
+
+<script src="js/main.js"></script>
+<script>
+    let posts = getPostsByCategory('ban-do');
+    renderPosts('postsContainer', posts, 50);
+
+    // Tìm kiếm (dùng chung)
+    document.getElementById('searchBtn')?.addEventListener('click', function() {
+        let kw = document.getElementById('searchInput').value.toLowerCase();
+        if (!kw) return;
+        let all = getAllPosts();
+        let res = all.filter(p => p.title.toLowerCase().includes(kw) || p.content.toLowerCase().includes(kw));
+        if (res.length === 0) alert('Không tìm thấy.');
+        else alert(`Tìm thấy ${res.length} bài:\n${res.map(p => p.title).join('\n')}`);
+    });
+    document.getElementById('searchInput')?.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') document.getElementById('searchBtn').click();
+    });
+</script>
+</body>
+</html>

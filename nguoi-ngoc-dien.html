@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Tri ân Người Ngọc Điền – Bảng Vàng Ghi Công | Xóm Ngọc Điền</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,600&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS (Đồng bộ hệ thống)
+═══════════════════════════════════════ */
+:root {
+  --red:        #C0231A;
+  --red-deep:   #7A1410;
+  --red-mid:    #A01D16;
+  --gold:       #B8882A;
+  --gold-light: #F9F1E1;
+  --ink:        #181410;
+  --ink-2:      #332A1E;
+  --ink-3:      #5C4F3E;
+  --ink-4:      #8A7B6A;
+  --cream:      #F8F5F0;
+  --white:      #FFFFFF;
+  --border:     #DDD5C8;
+  --border-2:   #EAE4DC;
+  --ff-head:    'Playfair Display', Georgia, serif;
+  --ff-serif:   'Lora', Georgia, serif;
+  --ff-sans:    'Be Vietnam Pro', sans-serif;
+  --r-md: 14px;
+  --r-xl: 28px;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body { background: var(--cream); font-family: var(--ff-sans); color: var(--ink); line-height: 1.6; font-size: 15px; }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+/* ═══════════════════════════════════════
+   HEADER
+═══════════════════════════════════════ */
+.masthead { background: var(--white); border-bottom: 1px solid var(--border-2); padding: 18px 0; text-align: center; }
+.navbar { background: var(--red); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 12px rgba(192,35,26,.3); }
+.nav-inner { max-width: 1280px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: center; overflow-x: auto; white-space: nowrap; }
+.navbar a { display: inline-block; padding: 13px 18px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,.88); border-bottom: 2.5px solid transparent; }
+.navbar a.active { color: #fff; border-bottom-color: #fff; }
+
+/* ═══════════════════════════════════════
+   BÀI TỰA LỊCH SỬ
+═══════════════════════════════════════ */
+.essay-wrap {
+    max-width: 900px;
+    margin: 50px auto 70px;
+    background: var(--white);
+    padding: 50px 60px;
+    border-radius: var(--r-md);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+    border-top: 4px solid var(--red-deep);
+    position: relative;
+}
+.essay-wrap::before {
+    content: '★';
+    position: absolute;
+    top: -16px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--cream);
+    color: var(--gold);
+    font-size: 20px;
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; border: 1px solid var(--gold);
+}
+.essay-title {
+    font-family: var(--ff-head);
+    font-size: 20px; 
+    color: var(--red-deep);
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    line-height: 1.5;
+}
+.essay-content {
+    font-family: var(--ff-serif);
+    font-size: 16.5px;
+    line-height: 1.85;
+    color: var(--ink-2);
+    text-align: justify;
+}
+.essay-content p { margin-bottom: 20px; }
+.essay-content p:first-of-type::first-letter {
+    font-size: 3.5em;
+    float: left;
+    line-height: 0.8;
+    padding-right: 8px;
+    color: var(--red);
+    font-family: var(--ff-head);
+    font-weight: bold;
+}
+
+/* ═══════════════════════════════════════
+   TIÊU ĐỀ CÁC MỤC BÊN DƯỚI
+═══════════════════════════════════════ */
+.sec-title-wrap { text-align: center; margin: 60px 0 35px; padding: 0 15px; }
+.sec-title { 
+    font-family: var(--ff-head); 
+    font-size: 20px; 
+    color: var(--red-deep); 
+    font-weight: 800; 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 15px; 
+    text-transform: uppercase; 
+    letter-spacing: 1.5px; 
+    line-height: 1.5;
+}
+.sec-title::before, .sec-title::after { 
+    content: ''; 
+    width: 35px; 
+    height: 1.5px; 
+    background: var(--gold); 
+    flex-shrink: 0; 
+}
+
+/* BẢNG VÀNG MẸ VNAH */
+.mvnah-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 50px; }
+.gold-card { background: var(--white); border: 2px solid var(--red-deep); border-radius: var(--r-md); padding: 5px; position: relative; box-shadow: 0 8px 25px rgba(122,20,16,0.08); transition: 0.3s; }
+.gold-card-inner { border: 1px solid var(--gold); border-radius: 8px; padding: 20px; display: flex; flex-direction: column; align-items: center; background: linear-gradient(to bottom right, #fff, #fdfbf7); text-align: center; height: 100%; }
+.gold-card-star { position: absolute; top: -12px; left: -12px; width: 34px; height: 34px; background: var(--red); border: 2px solid var(--gold); border-radius: 50%; color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 15px; z-index: 5;}
+
+.gc-img { width: 100%; height: 250px; object-fit: contain; margin-bottom: 15px; border: 1px solid var(--border-2); background: #f9f9f9; }
+.gc-info h3 { font-family: var(--ff-head); font-size: 18px; color: var(--red-deep); margin-bottom: 6px; text-transform: uppercase; }
+.gc-info p { font-size: 13px; color: var(--ink-2); line-height: 1.5; font-style: italic; padding: 0 5px; }
+
+/* BỨC TƯỜNG CHÂN DUNG LIỆT SỸ (3 CỘT) */
+.martyr-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 20px; }
+.martyr-card { background: white; border: 1px solid var(--gold); border-radius: 10px; padding: 10px; text-align: center; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+.martyr-card:hover { transform: scale(1.03); border-color: var(--red); box-shadow: 0 6px 15px rgba(192,35,26,0.1); }
+.martyr-img { width: 100%; height: 160px; object-fit: contain; border-radius: 4px; margin-bottom: 10px; background: #f0f0f0; border: 1px solid #eee; }
+.martyr-name { font-family: var(--ff-head); font-size: 14px; font-weight: 700; color: var(--red-deep); margin-top: 5px; text-transform: uppercase; }
+
+/* GHI CHÚ CUỐI DANH SÁCH */
+.update-note { text-align: center; color: var(--red); font-weight: 600; font-size: 13.5px; margin: 10px 0 60px; padding: 15px; border: 1px dashed var(--red); border-radius: 10px; background: var(--red-pale); }
+
+/* BIA ĐÁ ĐẢNG BỘ */
+.party-stele {
+    background: #FAF7F2; 
+    border: 2px solid var(--red-deep);
+    box-shadow: 0 0 0 4px #FAF7F2, 0 0 0 5px var(--gold), 0 10px 30px rgba(0,0,0,0.08); 
+    border-radius: 8px;
+    padding: 45px 50px;
+    margin: 0 auto 60px;
+    max-width: 1000px;
+}
+.party-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px 30px;
+}
+.party-item {
+    font-family: var(--ff-serif);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--border);
+}
+.party-icon {
+    color: var(--red);
+    font-size: 15px;
+}
+.party-source {
+    text-align: right;
+    font-size: 13.5px;
+    font-style: italic;
+    color: var(--ink-4);
+    margin-top: 35px;
+    border-top: 1px solid var(--border-2);
+    padding-top: 15px;
+}
+
+/* ═══════════════════════════════════════
+   BÀI BÁO ANH HÙNG LAO ĐỘNG
+═══════════════════════════════════════ */
+.hero-report-wrap {
+    max-width: 1000px;
+    margin: 0 auto 80px;
+    background: var(--white);
+    padding: 60px;
+    border-radius: var(--r-md);
+    box-shadow: 0 15px 45px rgba(0,0,0,0.05);
+    border: 1px solid var(--border-2);
+}
+.hero-featured-img {
+    width: 320px;
+    height: auto;
+    float: left;
+    margin: 0 40px 20px 0;
+    border: 5px solid var(--white);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    border-radius: 4px;
+}
+.hero-report-title {
+    font-family: var(--ff-head);
+    font-size: 30px;
+    color: var(--red-deep);
+    line-height: 1.3;
+    margin-bottom: 25px;
+    font-weight: 900;
+}
+.hero-sapo {
+    font-family: var(--ff-sans);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink-2);
+    margin-bottom: 30px;
+    line-height: 1.7;
+    border-left: 5px solid var(--gold);
+    padding-left: 20px;
+}
+.hero-body-text {
+    font-family: var(--ff-serif);
+    font-size: 17px;
+    color: var(--ink-2);
+    line-height: 1.9;
+    text-align: justify;
+}
+.hero-body-text p { margin-bottom: 22px; }
+
+.poem-block {
+    background: #fdfbf7;
+    border: 1px solid var(--gold-light);
+    padding: 40px;
+    margin: 40px 0;
+    border-radius: 8px;
+    font-style: italic;
+    text-align: center;
+    position: relative;
+}
+.poem-block::before, .poem-block::after {
+    content: '"';
+    font-size: 80px;
+    font-family: Georgia, serif;
+    color: var(--gold-light);
+    position: absolute;
+    opacity: 0.5;
+}
+.poem-block::before { top: 0; left: 20px; }
+.poem-block::after { bottom: -40px; right: 20px; }
+
+.poem-title {
+    font-family: var(--ff-head);
+    font-style: normal;
+    font-weight: 800;
+    font-size: 20px;
+    text-transform: uppercase;
+    color: var(--red-deep);
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+}
+
+/* FOOTER */
+.footer { background: var(--ink); color: #7A6E62; padding: 40px 0; font-size: 13px; text-align: center; margin-top: 60px; }
+
+/* RESPONSIVE */
+@media (max-width: 780px) {
+  .essay-wrap { padding: 30px 20px; }
+  .essay-title, .sec-title { font-size: 17px; }
+  .mvnah-grid, .martyr-grid { grid-template-columns: 1fr; }
+  .party-stele { padding: 30px 20px; }
+  .party-list { grid-template-columns: 1fr; gap: 10px; }
+  
+  /* Responsive cho Bài báo mới */
+  .hero-featured-img { width: 100%; float: none; margin: 0 0 30px 0; }
+  .hero-report-wrap { padding: 30px 20px; }
+  .hero-report-title { font-size: 24px; }
+  
+  .gc-img { height: 200px; }
+  .sec-title { line-height: 1.5; flex-direction: column; gap: 5px; }
+  .sec-title::before, .sec-title::after { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="container">
+    <a href="index.html"><img src="logo-text.png" alt="Xóm Ngọc Điền" style="height: 50px;"></a>
+  </div>
+</div>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html">Trang chủ</a>
+    <a href="gioi-thieu.html">Giới thiệu</a>
+    <a href="lich-su.html">Lịch sử</a>
+    <a href="tin-tuc.html">Tin tức</a>
+    <a href="nguoi-ngoc-dien.html" class="active">Người Ngọc Điền</a>
+    <a href="van-chuong.html">Văn chương</a>
+    <a href="di-tich.html">Di tích</a>
+  </div>
+</nav>
+
+<div class="container">
+    
+    <div class="essay-wrap">
+        <h1 class="essay-title">TRI ÂN NHỮNG NGƯỜI CON NGỌC ĐIỀN</h1>
+        <div class="essay-content">
+            <p>Nép mình bên dòng sông Đào hiền hòa uốn lượn, Ngọc Điền không chỉ là một dải đất bồi đắp bởi lớp phù sa nhọc nhằn, mà còn là cái nôi bồi dưỡng những tâm hồn trung kiên, tài hoa, mang đậm cốt cách của con người xứ Nghệ. Lịch sử gần ba thế kỷ của quê ta được viết lên không phải bằng lụa là gấm vóc, mà bằng mồ hôi, nước mắt và cả máu xương của bao thế hệ tiền nhân.</p>
+            
+            <p>Lật giở những trang sử làng từ thuở dựng cơ lập ấp, rèn giũa nề nếp qua bản Hương ước 1883, Ngọc Điền đã sớm nức tiếng là vùng đất "địa linh nhân kiệt", trọng đạo lý và giàu truyền thống hiếu học. Trong suốt chiều dài lịch sử của dân tộc, quê hương ta đã sản sinh ra biết bao người con ưu tú. Dưới thời đại phong kiến, văn mạch Ngọc Điền rực rỡ với những người con đỗ đạt làm rạng danh xóm làng như Tiến sỹ Nguyễn Văn Thông, và con trai là tướng thần Nguyễn Tất Đắc; các bậc Viện sỹ hàn lâm như Hàn Nguyễn (Nguyễn Lương Khai), Hàn Cao (Cao Duy Cán). Đất học ấy còn sinh ra những bậc "Nhất xứ" vang danh như cụ Xứ Hùng (Nguyễn Mộng Lý), cùng nhiều nho sỹ kỳ cựu nổi danh như Cựu Hựu (Lý trưởng Nguyễn Cư), Cựu Tuyển (nhà giáo Hán Nôm Cao Tuyển), Cựu Quát, Cựu Diện... Dẫu mộc mạc trong tấm áo nâu sờn, nhưng chí lớn của các bậc tiền nhân chưa bao giờ chịu bó hẹp sau lũy tre làng. Họ mang học vấn, khí tiết ra giúp đời, đặt nền móng vững chắc cho biết bao những người con thành danh khác đang sinh sống và cống hiện trên mọi nẻo đường Tổ quốc hôm nay.</p>
+            
+            <p>Khi non sông cất tiếng gọi, lớp lớp thanh niên Ngọc Điền lại gác bút nghiên, từ biệt luống cày để lên đường theo tiếng gọi thiêng liêng của Tổ quốc. Đất mẹ Ngọc Điền đã thắm đỏ bởi máu xương của hơn 42 người con ưu tú – hơn 42 vì sao sáng mãi trên bầu trời độc lập. Phía sau những tấm Bằng Tổ quốc ghi công là nỗi đau quặn thắt, là sự hy sinh thầm lặng mà vĩ đại của những người Mẹ Việt Nam Anh hùng: Mẹ Nguyễn Thị Nhung, Mẹ Phan Thị Chắt, Mẹ Lương Thị Thậm và Mẹ Nguyễn Thị Em. Các Mẹ đã nuốt ngược nước mắt vào trong, hiến dâng những núm ruột yêu thương nhất của mình cho hình hài xứ sở, để dòng sông Đào mãi mãi được chảy nhịp bình yên.</p>
+            
+            <p>Ngay giữa những năm tháng đạn bom khốc liệt của thập niên 50-60, khi đất nước đang oằn mình trong chiến tranh, người Ngọc Điền lại kiên cường bước vào một mặt trận khác: Mặt trận lao động sản xuất, giữ vững hậu phương, chi viện lương thực cho tiền tuyến. Biểu tượng sáng ngời cho tinh thần vươn lên không mệt mỏi ấy chính là Anh hùng Lao động Cao Lục. Bằng đôi bàn tay chai sần và ý chí sắt đá, cụ đã hóa giải sức mạnh thiên nhiên, dẫn dắt bà con khai hoang, phục hóa, biến những vùng đất chua phèn thành vựa lúa trù phú. Cụ không chỉ để lại cho thế hệ sau những bờ xôi ruộng mật, mà còn thắp lên ngọn lửa của tinh thần lao động kiến quốc ngay trong khói lửa chiến tranh.</p>
+            
+            <p>Hôm nay, giữa dòng chảy hối hả của thời đại số, những người con Ngọc Điền thế hệ mới xin cúi đầu tri ân lớp lớp tiền nhân. Những cái tên khắc trên bia đá, những tấm Huân chương ngả màu thời gian nay được trân trọng lưu giữ trên "Bảng Vàng Ghi Công". Đó không chỉ là sự nhắc nhớ về một thời hoa lửa hào hùng, mà còn là lời thề sắt son của thế hệ hậu sinh: Nguyện sống, cống hiến và gìn giữ mãi ngọn lửa tự hào mang tên Ngọc Điền.</p>
+        </div>
+    </div>
+
+    <div class="sec-title-wrap">
+        <h2 class="sec-title">BÀ MẸ VIỆT NAM ANH HÙNG</h2>
+    </div>
+    <div class="mvnah-grid">
+        <div class="gold-card"><div class="gold-card-star">★</div><div class="gold-card-inner">
+            <img src="me-vnah-luong-thi-tham.jpg" class="gc-img" alt="Mẹ Lương Thị Thậm">
+            <div class="gc-info">
+                <h3>Mẹ Lương Thị Thậm</h3>
+                <p>Có con độc nhất hy sinh vì sự nghiệp giải phóng dân tộc và bảo vệ tổ quốc.</p>
+            </div>
+        </div></div>
+
+        <div class="gold-card"><div class="gold-card-star">★</div><div class="gold-card-inner">
+            <img src="me-vnah-nguyen-thi-em.jpg" class="gc-img" alt="Mẹ Nguyễn Thị Em">
+            <div class="gc-info">
+                <h3>Mẹ Nguyễn Thị Em</h3>
+                <p>Đã có nhiều cống hiến, hy sinh vì sự nghiệp giải phóng dân tộc, xây dựng và bảo vệ tổ quốc.</p>
+            </div>
+        </div></div>
+
+        <div class="gold-card"><div class="gold-card-star">★</div><div class="gold-card-inner">
+            <img src="me-vnah-nguyen-thi-nhung.jpg" class="gc-img" alt="Mẹ Nguyễn Thị Nhung">
+            <div class="gc-info">
+                <h3>Mẹ Nguyễn Thị Nhung</h3>
+                <p>Đã có nhiều cống hiến, hy sinh vì sự nghiệp giải phóng dân tộc, xây dựng và bảo vệ tổ quốc.</p>
+            </div>
+        </div></div>
+
+        <div class="gold-card"><div class="gold-card-star">★</div><div class="gold-card-inner">
+            <img src="me-vnah-phan-thi-chat.jpg" class="gc-img" alt="Mẹ Phan Thị Chắt">
+            <div class="gc-info">
+                <h3>Mẹ Phan Thị Chắt</h3>
+                <p>Đã có nhiều cống hiến, hy sinh vì sự nghiệp giải phóng dân tộc, xây dựng và bảo vệ tổ quốc.</p>
+            </div>
+        </div></div>
+    </div>
+
+    <div class="sec-title-wrap">
+        <h2 class="sec-title">NHỮNG NGƯỜI CON NGỌC ĐIỀN ĐÃ HY SINH<br>VÌ TỔ QUỐC, VÌ SỰ NGHIỆP GIẢI PHÓNG DÂN TỘC</h2>
+    </div>
+    <div class="martyr-grid">
+        <div class="martyr-card"><img src="cao-dinh-thanh.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Cao Đình Thành</div></div>
+        <div class="martyr-card"><img src="cao-quang-dam.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Cao Quang Đảm</div></div>
+        <div class="martyr-card"><img src="cao-quang-than.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Cao Quang Thân</div></div>
+        <div class="martyr-card"><img src="cao-quang-the.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Cao Quang Thể</div></div>
+        <div class="martyr-card"><img src="cao-tham-quan.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Cao Thẩm Quân</div></div>
+        <div class="martyr-card"><img src="cao-van-lien.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Cao Văn Liên</div></div>
+        <div class="martyr-card"><img src="ho-xuan-du.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Hồ Xuân Dư</div></div>
+        <div class="martyr-card"><img src="nguyen-luong-van.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Nguyễn Lương Văn</div></div>
+        <div class="martyr-card"><img src="nguyen-van-bao.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Nguyễn Văn Báo</div></div>
+        <div class="martyr-card"><img src="nguyen-van-dang.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Nguyễn Văn Đáng</div></div>
+        <div class="martyr-card"><img src="nguyen-van-quyen.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Nguyễn Văn Quyên</div></div>
+        <div class="martyr-card"><img src="tran-van-phu.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Trần Văn Phú</div></div>
+        <div class="martyr-card"><img src="cao-duc.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Cao Đức</div></div>
+        <div class="martyr-card"><img src="ho-sy-thuyen.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Hồ Sỹ Thuyên</div></div>
+        <div class="martyr-card"><img src="nguyen-dinh-tuyen.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Nguyễn Đình Tuyến</div></div>
+        <div class="martyr-card"><img src="tran-nghia.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Trần Nghĩa</div></div>
+        <div class="martyr-card"><img src="ho-xuan-nghia.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Hồ Xuân Nghĩa</div></div>
+        <div class="martyr-card"><img src="cao-xuan-the.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Cao Xuân Thế</div></div>
+        <div class="martyr-card"><img src="luong-thanh-long.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Lương Thành Long</div></div>
+        <div class="martyr-card"><img src="nguyen-luong-khang.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Nguyễn Lương Kháng</div></div>
+        <div class="martyr-card"><img src="nguyen-van-hoi.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Nguyễn Văn Hợi</div></div>
+        <div class="martyr-card"><img src="nguyen-van-hong.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Nguyễn Văn Hồng</div></div>
+        <div class="martyr-card"><img src="nguyen-van-tu.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Nguyễn Văn Tứ</div></div>
+        <div class="martyr-card"><img src="cao-quang-tien.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Cao Quang Tiễn</div></div>
+        <div class="martyr-card"><img src="cao-xuan-hung.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Cao Xuân Hùng</div></div>
+        <div class="martyr-card"><img src="ha-van-lan.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Hà Văn Lan</div></div>
+        <div class="martyr-card"><img src="ha-huy-trong.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Hà Huy Trọng</div></div>
+        <div class="martyr-card"><img src="ho-xuan-the.jpg" class="martyr-img" onerror="this.src='co-to-quoc.jpg'"><div class="martyr-name">Hồ Xuân Thể</div></div>
+
+        <div class="martyr-card"><img src="co-to-quoc.jpg" class="martyr-img"><div class="martyr-name">Cao Quang Luật</div></div>
+        <div class="martyr-card"><img src="co-to-quoc.jpg" class="martyr-img"><div class="martyr-name">Cao Quang Linh</div></div>
+        <div class="martyr-card"><img src="co-to-quoc.jpg" class="martyr-img"><div class="martyr-name">Lương Xuân Hai</div></div>
+        <div class="martyr-card"><img src="co-to-quoc.jpg" class="martyr-img"><div class="martyr-name">Cao Văn Bính</div></div>
+        <div class="martyr-card"><img src="co-to-quoc.jpg" class="martyr-img"><div class="martyr-name">Lương Thế Dũng</div></div>
+        <div class="martyr-card"><img src="co-to-quoc.jpg" class="martyr-img"><div class="martyr-name">Cao Nha</div></div>
+        <div class="martyr-card"><img src="co-to-quoc.jpg" class="martyr-img"><div class="martyr-name">Nguyễn Văn Trình</div></div>
+        <div class="martyr-card"><img src="co-to-quoc.jpg" class="martyr-img"><div class="martyr-name">Cao Xuân Niêm</div></div>
+        <div class="martyr-card"><img src="co-to-quoc.jpg" class="martyr-img"><div class="martyr-name">Cao Xuân Đặng</div></div>
+        <div class="martyr-card"><img src="co-to-quoc.jpg" class="martyr-img"><div class="martyr-name">Trương Văn Thang</div></div>
+        <div class="martyr-card"><img src="co-to-quoc.jpg" class="martyr-img"><div class="martyr-name">Cao Văn Thịnh</div></div>
+        <div class="martyr-card"><img src="co-to-quoc.jpg" class="martyr-img"><div class="martyr-name">Hà Huy Viện</div></div>
+        <div class="martyr-card"><img src="co-to-quoc.jpg" class="martyr-img"><div class="martyr-name">Nguyễn Đình Dần</div></div>
+        <div class="martyr-card"><img src="co-to-quoc.jpg" class="martyr-img"><div class="martyr-name">Cao Xuân Hải</div></div>
+    </div>
+    
+    <div class="update-note">
+        ⚠️ DANH SÁCH LIỆT SỸ ĐANG ĐƯỢC CẬP NHẬT THÊM KHI ADMIN CÓ ĐẦY ĐỦ THÔNG TIN.
+    </div>
+
+    <div class="sec-title-wrap">
+        <h2 class="sec-title">NHỮNG ĐẢNG VIÊN ĐẦU TIÊN CỦA ĐẢNG BỘ HƯNG THÁI</h2>
+    </div>
+    <div class="party-stele">
+        <div class="party-list">
+            <div class="party-item"><span class="party-icon">☭</span> Nguyễn Lương Châu</div>
+            <div class="party-item"><span class="party-icon">☭</span> Bùi Xuân Long</div>
+            <div class="party-item"><span class="party-icon">☭</span> Cao Cương</div>
+            <div class="party-item"><span class="party-icon">☭</span> Cao Huy</div>
+            <div class="party-item"><span class="party-icon">☭</span> Nguyễn Cảnh</div>
+            <div class="party-item"><span class="party-icon">☭</span> Nguyễn Huyên</div>
+            <div class="party-item"><span class="party-icon">☭</span> Nguyễn Đoan</div>
+            <div class="party-item"><span class="party-icon">☭</span> Lương Mại</div>
+            <div class="party-item"><span class="party-icon">☭</span> Cao Duyệt</div>
+            <div class="party-item"><span class="party-icon">☭</span> Cao Duệ</div>
+            <div class="party-item"><span class="party-icon">☭</span> Cao Linh</div>
+            <div class="party-item"><span class="party-icon">☭</span> Cao Ninh</div>
+            <div class="party-item"><span class="party-icon">☭</span> <span>Trần Hai <span style="font-weight:400; font-style:italic;">(Hai Đình)</span></span></div>
+            <div class="party-item"><span class="party-icon">☭</span> Hồ Cao Tớn</div>
+            <div class="party-item"><span class="party-icon">☭</span> Nguyễn Thêm</div>
+            <div class="party-item"><span class="party-icon">☭</span> Trần Phác</div>
+            <div class="party-item"><span class="party-icon">☭</span> <strong style="color:var(--red-deep); font-size:16.5px;">Trần Đức Bốn</strong>&nbsp;<span style="color:var(--red); font-size:13.5px; font-weight:700;">(Bí thư chi bộ)</span></div>
+        </div>
+        <div class="party-source">
+            (Theo Cao Viết Hạnh – Nhóm Facebook Ngọc Điền Thôn)
+        </div>
+    </div>
+
+    <div class="sec-title-wrap">
+        <h2 class="sec-title">ANH HÙNG LAO ĐỘNG</h2>
+    </div>
+    
+    <div class="hero-report-wrap">
+        <img src="image_faa02a.jpg" class="hero-featured-img" alt="Anh hùng Cao Lục">
+        <h1 class="hero-report-title">Huyền thoại về "Anh Chủ nhiệm" Cao Lục:<br><div class="sec-title-wrap" id="muc-cao-luc">
+    <h2 class="sec-title">ANH HÙNG LAO ĐỘNG CAO LỤC</h2>
+</div></h1>
+        <p style="color:var(--ink-4); font-size:14px; margin-bottom:20px;">Sinh: 1929 - Mất: 1974 | Danh hiệu: Anh hùng Lao động (1962)</p>
+        
+        <div class="hero-sapo">
+            Từ một người lính dạn dày khói lửa Điện Biên, ông trở về mang theo khát vọng làm cuộc cách mạng đánh đuổi "giặc đói, giặc nghèo" ngay trên quê hương. Ở tuổi ngoài 30, ông đã biến một vùng chiêm trũng "chưa nắng đã khô, chưa mưa đã ngập" thành lá cờ đầu của nền nông nghiệp miền Bắc XHCN. Ông là Anh hùng Lao động Cao Lục – nguyên mẫu bức tượng đài bất tử trong bài thơ "Anh Chủ nhiệm" (Hoàng Trung Thông), một người cộng sản đã vắt kiệt sinh lực mình cho đất nước đến hơi thở cuối cùng.
+        </div>
+
+        <div class="hero-body-text">
+            <p><strong>Từ chiến hào Điện Biên đến mặt trận đồng ruộng:</strong> Những năm giữa thế kỷ 20, làng Ngọc Điền, xã Hưng Thái (nay là thị trấn Hưng Nguyên, tỉnh Nghệ An) vẫn chìm trong cái nghèo ngàn đời của vùng đất trũng khắc nghiệt. Phía sau lũy tre làng ấy, chàng thanh niên Cao Lục (sinh năm 1929) đã gác lại nỗi lo toan gia đình, xung phong nhập ngũ vào năm 1949. Thuộc biên chế của Đại đoàn 308 anh hùng, người lính trẻ đã vào sinh ra tử từ chiến dịch Biên giới đến chảo lửa Điện Biên Phủ, lập nhiều chiến công, vinh dự đứng vào hàng ngũ của Đảng và đảm nhận cương vị Trung đội trưởng.</p>
+            
+            <p>Năm 1958, rời quân ngũ phục viên, người cựu chiến binh không chọn cho mình sự an nhàn. Bước chân trên con đường làng ngập bùn lầy, trong ông sục sôi một mệnh lệnh không lời: <em>"Phải giải phóng quê hương khỏi sự bần hàn"</em>. Hành trang mang về của ông là toàn bộ số tiền trợ cấp phục viên được dùng để mua sách kỹ thuật nông nghiệp sau một lần ghé thăm triển lãm ở tỉnh. Đó chính là viên gạch nền móng đầu tiên cho tư duy đổi mới vươn tầm thời đại của ông.</p>
+            
+            <p>Hưởng ứng chủ trương của Đảng bộ xã, ông Cao Lục hăng hái đứng ra làm Tổ trưởng tổ đổi công đầu tiên gồm 8 hộ gia đình. Bằng tư duy nhạy bén của người lính, ông táo bạo phá bỏ tập quán cũ, vận động bà con thay cày chìa vôi bằng cày 51, áp dụng khoa học kỹ thuật trên thửa ruộng thí nghiệm 2 sào 4 thước. Kết quả vụ đầu tiên chấn động cả vùng: Năng suất đạt 42 tạ/ha. Uy tín vang xa, nhân dân một lòng tin tưởng, các tổ đổi công sáp nhập và ông Cao Lục được bầu làm Chủ nhiệm Hợp tác xã (HTX) Ba Tơ – cái tên mang biểu tượng của tình đoàn kết kết nghĩa keo sơn giữa hai miền Nam – Bắc (Hưng Nguyên, Nghệ An và Ba Tơ, Quảng Ngãi).</p>
+
+            <p><strong>Người mở đường mang tầm nhìn vượt thời đại:</strong> Dưới sự chèo lái của Chủ nhiệm Cao Lục, HTX Ba Tơ đã tạo nên những cuộc "dời non lấp biển" ngay trong những năm tháng đạn bom khốc liệt nhất. Nắm rõ quy luật <em>"Nhất nước, nhì phân, tam cần, tứ giống"</em>, ông chọn thủy lợi làm khâu đột phá. Phối hợp cùng sinh viên trường Đại học Sư phạm Vinh, ông huy động sức dân đào đắp hơn 60.000m3 đất, dựng lên hệ thống đê bao dài hơn 3km ôm trọn xóm làng, cùng hệ thống mương tưới tiêu khoa học. Tầm nhìn của ông không dừng lại ở cây lúa. Ông lặn lội tìm đến Viện Giống cây trồng của Bộ Nông nghiệp, dành 10ha ruộng để nhân giống lúa ngắn ngày, giúp Ba Tơ nâng năng suất lên gấp 6 lần. Để phá thế độc canh, ông mạnh dạn cử người ra Hà Nam học nghề, mở ra hệ thống ao cá rộng lớn thu hàng trăm tấn mỗi năm, lập trang trại lợn gần 1.000 con với 10ha vườn rau.</p>
+            
+            <p>Kỳ tích nối tiếp kỳ tích. Giữa năm 1972, khi chiến tranh phá hoại miền Bắc vô cùng ác liệt, ông đã thuyết phục thành công đưa trạm điện sơ tán 320KW của Nhà máy điện Vinh về xóm. Dòng sông Đào bừng sáng. Dọc hai bờ sông, một "khu công nghiệp thu nhỏ" mọc lên với trạm cơ khí đủ máy phay, tiện, bào; máy xay xát; lò gạch ngói và lò vôi liên hoàn rực lửa đêm ngày. HTX Ba Tơ quy hoạch ruộng đồng thành những ô thửa lớn, đón máy cày bừa cơ giới hóa. Cao Lục còn có công lớn trong việc tham mưu thành lập trường Cấp III vừa học vừa làm (tiền thân của THPT Thái Lão ngày nay), gieo mầm tri thức cho lớp lớp thanh niên xứ Nghệ.</p>
+
+            <p><strong>Lá cờ đầu của miền Bắc và bức tượng đài trong thi ca:</strong> Sự vươn mình thần kỳ của Ba Tơ đã đưa HTX trở thành lá cờ đầu của ngành nông nghiệp toàn miền Bắc XHCN. Năm 1961, Đại tướng Nguyễn Chí Thanh - Ủy viên Bộ Chính trị, Trưởng ban Nông nghiệp Trung ương đã đích thân về lội ruộng thăm đồng và thốt lên: <em>"Phải suy nghĩ, phải nói, phải làm như Cao Lục!"</em>. Đầu năm 1974, Tổng Bí thư Lê Duẩn cũng đã về thăm và ngợi khen mô hình sản xuất tiên tiến này. Với những cống hiến vĩ đại, năm 1962, ông Cao Lục vinh dự được Đảng và Nhà nước phong tặng danh hiệu: Anh hùng Lao động.</p>
+
+            <p>Khí phách, tài năng và tấm lòng vì dân của Cao Lục đã tạo nên một nguồn cảm hứng mãnh liệt. Năm 1962, sau chuyến đi thực tế tại HTX Ba Tơ, nhà thơ Hoàng Trung Thông đã xúc động viết nên bài thơ <strong>"Anh Chủ nhiệm"</strong> vang bóng một thời. Hình tượng vị chủ nhiệm khoác áo nâu sờn, chân đất lội bùn, ngày đêm vật lộn với thiên tai để mang lại ấm no cho dân làng trong bài thơ, chính là bức chân dung chân thực nhất về Anh hùng Cao Lục:</p>
+
+            <div class="poem-block">
+                <div class="poem-title">Bài thơ: Anh Chủ Nhiệm</div>
+                Nắng chiều thấp thoáng ngọn cây tre<br>
+                Sóng lúa mênh mông cuộn đổ về.<br>
+                Anh cùng tôi bước trên đê nhỏ<br>
+                Áo nâu bạc màu bay với gió.<br>
+                Anh giơ tay vẽ giữa đồng xanh<br>
+                Vẽ cả ngày mai thành bức tranh:<br>
+                Kìa dòng mương chảy cầu đương bắc<br>
+                Lò gạch xây cao, đường thẳng đắp<br>
+                Nơi đây kho thóc, nhà chăn nuôi<br>
+                Tiền đã lo xong, đất cắm rồi.<br>
+                Chân vẫn bước đều, miệng vẫn nói.<br>
+                Phơi phới lòng anh cơn gió thổi.<br><br>
+                
+                Anh làm chủ nhiệm đã ba năm<br>
+                Ba năm vật lộn cùng khó khăn.<br>
+                Có mùa mạ cháy đồng khô cạn<br>
+                Mười bậc nước leo lên ruộng hạn.<br>
+                Có mùa lúa chín lụt tràn qua<br>
+                Lại phải nghiêng đồng hắt nước ra.<br>
+                Người nhiều, ruộng ít, trâu bò ít<br>
+                Chạy ngược chạy xuôi, lo rối rít,<br>
+                Ngoài ba mươi tuổi máu đương sôi<br>
+                Không chịu khoanh tay đứng ngó trời.<br>
+                Xoay mùa, chuyển vụ, tăng năng suất<br>
+                Thiếu đất lên rừng tay vỡ đất.<br>
+                Còn nhiều nếp cũ thói riêng tây.<br>
+                Trăm miệng, trăm người, trăm cái gay.<br>
+                Hõm mắt thâu đêm lo việc xã<br>
+                Gió rét, đường trơn, chân bấm đá.<br>
+                Hết làng đến ruộng thoi đi về<br>
+                Miệng nói, tay làm, tai lắng nghe.<br>
+                Cùng bao đồng chí anh đi trước<br>
+                Đứng mũi chịu sào đầu gió ngược.<br>
+                Có đêm nằm nghĩ cảnh gieo neo<br>
+                Vợ yếu con đông chưa hết nghèo.<br>
+                Nhưng rồi thấy rõ đường đi tới<br>
+                Nước nổi lo chi bèo chẳng nổi.<br>
+                Lại lao vào việc lòng say sưa<br>
+                Hết sớm thôi chiều, nắng lại mưa.<br>
+                “Ơi anh chủ nhiệm! Anh chủ nhiệm!”<br>
+                Bao tiếng thân yêu lời cảm mến<br>
+                Tay anh nắm chặt tay xã viên<br>
+                Xốc cả phong trào vững tiến lên.<br><br>
+                
+                Anh cùng tôi bước trên đê nhỏ<br>
+                Áo nâu bạc màu bay với gió.<br>
+                Mắt tôi ôm hết cả đồng xanh<br>
+                Cả dáng hình anh trong bức tranh.<br><br>
+                <span style="font-style:normal; font-weight:700;">Hoàng Trung Thông (4-1962)</span>
+            </div>
+
+            <p><strong>Sự tận hiến vô ngã của một nhân cách lớn:</strong> Đem lại sự trù phú, thay da đổi thịt cho quê hương, nhưng Anh hùng Cao Lục lại chọn cho mình một lối sống thanh bần, liêm khiết đến mức khổ hạnh. Kỷ luật nghiêm minh nhưng chan chứa tình người. Nhân dân Ngọc Điền vẫn truyền tai nhau câu chuyện bảo vệ HTX bắt được con cá lớn trườn lên bờ giữa đêm mưa, cố ý đặt giữa đường để "thử lòng" Chủ nhiệm. Đi họp khuya về, thấy cá, ông không mang về nhà mà nhẹ nhàng vuốt ve rồi thả lại xuống ao. Sự trong sáng, vô tư ấy đã thu phục hoàn toàn nhân tâm, khiến cả làng nhất tề bảo vệ tài sản chung của tập thể.</p>
+            
+            <p>15 năm giữ cương vị Chủ nhiệm, ông dốc cạn tâm can cho công việc. Ông tự nấu cơm, ăn ngủ tại phòng làm việc, thức trắng đêm ở trại chăn nuôi chăm lợn đẻ. Có lần người nhà báo tin con ốm nặng, ông chỉ kịp gạt nước mắt cậy nhờ: <em>"Đã có ông Luận (Trạm trưởng y tế) lo"</em>, rồi lại lao ra đồng. Làm việc lao lực, ăn uống kham khổ, ông bỏ qua mọi dấu hiệu bạo bệnh của bản thân. Đến khi gục ngã trên mặt trận sản xuất, được đưa ra Bệnh viện Việt Xô (Hà Nội) cấp cứu thì đã quá muộn.</p>
+            
+            <p>Ngày 05 tháng 08 năm 1974, Anh hùng Lao động Cao Lục trút hơi thở cuối cùng khi mới vừa tròn 45 tuổi – độ tuổi rực rỡ và độ chín nhất của đời người.</p>
+
+            <p>Ông ra đi, nhưng để lại cho quê hương một di sản đồ sộ về cơ sở vật chất, về tư duy làm kinh tế đổi mới, và trên hết là một nhân cách lớn của người Cộng sản. Hơn nửa thế kỷ trôi qua, mồ hôi và tâm huyết của Cụ Cao Lục đã hòa vào dòng sông Đào, thấm vào từng tấc đất Ngọc Điền. Bài thơ "Anh chủ nhiệm" vẫn còn ngân vang mãi, như một lời nhắc nhở thế hệ hôm nay và mai sau về một thời hoa lửa hào hùng, về một người con ưu tú đã sống, chiến đấu và hóa thân cho dáng hình xứ sở.</p>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <p>© 2026 Xóm Ngọc Điền · Nghệ An | Xây dựng bởi ❤️ Thái Lão</p>
+</div>
+
+</body>
+</html>

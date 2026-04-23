@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Tiếng Làng – Tâm tình & Góc nhìn xóm quê | Ngọc Điền</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,600&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS CHUẨN
+═══════════════════════════════════════ */
+:root {
+  --red:        #C0231A;
+  --red-deep:   #7A1410;
+  --red-mid:    #A01D16;
+  --red-pale:   #FAECEA;
+  --gold:       #B8882A;
+  --gold-light: #F9F1E1;
+  --ink:        #181410;
+  --ink-2:      #332A1E;
+  --ink-3:      #5C4F3E;
+  --ink-4:      #8A7B6A;
+  --cream:      #F8F5F0;
+  --cream-2:    #F0EBE3;
+  --white:      #FFFFFF;
+  --border:     #DDD5C8;
+  --border-2:   #EAE4DC;
+
+  --ff-head:    'Playfair Display', Georgia, serif;
+  --ff-serif:   'Lora', Georgia, serif;
+  --ff-sans:    'Be Vietnam Pro', sans-serif;
+
+  --r-xs: 6px;
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body { background: var(--cream); font-family: var(--ff-sans); color: var(--ink); line-height: 1.6; font-size: 15px; }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+.container { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+
+/* ═══════════════════════════════════════
+   HEADER & NAVBAR
+═══════════════════════════════════════ */
+.topbar { background: var(--ink); padding: 7px 0; font-size: 12px; color: #8A7B6A; }
+.topbar-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
+.topbar-left { display: flex; align-items: center; gap: 16px; }
+.topbar-sep { color: #3D3020; }
+.topbar-right { display: flex; gap: 16px; }
+.topbar a { color: #A09080; transition: color .15s; }
+.topbar a:hover { color: var(--gold); }
+
+.masthead { background: var(--white); border-bottom: 1px solid var(--border-2); padding: 18px 0 14px; }
+.masthead-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+.logo img { height: 58px; width: auto; display: block; }
+.search-box { display: flex; align-items: center; border: 1.5px solid var(--border); border-radius: 40px; overflow: hidden; background: var(--cream); transition: border-color .2s; }
+.search-box:focus-within { border-color: var(--red); }
+.search-box input { padding: 9px 16px; border: none; background: transparent; width: 210px; outline: none; font-size: 13.5px; font-family: var(--ff-sans); }
+.search-box button { background: var(--red); border: none; padding: 0 18px; height: 38px; color: white; font-weight: 600; font-size: 12.5px; cursor: pointer; transition: background .2s; }
+.search-box button:hover { background: var(--red-deep); }
+
+.navbar { background: var(--red); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 12px rgba(192,35,26,.3); }
+.nav-inner { max-width: 1280px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+.nav-inner::-webkit-scrollbar { display: none; }
+.navbar a { display: inline-block; padding: 13px 14px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,.88); border-bottom: 2.5px solid transparent; transition: color .15s; }
+.navbar a:hover { color: #fff; border-bottom-color: rgba(255,255,255,.5); }
+.navbar a.active { color: #fff; border-bottom-color: #fff; }
+.navbar a.nav-admin { margin-left: auto; background: rgba(0,0,0,.18); border-radius: var(--r-xs); padding: 8px 14px; margin-top: 5px; margin-bottom: 5px; border: none; }
+
+/* ═══════════════════════════════════════
+   BANNER & TABS TIẾNG LÀNG
+═══════════════════════════════════════ */
+.tl-header { background: var(--white); border-bottom: 1px solid var(--border-2); padding: 40px 0; margin-bottom: 30px; text-align: center; }
+.tl-title { font-family: var(--ff-head); font-size: 32px; color: var(--red-deep); font-weight: 800; margin-bottom: 10px; }
+.tl-desc { font-family: var(--ff-serif); font-size: 15.5px; color: var(--ink-3); font-style: italic; max-width: 700px; margin: 0 auto; line-height: 1.6; }
+
+.tl-nav-wrapper { border-bottom: 2px solid var(--border-2); margin-bottom: 30px; }
+.tl-tabs { display: flex; gap: 30px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; padding-bottom: 2px; }
+.tl-tabs::-webkit-scrollbar { display: none; }
+.tl-tab { background: none; border: none; padding: 10px 0 12px; font-family: var(--ff-sans); font-size: 14px; font-weight: 700; color: var(--ink-3); cursor: pointer; border-bottom: 3px solid transparent; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s; }
+.tl-tab:hover { color: var(--red); }
+.tl-tab.active { color: var(--red-deep); border-bottom-color: var(--red); pointer-events: none; }
+
+/* ═══════════════════════════════════════
+   BỐ CỤC CHÍNH: TRÁI (LƯỚI BÀI) - PHẢI (SIDEBAR ĐỒNG BỘ MỚI)
+═══════════════════════════════════════ */
+.page-layout { display: grid; grid-template-columns: 1fr 340px; gap: 40px; margin-bottom: 60px; align-items: start; }
+
+/* LƯỚI BÀI VIẾT (VINTAGE CARDS) */
+.tl-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.vintage-card { background: #FCFAF6; border: 1px solid #EAE4DC; border-radius: var(--r-md); padding: 24px; transition: all 0.3s ease; display: flex; flex-direction: column; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+.vintage-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 10px 25px rgba(184, 136, 42, 0.1); background: #fff; }
+.vc-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 12px; }
+.vc-tag { background: var(--gold-light); color: var(--gold); font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+.vc-date { color: var(--ink-4); font-style: italic; }
+.vc-title { font-family: var(--ff-serif); font-size: 20px; font-weight: 700; color: var(--red-deep); margin-bottom: 12px; line-height: 1.4; }
+.vc-title:hover { color: var(--red); }
+.vc-excerpt { font-family: var(--ff-serif); font-size: 14.5px; color: var(--ink-3); line-height: 1.65; margin-bottom: 20px; flex: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.vc-readmore { font-weight: 700; color: var(--red); font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; display: inline-flex; align-items: center; gap: 5px; }
+.vc-readmore:hover { gap: 8px; color: var(--red-deep); }
+
+/* SIDEBAR MỚI (ĐỒNG BỘ VỚI TRANG CHỦ) */
+.sidebar { display: flex; flex-direction: column; gap: 22px; }
+.sb-block { background: var(--white); border-radius: var(--r-md); border: 1px solid var(--border-2); overflow: hidden; }
+.sb-head { padding: 13px 18px 11px; border-bottom: 1px solid var(--border-2); display: flex; align-items: center; gap: 8px; background: #FCFAF6; }
+.sb-head-bar { width: 3px; height: 16px; background: var(--gold); border-radius: 2px; flex-shrink: 0; }
+.sb-head-title { font-family: var(--ff-head); font-size: 14.5px; font-weight: 700; color: var(--ink); text-transform: uppercase; letter-spacing: 0.5px; }
+.sb-body { padding: 16px 18px; }
+
+/* Góc Tác Giả */
+.author-spotlight { text-align: center; }
+.author-img { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--gold-light); margin: 0 auto 12px; background-position: center; background-size: cover; }
+.author-name { font-family: var(--ff-head); font-size: 17px; font-weight: 700; color: var(--ink); margin-bottom: 5px; }
+.author-desc { font-size: 13px; color: var(--ink-3); line-height: 1.5; font-style: italic; }
+
+/* Form Gửi & Phản ánh chung */
+.sb-input, .sb-textarea { width: 100%; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: var(--r-sm); margin-bottom: 9px; font-size: 13px; font-family: var(--ff-sans); color: var(--ink); background: var(--cream); outline: none; transition: border-color .2s; }
+.sb-input:focus, .sb-textarea:focus { border-color: var(--red); }
+.sb-textarea { resize: vertical; min-height: 72px; }
+.btn-submit { width: 100%; background: var(--red); color: #fff; border: none; padding: 10px 16px; border-radius: 40px; font-weight: 700; font-size: 13px; cursor: pointer; font-family: var(--ff-sans); transition: background .2s, transform .15s; }
+.btn-submit:hover { background: var(--red-deep); transform: translateY(-1px); }
+.admin-phone-bar { margin-top: 12px; background: var(--red-pale); border-radius: 40px; padding: 8px 14px; text-align: center; font-size: 12.5px; font-weight: 700; color: var(--red); }
+
+/* Xem Nhiều Nhất */
+.trend-item { display: flex; gap: 12px; align-items: flex-start; padding: 11px 0; border-bottom: 1px solid var(--border-2); }
+.trend-item:last-child { border-bottom: none; padding-bottom: 0; }
+.trend-num { font-family: var(--ff-head); font-size: 20px; font-weight: 900; color: var(--red); min-width: 26px; line-height: 1.1; opacity: .85; }
+.trend-title { font-size: 13.5px; font-weight: 500; color: var(--ink); line-height: 1.42; }
+.trend-title:hover { color: var(--red); }
+.trend-meta { font-size: 11px; color: var(--ink-4); margin-top: 3px; font-weight: 600; }
+
+/* Các mục Icon */
+.policy-item { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--border-2); }
+.policy-item:last-child { border-bottom: none; padding-bottom: 0; }
+.policy-ico { width: 34px; height: 34px; background: var(--gold-light); border-radius: var(--r-xs); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+.policy-text { font-size: 13.5px; font-weight: 500; color: var(--ink); }
+.policy-text:hover { color: var(--red); }
+.policy-sub { font-size: 11px; color: var(--ink-4); }
+.lib-item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: var(--r-xs); font-size: 13.5px; font-weight: 500; color: var(--ink); transition: background .15s, color .15s; }
+.lib-item:hover { background: var(--red-pale); color: var(--red); }
+.lib-item span { font-size: 16px; }
+
+/* Podcast & Zalo */
+.podcast-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px dashed var(--border-2); }
+.podcast-item:last-child { border-bottom: none; padding-bottom: 0; }
+.podcast-thumb { width: 50px; height: 50px; border-radius: var(--r-xs); flex-shrink: 0; background-size: cover; background-position: center; position: relative; }
+.podcast-thumb::after { content: '▶'; position: absolute; inset: 0; background: rgba(0,0,0,0.4); color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; opacity: 0; transition: opacity 0.2s; border-radius: inherit;}
+.podcast-item:hover .podcast-thumb::after { opacity: 1; }
+.podcast-info { flex: 1; }
+.podcast-title { font-size: 13px; font-weight: 600; color: var(--ink); line-height: 1.4; margin-bottom: 4px; transition: color 0.15s; }
+.podcast-item:hover .podcast-title { color: var(--red); }
+
+.zalo-qr { background: var(--cream-2); border-radius: var(--r-sm); padding: 18px; text-align: center; color: var(--ink-4); font-size: 13px; margin-bottom: 12px; border: 1px dashed var(--border); min-height: 90px; display: flex; align-items: center; justify-content: center; }
+.btn-zalo { display: block; background: #0A8F4B; color: #fff; text-align: center; padding: 10px 16px; border-radius: 40px; font-weight: 700; font-size: 13px; transition: background .2s, transform .15s; }
+.btn-zalo:hover { background: #077A3F; transform: translateY(-1px); }
+
+/* Thời tiết */
+.weather-row { display: flex; align-items: center; gap: 16px; justify-content: center; }
+.weather-ico { font-size: 42px; line-height: 1; }
+.weather-temp { font-family: var(--ff-head); font-size: 34px; font-weight: 700; color: var(--ink); line-height: 1; }
+.weather-info { font-size: 12px; color: var(--ink-3); line-height: 1.7; }
+
+/* Thông báo trống */
+.empty-state { text-align: center; padding: 60px 20px; color: var(--ink-4); font-style: italic; grid-column: 1 / -1; background: #FCFAF6; border: 1px dashed var(--border); border-radius: var(--r-md); }
+
+/* FOOTER */
+.footer { background: var(--ink); color: #7A6E62; padding: 52px 0 28px; font-size: 13px; margin-top: 40px; }
+.footer-top { display: flex; flex-wrap: wrap; gap: 48px; margin-bottom: 40px; }
+.footer-brand { flex: 1.2; min-width: 220px; }
+.footer-brand img { height: 45px; margin-bottom: 12px; }
+.footer-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; flex: 2; }
+.footer-col h4 { font-family: var(--ff-head); font-size: 14px; color: #C8BDB0; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid #2D2620; }
+.footer-col a { display: block; color: #7A6E62; line-height: 2.1; transition: color .15s; }
+.footer-col a:hover { color: var(--gold); }
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+  .page-layout { grid-template-columns: 1fr; }
+  .sidebar { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+}
+@media (max-width: 768px) {
+  .tl-grid { grid-template-columns: 1fr; }
+  .sidebar { grid-template-columns: 1fr; }
+  .topbar-right { display: none; }
+  .masthead-inner { flex-direction: column; }
+  .search-box { width: 100%; }
+  .footer-cols { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .footer-cols { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container topbar-inner">
+    <div class="topbar-left">
+      <span class="date" id="todayDate"></span>
+      <span class="topbar-sep">|</span>
+      <span>📍 Hưng Nguyên – Nghệ An</span>
+    </div>
+    <div class="topbar-right">
+      <a href="admin/index.html">⚙ Quản trị</a>
+      <a href="gop-y.html">✉ Góp ý</a>
+    </div>
+  </div>
+</div>
+
+<div class="masthead">
+  <div class="container masthead-inner">
+    <div class="logo">
+      <a href="index.html"><img src="logo-text.png" alt="Xóm Ngọc Điền"></a>
+    </div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Tìm bài viết, tư liệu...">
+      <button id="searchBtn">🔍 Tìm kiếm</button>
+    </div>
+  </div>
+</div>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html">Trang chủ</a>
+    <a href="gioi-thieu.html">Giới thiệu</a>
+    <a href="nguoi-ngoc-dien.html">Người Ngọc Điền</a>
+    <a href="lich-su.html">Lịch sử</a>
+    <a href="tin-tuc.html">Tin tức</a>
+    <a href="le-hoi.html">Lễ hội</a>
+    <a href="van-chuong.html" class="active">Tiếng làng</a>
+    <a href="huong-uoc.html">Hương ước 1883</a>
+    <a href="di-tich.html">Di tích</a>
+    <a href="chinh-sach.html">Chính sách</a>
+    <a href="chuyen-doi-so.html">Chuyển đổi số</a>
+    <a href="thu-vien.html">Thư viện</a>
+    <a href="ban-do.html">Bản đồ</a>
+    <a href="admin/index.html" class="nav-admin">⚙ Quản trị</a>
+  </div>
+</nav>
+
+<div class="tl-header">
+    <div class="container">
+        <h1 class="tl-title">📜 Tiếng Làng</h1>
+        <p class="tl-desc">Không gian dành riêng cho những vần thơ, câu chuyện, giai thoại, những dòng tản mạn bên ấm chè xanh của người Ngọc Điền, và cả những góc nhìn hiến kế xây dựng quê hương.</p>
+    </div>
+</div>
+
+<div class="container">
+    
+    <div class="tl-nav-wrapper">
+        <div class="tl-tabs" id="tlTabs">
+            <button class="tl-tab active" data-filter="all">TẤT CẢ</button>
+            <button class="tl-tab" data-filter="tan-man">TẢN MẠN</button>
+            <button class="tl-tab" data-filter="tho">THƠ</button>
+            <button class="tl-tab" data-filter="am-che">BÊN ẤM CHÈ</button>
+            <button class="tl-tab" data-filter="giai-thoai">GIAI THOẠI</button>
+            <button class="tl-tab" data-filter="kham-pha">KHÁM PHÁ</button>
+            <button class="tl-tab" data-filter="goc-nhin">GÓC NHÌN</button>
+        </div>
+    </div>
+
+    <div class="page-layout">
+        <div class="tl-grid" id="tlGrid">
+            </div>
+
+        <aside class="sidebar">
+
+            <div class="sb-block">
+                <div class="sb-head"><div class="sb-head-bar"></div><span class="sb-head-title">✍️ Tác giả nổi bật</span></div>
+                <div class="sb-body author-spotlight" id="topAuthorContainer">
+                    </div>
+            </div>
+
+            <div class="sb-block">
+                <div class="sb-head"><div class="sb-head-bar" style="background: var(--red);"></div><span class="sb-head-title">💌 Gửi bài & Góp ý</span></div>
+                <div class="sb-body">
+                    <p style="font-size:13px; color:var(--ink-3); font-style:italic; margin-bottom:12px;">Bà con có vần thơ hay, câu chuyện cũ, hay sáng kiến muốn gửi Ban biên tập?</p>
+                    <input class="sb-input" type="text" id="feedbackName" placeholder="Tên tác giả / Bút danh">
+                    <textarea class="sb-textarea" id="feedbackMsg" rows="3" placeholder="Nhập bài thơ, tản mạn, hoặc nội dung góp ý..."></textarea>
+                    <button class="btn-submit" id="sendFeedbackBtn">Gửi tới Tòa soạn</button>
+                    <div class="admin-phone-bar">📞 Quản trị viên: 0914 58 75 75</div>
+                </div>
+            </div>
+
+            <div class="sb-block">
+                <div class="sb-head"><div class="sb-head-bar" style="background:var(--red);"></div><span class="sb-head-title">📈 Xem nhiều nhất</span></div>
+                <div class="sb-body" id="dynamicTrendingPosts" style="padding-top: 5px;">
+                    <div style="font-size:12px; color:var(--ink-4); text-align:center;">Đang tải...</div>
+                </div>
+            </div>
+
+            <div class="sb-block">
+                <div class="sb-head"><div class="sb-head-bar" style="background:var(--gold);"></div><span class="sb-head-title">📋 Chính sách & Dịch vụ số</span></div>
+                <div class="sb-body">
+                    <a href="https://vneid.gov.vn/" target="_blank" class="policy-item"><div class="policy-ico">📱</div><div><div class="policy-text">Cài đặt VNeID</div><div class="policy-sub">Ứng dụng định danh điện tử</div></div></a>
+                    <a href="https://dichvucong.gov.vn/" target="_blank" class="policy-item"><div class="policy-ico">🏛️</div><div><div class="policy-text">Dịch vụ công trực tuyến</div><div class="policy-sub">Cổng DVC Quốc gia</div></div></a>
+                    <a href="https://hungnguyen.nghean.gov.vn/" target="_blank" class="policy-item"><div class="policy-ico">🌐</div><div><div class="policy-text">Cổng TTĐT Hưng Nguyên</div><div class="policy-sub">Trang tin chính thức của Huyện</div></div></a>
+                    <a href="https://baohiemxahoi.gov.vn/" target="_blank" class="policy-item"><div class="policy-ico">🏥</div><div><div class="policy-text">Bảo hiểm xã hội Việt Nam</div><div class="policy-sub">Tra cứu thông tin BHXH, BHYT</div></div></a>
+                </div>
+            </div>
+
+            <div class="sb-block">
+                <div class="sb-head"><div class="sb-head-bar"></div><span class="sb-head-title">📚 Thư viện & Tư liệu</span></div>
+                <div class="sb-body">
+                    <a href="thu-vien.html" class="lib-item"><span>📸</span> Ảnh tư liệu xóm xưa</a>
+                    <a href="https://maps.app.goo.gl/4v2sMNmqP3CVYZBC9?g_st=ac" target="_blank" class="lib-item"><span>🗺️</span> Bản đồ số Ngọc Điền</a>
+                    <a href="thu-vien.html" class="lib-item"><span>🎬</span> Video tư liệu làng xóm</a>
+                </div>
+            </div>
+
+            <div class="sb-block">
+                <div class="sb-head"><div class="sb-head-bar" style="background:#3B82F6;"></div><span class="sb-head-title">🌤️ Thời tiết Hưng Nguyên</span></div>
+                <div class="sb-body" id="realtimeWeather">
+                    <div style="text-align:center; font-size:12px; color:var(--ink-4); font-style:italic;">Đang kết nối vệ tinh thời tiết...</div>
+                </div>
+            </div>
+
+            <div class="sb-block">
+                <div class="sb-head">
+                    <div class="sb-head-bar" style="background:var(--gold);"></div>
+                    <span class="sb-head-title" style="display:flex; justify-content:space-between; width:100%; align-items:center;">
+                        🎙️ Đọc truyện đêm khuya
+                        <a href="podcast.html" style="font-size:11px; color:var(--red); font-weight:600;">Xem tất cả →</a>
+                    </span>
+                </div>
+                <div class="sb-body" id="tlPodcastSidebar">
+                    </div>
+            </div>
+
+            <div class="sb-block">
+                <div class="sb-head"><div class="sb-head-bar" style="background:#0A8F4B;"></div><span class="sb-head-title">📱 Kết nối Zalo xóm</span></div>
+                <div class="sb-body">
+                    <div class="zalo-qr" style="padding: 8px;">
+                        <img src="zalo-qr.jpg" alt="Mã QR Zalo Xóm Ngọc Điền" style="width: 100%; max-width: 180px; height: auto; border-radius: 8px; margin: 0 auto; display: block;">
+                    </div>
+                    <a href="https://zalo.me/g/i8vuebonziplqy2c06ux" target="_blank" rel="noopener noreferrer" class="btn-zalo">Tham gia nhóm Zalo →</a>
+                </div>
+            </div>
+
+        </aside>
+    </div>
+
+</div>
+
+<div class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html"><img src="logo-text.png" alt="Xóm Ngọc Điền"></a>
+        <p>Cổng thông tin cộng đồng phi lợi nhuận, lưu giữ ký ức văn hóa và thúc đẩy chuyển đổi số nông thôn vùng Hưng Nguyên – Nghệ An.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Về chúng tôi</h4>
+          <a href="gioi-thieu.html">Giới thiệu xóm</a>
+          <a href="lich-su.html">Lịch sử hình thành</a>
+          <a href="admin/index.html">Ban quản trị</a>
+        </div>
+        <div class="footer-col">
+          <h4>Kho tư liệu</h4>
+          <a href="huong-uoc.html">Hương ước 1883</a>
+          <a href="nguoi-ngoc-dien.html">Tư liệu liệt sỹ</a>
+          <a href="thu-vien.html">Thư viện ảnh</a>
+        </div>
+        <div class="footer-col">
+          <h4>Kết nối</h4>
+          <a href="#">Zalo: XomNgocDien</a>
+          <a href="#">Facebook: @ngocdienque</a>
+        </div>
+      </div>
+    </div>
+    <div style="border-top: 1px solid #2D2620; margin-bottom: 20px;"></div>
+    <div style="text-align: center; font-size: 12px; color: #5A4E42;">
+      © 2026 Xóm Ngọc Điền · Nghệ An | Xây dựng bởi ❤️ Thái Lão
+    </div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+<script>
+    // 1. Cập nhật ngày giờ
+    function updateClock() {
+        var now = new Date();
+        var clockElement = document.getElementById('todayDate');
+        if(clockElement) clockElement.textContent = now.toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' });
+    }
+    updateClock();
+
+    // DANH SÁCH MỤC CỦA TIẾNG LÀNG ĐỂ MAP TÊN HIỂN THỊ
+    const catLabels = {
+        'tan-man': 'Tản mạn',
+        'tho': 'Thơ',
+        'am-che': 'Bên ấm chè',
+        'giai-thoai': 'Giai thoại',
+        'kham-pha': 'Khám phá',
+        'goc-nhin': 'Góc nhìn',
+        'tieng-lang': 'Tiếng làng'
+    };
+
+    // ========================================================
+    // LOGIC CỘT TRÁI: TAB FILTER & RENDER BÀI VIẾT (Giữ nguyên)
+    // ========================================================
+    document.addEventListener('DOMContentLoaded', () => {
+        
+        const tabs = document.querySelectorAll('.tl-tab');
+        const grid = document.getElementById('tlGrid');
+        
+        function renderPosts(filterCategory) {
+            grid.innerHTML = ''; 
+            let posts = typeof getAllPosts === 'function' ? getAllPosts() : [];
+            let tlPosts = posts.filter(p => Object.keys(catLabels).includes(p.category));
+
+            if (filterCategory !== 'all') {
+                tlPosts = tlPosts.filter(p => p.category === filterCategory);
+            }
+
+            if (tlPosts.length === 0) {
+                grid.innerHTML = `<div class="empty-state">Đang đợi các ngòi bút quê hương gửi gắm tác phẩm vào mục này...</div>`;
+                return;
+            }
+
+            tlPosts.forEach(post => {
+                const tag = catLabels[post.category] || 'Tiếng Làng';
+                const excerpt = post.content.replace(/<[^>]*>?/gm, '').substring(0, 120) + '...';
+                const cardHtml = `
+                    <div class="vintage-card">
+                        <div class="vc-meta">
+                            <span class="vc-tag">🏷️ ${tag}</span>
+                            <span class="vc-date">${post.date || ''}</span>
+                        </div>
+                        <a href="#" onclick="if(typeof viewPost==='function') viewPost('${post.id}'); return false;" class="vc-title">${post.title}</a>
+                        <div class="vc-excerpt">${excerpt}</div>
+                        <div><a href="#" onclick="if(typeof viewPost==='function') viewPost('${post.id}'); return false;" class="vc-readmore">Thưởng thức →</a></div>
+                    </div>
+                `;
+                grid.insertAdjacentHTML('beforeend', cardHtml);
+            });
+        }
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                tabs.forEach(t => t.classList.remove('active'));
+                e.target.classList.add('active');
+                const filter = e.target.getAttribute('data-filter');
+                renderPosts(filter);
+                history.pushState(null, null, '#' + filter);
+            });
+        });
+
+        const hash = window.location.hash.substring(1);
+        if (hash && catLabels[hash]) {
+            const targetTab = document.querySelector(`.tl-tab[data-filter="${hash}"]`);
+            if(targetTab) {
+                targetTab.click();
+            } else {
+                renderPosts('all');
+            }
+        } else {
+            renderPosts('all');
+        }
+    });
+
+    // ========================================================
+    // LOGIC SIDEBAR (ĐỒNG BỘ 100% VỚI TRANG CHỦ)
+    // ========================================================
+
+    // 1. Tác Giả Nổi Bật (Tính tự động)
+    (function renderTopAuthor() {
+        const container = document.getElementById('topAuthorContainer');
+        if (!container || typeof getAllPosts !== 'function') return;
+
+        const posts = getAllPosts();
+        const tlCategories = ['tan-man', 'tho', 'am-che', 'giai-thoai', 'kham-pha', 'goc-nhin', 'tieng-lang'];
+        const tlPosts = posts.filter(p => tlCategories.includes(p.category) && p.author && p.author.trim() !== '');
+
+        if (tlPosts.length === 0) {
+            container.innerHTML = `<div style="font-style:italic; font-size:13px; color:var(--ink-4); padding: 10px 0;">Đang chờ các tác giả gửi gắm tâm tình...</div>`;
+            return;
+        }
+
+        const authorCounts = {};
+        tlPosts.forEach(p => {
+            const author = p.author.trim();
+            authorCounts[author] = (authorCounts[author] || 0) + 1;
+        });
+
+        let topAuthor = ''; let maxCount = 0;
+        for (const [author, count] of Object.entries(authorCounts)) {
+            if (count > maxCount) { topAuthor = author; maxCount = count; }
+        }
+
+        const defaultAvatar = `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23A09080'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>`;
+        container.innerHTML = `
+            <div class="author-img" style="background-image: url('${defaultAvatar}'); background-color: #F0EBE3; background-size: 60%; background-repeat: no-repeat;"></div>
+            <div class="author-name">${topAuthor}</div>
+            <div class="author-desc">Cây bút tích cực nhất với ${maxCount} tác phẩm đóng góp.</div>
+        `;
+    })();
+
+    // 2. Form Gửi Bài / Góp Ý
+    document.getElementById('sendFeedbackBtn')?.addEventListener('click', function(e) {
+        e.preventDefault();
+        var name = document.getElementById('feedbackName').value.trim() || 'Ẩn danh';
+        var msg = document.getElementById('feedbackMsg').value.trim();
+        var btn = document.getElementById('sendFeedbackBtn');
+
+        if (!msg) { alert('Vui lòng nhập nội dung tác phẩm hoặc góp ý.'); return; }
+
+        var originalText = btn.innerText;
+        btn.innerText = 'Đang gửi...';
+        btn.disabled = true;
+
+        var fb=JSON.parse(localStorage.getItem('ngocdien_feedbacks')||'[]');
+        fb.unshift({name:name,msg:msg,date:new Date().toLocaleString()});
+        localStorage.setItem('ngocdien_feedbacks',JSON.stringify(fb));
+
+        fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+                access_key: 'ĐẠI_CA_DÁN_MÃ_ACCESS_KEY_VÀO_ĐÂY', 
+                name: name, message: msg,
+                subject: 'Bài viết/Góp ý mới từ ' + name + ' - Tiếng Làng',
+                from_name: 'Cổng thông tin Ngọc Điền'
+            })
+        })
+        .then(async (response) => {
+            if (response.status == 200) {
+                alert('Cảm ơn tác giả ' + name + '! Nội dung đã được gửi đến Ban biên tập.');
+                document.getElementById('feedbackMsg').value = '';
+                document.getElementById('feedbackName').value = '';
+            } else { alert('Có lỗi xảy ra, vui lòng thử lại sau.'); }
+        })
+        .catch(error => { alert('Có lỗi mạng, vui lòng kiểm tra kết nối.'); })
+        .finally(() => { btn.innerText = originalText; btn.disabled = false; });
+    });
+
+    // 3. Xem nhiều nhất (+1000 lượt xem Marketing)
+    (function initTrendingPosts() {
+        const container = document.getElementById('dynamicTrendingPosts');
+        if (!container || typeof getAllPosts !== 'function') return;
+        let posts = getAllPosts();
+        
+        if(posts.length === 0) {
+            container.innerHTML = '<div style="font-size:12px; color:var(--ink-4); padding:10px 0;">Đang cập nhật dữ liệu...</div>'; return;
+        }
+
+        posts = posts.map(p => { p.views = p.views || Math.floor(Math.random() * 50) + 1; return p; });
+        posts.sort((a, b) => b.views - a.views);
+        
+        const top3 = posts.slice(0, 3);
+        let html = '';
+        
+        top3.forEach((p, index) => {
+            const displayViews = p.views + 1000;
+            html += `
+            <div class="trend-item">
+                <span class="trend-num">${index + 1}</span>
+                <div>
+                    <a href="#" onclick="if(typeof viewPost==='function') viewPost('${p.id}'); return false;" class="trend-title">${p.title}</a>
+                    <div class="trend-meta" style="color: var(--red); font-weight: 600;">🔥 ${displayViews.toLocaleString('vi-VN')} lượt xem</div>
+                </div>
+            </div>`;
+        });
+        container.innerHTML = html;
+    })();
+
+    // 4. Thời tiết thời gian thực
+    (async function fetchRealtimeWeather() {
+        const weatherContainer = document.getElementById('realtimeWeather');
+        if (!weatherContainer) return;
+        
+        try {
+            const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=18.6439&longitude=105.6569&current_weather=true');
+            const data = await res.json();
+            const temp = Math.round(data.current_weather.temperature);
+            const code = data.current_weather.weathercode;
+            
+            let icon = '🌤️'; let desc = 'Có mây';
+            if (code === 0) { icon = '☀️'; desc = 'Trời quang đãng'; }
+            else if (code >= 1 && code <= 3) { icon = '⛅'; desc = 'Trời nhiều mây'; }
+            else if (code >= 45 && code <= 48) { icon = '🌫️'; desc = 'Sương mù'; }
+            else if (code >= 51 && code <= 67) { icon = '🌧️'; desc = 'Trời có mưa nhỏ'; }
+            else if (code >= 71 && code <= 82) { icon = '⛈️'; desc = 'Có mưa rào'; }
+            else if (code >= 95) { icon = '🌩️'; desc = 'Mưa dông sấm sét'; }
+
+            weatherContainer.innerHTML = `
+                <div class="weather-row" style="padding: 10px 0;">
+                    <div class="weather-ico">${icon}</div>
+                    <div>
+                        <div class="weather-temp" style="color: var(--red-deep);">${temp}°C</div>
+                        <div class="weather-info" style="font-weight: 500;">${desc}</div>
+                        <div style="font-size: 10.5px; color: var(--ink-4); margin-top:2px;">(Cập nhật thời gian thực)</div>
+                    </div>
+                </div>
+            `;
+        } catch (e) {
+            weatherContainer.innerHTML = `<div style="font-size:12px; color:var(--ink-4); text-align:center; padding: 10px 0;">Đang bảo trì vệ tinh...</div>`;
+        }
+    })();
+
+    // 5. Podcast Sidebar
+    (function initDynamicPodcast() {
+        const container = document.getElementById('tlPodcastSidebar');
+        if (!container || typeof getPostsByCategory !== 'function') return;
+
+        const podcastPosts = getPostsByCategory('podcast').slice(0, 3); 
+        if (podcastPosts.length === 0) {
+            container.innerHTML = `<div style="font-style:italic; font-size:12px; color:var(--ink-4); text-align:center; padding: 10px 0;">Đang cập nhật bản thu...</div>`;
+        } else {
+            let html = '';
+            podcastPosts.forEach(p => {
+                const img = p.image || 'https://via.placeholder.com/50';
+                html += `
+                <a href="podcast.html?id=${p.id}" class="podcast-item">
+                    <div class="podcast-thumb" style="background-image: url('${img}');"></div>
+                    <div class="podcast-info">
+                        <div class="podcast-title">${p.title}</div>
+                        <div style="font-size:11px; color:var(--red); font-weight:700;">▶ Nghe ngay</div>
+                    </div>
+                </a>`;
+            });
+            container.innerHTML = html;
+        }
+    })();
+</script>
+</body>
+</html>
