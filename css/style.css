@@ -1,0 +1,286 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background-color: #F5F5F0;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #1A1A1A;
+    line-height: 1.5;
+}
+.container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.header {
+    background: #FFFFFF;
+    border-bottom: 3px solid #DA251D;
+    padding: 20px 0;
+    margin-bottom: 30px;
+}
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.logo h1 {
+    font-family: 'Times New Roman', serif;
+    font-size: 32px;
+    color: #DA251D;
+}
+.logo p {
+    font-size: 14px;
+    color: #666;
+}
+.search-box {
+    display: flex;
+    border: 1px solid #E0E0E0;
+    border-radius: 30px;
+    overflow: hidden;
+    background: white;
+}
+.search-box input {
+    padding: 10px 15px;
+    border: none;
+    width: 220px;
+    outline: none;
+}
+.search-box button {
+    background: #DA251D;
+    border: none;
+    padding: 0 20px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+.menu-wrapper {
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 32px;
+    border: 1px solid #EAEAEA;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.main-menu {
+    display: inline-flex;
+}
+.main-menu a {
+    display: inline-block;
+    padding: 14px 20px;
+    text-decoration: none;
+    font-weight: 600;
+    color: #1A1A1A;
+    font-size: 14px;
+    border-bottom: 3px solid transparent;
+}
+.main-menu a:hover {
+    color: #DA251D;
+    border-bottom-color: #DA251D;
+}
+.grid-main {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 32px;
+    margin-bottom: 48px;
+}
+.card {
+    background: white;
+    border-radius: 20px;
+    border: 1px solid #EAEAEA;
+    overflow: hidden;
+    margin-bottom: 24px;
+    transition: 0.2s;
+}
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+.card-img {
+    height: 200px;
+    background: #E5E7EB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+}
+.card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.card-content {
+    padding: 20px;
+}
+.card-content h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+.meta {
+    font-size: 12px;
+    color: #9CA3AF;
+    margin-bottom: 12px;
+}
+.read-more {
+    color: #DA251D;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    gap: 6px;
+}
+.sidebar-block {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    border: 1px solid #EAEAEA;
+    margin-bottom: 28px;
+}
+.block-title {
+    font-size: 20px;
+    font-weight: 700;
+    border-bottom: 2px solid #F0F0F0;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+}
+.admin-phone {
+    background: #FEF2F2;
+    padding: 12px;
+    border-radius: 40px;
+    text-align: center;
+    margin-top: 16px;
+}
+input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 16px;
+    border: 1px solid #E5E7EB;
+    margin-bottom: 12px;
+}
+button {
+    background: #DA251D;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 40px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+}
+.footer {
+    background: #1F2937;
+    color: #9CA3AF;
+    margin-top: 60px;
+    padding: 48px 0 24px;
+}
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 40px;
+    margin-bottom: 32px;
+}
+.footer-col h4 {
+    color: white;
+    margin-bottom: 16px;
+}
+.copyright {
+    text-align: center;
+    border-top: 1px solid #374151;
+    padding-top: 24px;
+}
+@media (max-width: 900px) {
+    .grid-main {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========================================== */
+/* PHẦN THÊM MỚI BÊN DƯỚI (KHÔNG CHẠM VÀO CODE TRÊN) */
+/* ========================================== */
+
+/* 1. Ẩn thanh cuộn ngang cho thanh menu (vuốt vẫn mượt mà) */
+.menu-wrapper {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.menu-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+/* 2. Cân chỉnh lại giao diện riêng cho Màn hình điện thoại */
+@media (max-width: 900px) {
+    /* Ép thanh tìm kiếm dãn đầy 100% chiều ngang màn hình */
+    .search-box {
+        width: 100%;
+        display: flex;
+    }
+    .search-box input {
+        flex: 1;
+        width: auto;
+    }
+    .search-box button {
+        padding: 0 25px;
+    }
+
+    /* Căn giữa Logo (Hình tròn đỏ) và cụm chữ theo chiều dọc */
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        width: 100%;
+    }
+    
+    /* Gộp chữ Xóm Ngọc Điền thành một khối để không bị xô lệch */
+    .logo > div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+
+/* ========================================== */
+/* BƯỚC 1: CSS CHO MODAL ĐỌC BÀI VIẾT (MỚI THÊM) */
+/* ========================================== */
+
+/* 3. CSS cho Modal Đọc Bài Viết (Chuẩn báo chí Việt Nam) */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 9999; padding: 20px;
+}
+.modal-content {
+    background: white;
+    width: 100%; max-width: 800px; max-height: 90vh;
+    border-radius: 12px; padding: 40px;
+    overflow-y: auto; position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+.close-btn {
+    position: absolute; top: 15px; right: 25px;
+    font-size: 32px; font-weight: bold; color: #DA251D;
+    cursor: pointer; transition: 0.2s;
+}
+.close-btn:hover { color: #000; }
+.modal-title {
+    font-family: 'Times New Roman', serif; font-size: 28px; 
+    color: #DA251D; margin-bottom: 15px; padding-right: 30px;
+}
+.modal-meta {
+    font-size: 14px; color: #666; margin-bottom: 25px;
+    border-bottom: 1px solid #EEE; padding-bottom: 15px;
+}
+.modal-img {
+    width: 100%; max-height: 450px; object-fit: contain;
+    border-radius: 8px; margin-bottom: 25px; background: #f9f9f9;
+}
+/* THIẾT LẬP CĂN ĐỀU 2 BÊN VÀ KHOẢNG CÁCH DÒNG */
+.modal-body {
+    font-size: 17px; 
+    line-height: 1.7; /* Khoảng cách dòng chuẩn dễ đọc */
+    color: #222;
+    text-align: justify; /* Lệnh căn đều 2 lề theo chuẩn VN */
+    font-family: 'Inter', sans-serif;
+}
