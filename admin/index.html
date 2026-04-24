@@ -85,10 +85,11 @@
     </form>
     <div id="message"></div>
     <hr>
-    <h3>📋 Bài viết gần đây</h3>
+    <h3>📋 Bài viết gần đây (Trên Đám mây)</h3>
     <div id="postList"></div>
-    <p><a href="../index.html" target="_blank">🔗 Xem trang chủ</a> | <a href="#" onclick="exportData()">💾 Xuất backup</a> | <a href="#" onclick="importData()">📂 Nhập backup</a></p>
+    <p><a href="../index.html" target="_blank">🔗 Xem trang chủ</a> | <a href="#" onclick="exportData()">💾 Tải sao lưu</a> | <a href="#" onclick="importData()">📂 Nhập backup</a></p>
 </div>
+
 <script src="../js/main.js"></script>
 <script>
     document.getElementById('imageFile').addEventListener('change', function(e) {
@@ -104,72 +105,111 @@
     });
 
     // ==========================================
-    // BỔ SUNG XỬ LÝ LƯU BÀI SỬA VÀ ĐĂNG BÀI MỚI
+    // LOGIC ĐĂNG BÀI VÀ SỬA BÀI LÊN SUPABASE
     // ==========================================
-    document.getElementById('postForm').addEventListener('submit', function(e) {
+    document.getElementById('postForm').addEventListener('submit', async function(e) {
         e.preventDefault();
+        
+        let btn = document.querySelector('#postForm button[type="submit"]');
+        let originalText = btn.innerHTML;
+        btn.innerHTML = 'Đang đẩy lên Đám mây...';
+        btn.disabled = true;
+
         let title = document.getElementById('title').value;
         let category = document.getElementById('category').value;
         let image = document.getElementById('imageUrl').value;
         let video = document.getElementById('videoUrl').value;
-        let audioUrl = document.getElementById('audioUrl').value; // Đã hứng biến Audio
+        let audioUrl = document.getElementById('audioUrl').value;
         let content = document.getElementById('content').value;
         let author = document.getElementById('author').value;
         
-        if (!title || !content) { alert('Vui lòng nhập đủ tiêu đề và nội dung'); return; }
+        if (!title || !content) { alert('Vui lòng nhập đủ tiêu đề và nội dung'); btn.innerHTML = originalText; btn.disabled = false; return; }
         
-        let posts = getAllPosts();
-        
-        // NẾU ĐANG TRONG TRẠNG THÁI SỬA BÀI
-        if (window.currentEditId) {
-            let postIndex = posts.findIndex(p => p.id == window.currentEditId);
-            if(postIndex !== -1) {
-                posts[postIndex].title = title;
-                posts[postIndex].category = category;
-                posts[postIndex].image = image;
-                posts[postIndex].video = video;
-                posts[postIndex].audioUrl = audioUrl; // Cập nhật biến Audio
-                posts[postIndex].content = content;
-                posts[postIndex].author = author;
-                localStorage.setItem('ngocdien_posts', JSON.stringify(posts));
+        let postData = { title, category, image, video, audioUrl, content, author };
+
+        try {
+            // NẾU ĐANG TRONG TRẠNG THÁI SỬA BÀI
+            if (window.currentEditId) {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/posts?id=eq.${window.currentEditId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify(postData)
+                });
+
+                if (!response.ok) throw new Error("Lỗi khi cập nhật");
+                
                 document.getElementById('message').innerHTML = '<div class="success" style="color:#FF8C00;">✅ Đã cập nhật bài viết thành công!</div>';
+                window.currentEditId = null;
+                btn.innerHTML = 'Đăng bài';
+                btn.style.background = '#DA251D';
+
+            } else {
+                // NẾU LÀ ĐĂNG BÀI MỚI (Tự sinh ngày tháng và mặc định 0 views)
+                postData.date = new Date().toLocaleDateString('vi-VN');
+                postData.views = 0;
+
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/posts`, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify(postData)
+                });
+
+                if (!response.ok) throw new Error("Lỗi khi đăng bài mới");
+                document.getElementById('message').innerHTML = '<div class="success">✅ Đã đăng bài lên Đám mây thành công!</div>';
             }
-            // Trả lại giao diện Đăng bài mới ban đầu
-            window.currentEditId = null;
-            let btn = document.querySelector('#postForm button[type="submit"]');
-            btn.innerHTML = 'Đăng bài';
-            btn.style.background = '#DA251D';
-        } else {
-            // NẾU LÀ ĐĂNG BÀI MỚI
-            let post = { title, category, image, video, audioUrl, content, author }; // Đưa Audio vào CSDL
-            savePost(post);
-            document.getElementById('message').innerHTML = '<div class="success">✅ Đã đăng bài thành công!</div>';
+            
+            // Xóa trắng form sau khi lưu thành công
+            document.getElementById('postForm').reset();
+            document.getElementById('imagePreview').innerHTML = '';
+            
+            // Tải lại danh sách bài viết từ Đám mây
+            displayAdminPosts();
+            
+        } catch (error) {
+            alert("Lỗi kết nối Supabase: " + error.message);
+        } finally {
+            if (!window.currentEditId) {
+                btn.innerHTML = 'Đăng bài';
+            }
+            btn.disabled = false;
         }
-        
-        // Reset form sau khi lưu
-        document.getElementById('postForm').reset();
-        document.getElementById('imagePreview').innerHTML = '';
-        displayPosts();
-        setTimeout(() => document.getElementById('message').innerHTML = '', 3000);
+
+        setTimeout(() => document.getElementById('message').innerHTML = '', 4000);
     });
 
     // ==========================================
-    // BỔ SUNG HIỂN THỊ NÚT SỬA VÀ NÚT XÓA BÀI VIẾT
+    // LẤY DANH SÁCH BÀI TỪ SUPABASE ĐỂ HIỂN THỊ
     // ==========================================
-    function displayPosts() {
-        let posts = getAllPosts();
+    async function displayAdminPosts() {
         let container = document.getElementById('postList');
-        if (posts.length === 0) { container.innerHTML = '<p>Chưa có bài.</p>'; return; }
+        container.innerHTML = '<p>Đang tải dữ liệu từ Đám mây...</p>';
+        
+        // Gọi hàm từ main.js để kéo dữ liệu mới nhất
+        let posts = await fetchPostsFromSupabase();
+        
+        if (posts.length === 0) { container.innerHTML = '<p>Kho Đám mây chưa có bài nào.</p>'; return; }
+        
         let html = '<ul style="list-style:none; padding:0;">';
-        posts.slice(0, 15).forEach(p => {
+        posts.slice(0, 20).forEach(p => {
+            let plainContent = p.content ? p.content.replace(/<\/?[^>]+(>|$)/g, "").substring(0,80) : "";
             html += `<li style="border-bottom:1px solid #eee; padding:15px 0; display:flex; justify-content:space-between; align-items:center;">
                 <div style="flex: 1; padding-right: 15px;">
-                    <strong>${p.title}</strong> <span style="color:#DA251D">(${p.category})</span> - ${p.date}<br>
-                    <small style="color:#666;">${p.content.replace(/<\/?[^>]+(>|$)/g, "").substring(0,80)}...</small>
+                    <strong>${p.title}</strong> <span style="color:#DA251D">(${p.category})</span> - ${p.date || ''}<br>
+                    <small style="color:#666;">${plainContent}...</small>
                 </div>
                 <div style="min-width: 140px; text-align:right;">
-                    <button type="button" onclick="editPost(${p.id})" style="background:#FF8C00; padding:8px 15px; border-radius:8px; font-size:13px; width:auto; display:inline-block; margin-right:5px;">Sửa</button>
-                    <button type="button" onclick="deletePost(${p.id})" style="background:#f44336; padding:8px 15px; border-radius:8px; font-size:13px; width:auto; display:inline-block;">Xóa</button>
+                    <button type="button" onclick="editPost(${p.id})" style="background:#FF8C00; color:white; border:none; cursor:pointer; padding:8px 15px; border-radius:8px; font-size:13px; width:auto; display:inline-block; margin-right:5px;">Sửa</button>
+                    <button type="button" onclick="deletePostAdmin(${p.id})" style="background:#f44336; color:white; border:none; cursor:pointer; padding:8px 15px; border-radius:8px; font-size:13px; width:auto; display:inline-block;">Xóa</button>
                 </div>
             </li>`;
         });
@@ -177,35 +217,51 @@
         container.innerHTML = html;
     }
 
+    // Hàm xóa bài viết thiết kế riêng cho Trang Admin
+    window.deletePostAdmin = async function(id) {
+        if (confirm('Anh có chắc chắn muốn xóa bài viết này khỏi Đám mây không? Hành động này không thể hoàn tác!')) {
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/posts?id=eq.${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`
+                    }
+                });
+                if (!response.ok) throw new Error("Xóa thất bại");
+                
+                alert('Đã xóa bài viết thành công!');
+                displayAdminPosts(); // Tải lại danh sách
+            } catch (error) {
+                alert("Có lỗi khi xóa bài: " + error.message);
+            }
+        }
+    };
+
+    // ==========================================
+    // SAO LƯU DỮ LIỆU
+    // ==========================================
     function exportData() {
-        let data = localStorage.getItem('ngocdien_posts');
+        let posts = getAllPosts(); // Lấy từ bộ nhớ globalPosts của main.js
+        if(posts.length === 0) { alert("Chưa có dữ liệu để tải về."); return; }
+        
+        let data = JSON.stringify(posts);
         let blob = new Blob([data], {type: 'application/json'});
         let a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        a.download = 'ngocdien_backup.json';
+        a.download = 'ngocdien_backup_cloud.json';
         a.click();
-        alert('Đã xuất backup.');
+        alert('Đã tải bản sao lưu từ Đám mây về máy tính thành công.');
     }
+
     function importData() {
-        let input = document.createElement('input');
-        input.type = 'file';
-        input.accept = 'application/json';
-        input.onchange = function(e) {
-            let file = e.target.files[0];
-            let reader = new FileReader();
-            reader.onload = function(ev) {
-                try {
-                    let posts = JSON.parse(ev.target.result);
-                    localStorage.setItem('ngocdien_posts', JSON.stringify(posts));
-                    alert('Nhập backup thành công!');
-                    displayPosts();
-                } catch(err) { alert('File không hợp lệ'); }
-            };
-            reader.readAsText(file);
-        };
-        input.click();
+        alert('Hệ thống hiện đang sử dụng Đám mây Supabase để đảm bảo an toàn. Tính năng nhập file tạm thời khóa để tránh ghi đè dữ liệu trực tuyến của người khác.');
     }
-    displayPosts();
+
+    // Khi vừa mở trang Quản trị, tự động gọi dữ liệu từ Đám mây về hiển thị
+    window.onload = function() {
+        displayAdminPosts();
+    };
 </script>
 </body>
 </html>
