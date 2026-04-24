@@ -1,61 +1,231 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Ngọc Điền - Lịch sử xóm</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700&family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Lễ hội truyền thống | Xóm Ngọc Điền</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,600&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+    /* TRANG TRÍ RIÊNG CHO PHẦN TIÊU ĐỀ TRANG LỄ HỘI */
+    .page-header { background: var(--white); padding: 40px 0; text-align: center; border-bottom: 1px solid var(--border-2); margin-bottom: 40px; }
+    .page-title { font-family: var(--ff-head); font-size: 32px; color: var(--red-deep); margin-bottom: 10px; font-weight: 800; }
+    .page-desc { font-family: var(--ff-serif); color: var(--ink-3); font-style: italic; max-width: 700px; margin: 0 auto; line-height: 1.6; }
+</style>
 </head>
 <body>
-<div class="header">
-    <div class="container header-inner">
-        <div class="logo">
-            <a href="index.html" style="display: block; text-decoration: none; line-height: 0;">
-                <img src="logo-text.png" alt="Xóm Ngọc Điền" style="height: 52px; width: auto; display: block;">
-            </a>
-        </div>
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Tìm kiếm...">
-            <button id="searchBtn">Tìm</button>
-        </div>
+
+<div class="topbar">
+  <div class="container topbar-inner">
+    <div class="topbar-left">
+      <span class="date" id="todayDate"></span>
+      <span class="topbar-sep">|</span>
+      <span>📍 Hưng Nguyên – Nghệ An</span>
+    </div>
+    <div class="topbar-right">
+      <a href="admin/index.html">⚙ Quản trị</a>
+      <a href="gop-y.html">✉ Góp ý</a>
+    </div>
+  </div>
+</div>
+
+<div class="masthead">
+  <div class="container masthead-inner">
+    <div class="logo">
+      <a href="index.html" style="display: block; text-decoration: none; line-height: 0;">
+        <img src="logo-text.png" alt="Xóm Ngọc Điền" style="height: 58px; width: auto; display: block;">
+      </a>
+    </div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Tìm bài viết, tư liệu...">
+      <button id="searchBtn">🔍 Tìm kiếm</button>
+    </div>
+  </div>
+</div>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <button class="nav-btn" id="navBtnLeft">❮</button>
+    <div class="nav-inner" id="navInner">
+      <a href="index.html">Trang chủ</a>
+      <a href="gioi-thieu.html">Giới thiệu</a>
+      <a href="nguoi-ngoc-dien.html">Người Ngọc Điền</a>
+      <a href="lich-su.html">Lịch sử</a>
+      <a href="tin-tuc.html">Tin tức</a>
+      <a href="le-hoi.html" class="active">Lễ hội</a>
+      <a href="van-chuong.html">Tiếng làng</a>
+      <a href="huong-uoc.html">Hương ước 1883</a>
+      <a href="di-tich.html">Di tích</a>
+      <a href="chinh-sach.html">Chính sách</a>
+      <a href="chuyen-doi-so.html">Chuyển đổi số</a>
+      <a href="thu-vien.html">Thư viện</a>
+      <a href="ban-do.html">Bản đồ</a>
+      <a href="admin/index.html" class="nav-admin">⚙ Quản trị</a>
+    </div>
+    <button class="nav-btn" id="navBtnRight">❯</button>
+  </div>
+</nav>
+
+<div class="page-header">
+    <div class="container">
+        <h1 class="page-title">🎉 Lễ hội truyền thống</h1>
+        <p class="page-desc">Nơi lưu giữ những nét đẹp văn hóa tín ngưỡng, phong tục tập quán và các hoạt động gắn kết cộng đồng đặc sắc của bà con xóm Ngọc Điền.</p>
     </div>
 </div>
 
-<div class="container">
+<div class="container page-layout">
     
-    <h1 style="color:#DA251D; margin: 20px 0;">📜 Lễ hội</h1>
-    <div id="postsContainer" class="news-grid"></div>
+    <div id="postsContainer">
+        <div style="text-align: center; padding: 50px 0; color: var(--ink-4); font-style: italic;">
+            <div style="font-size: 40px; margin-bottom: 10px;">⏳</div>
+            Đang tải dữ liệu Lễ hội từ Đám mây...
+        </div>
+    </div>
+
+    <aside class="sidebar">
+
+        <div class="sb-block">
+            <div class="sb-head"><div class="sb-head-bar"></div><span class="sb-head-title">💬 Góp ý & Phản ánh</span></div>
+            <div class="sb-body">
+                <input class="sb-input" type="text" id="feedbackName" placeholder="Họ tên (hoặc ẩn danh)">
+                <textarea class="sb-textarea" id="feedbackMsg" rows="3" placeholder="Nội dung góp ý, hiến kế..."></textarea>
+                <button class="btn-submit" id="sendFeedbackBtn">Gửi ý kiến</button>
+                <div class="admin-phone-bar">📞 Quản trị viên: 0914 58 75 75</div>
+            </div>
+        </div>
+
+        <div class="sb-block">
+            <div class="sb-head"><div class="sb-head-bar" style="background:var(--red);"></div><span class="sb-head-title">📈 Xem nhiều nhất</span></div>
+            <div class="sb-body" id="dynamicTrendingPosts" style="padding-top: 5px;">
+                <div style="font-size:12px; color:var(--ink-4); text-align:center;">Đang tải...</div>
+            </div>
+        </div>
+
+        <div class="sb-block">
+            <div class="sb-head"><div class="sb-head-bar" style="background:var(--gold);"></div><span class="sb-head-title">📋 Chính sách & Dịch vụ số</span></div>
+            <div class="sb-body">
+                <a href="https://vneid.gov.vn/" target="_blank" class="policy-item"><div class="policy-ico">📱</div><div><div class="policy-text">Cài đặt VNeID</div><div class="policy-sub">Ứng dụng định danh điện tử</div></div></a>
+                <a href="https://dichvucong.gov.vn/" target="_blank" class="policy-item"><div class="policy-ico">🏛️</div><div><div class="policy-text">Dịch vụ công trực tuyến</div><div class="policy-sub">Cổng DVC Quốc gia</div></div></a>
+                <a href="https://hungnguyen.nghean.gov.vn/" target="_blank" class="policy-item"><div class="policy-ico">🌐</div><div><div class="policy-text">Cổng TTĐT Hưng Nguyên</div><div class="policy-sub">Trang tin chính thức của Huyện</div></div></a>
+            </div>
+        </div>
+
+        <div class="sb-block">
+            <div class="sb-head"><div class="sb-head-bar"></div><span class="sb-head-title">📚 Thư viện & Tư liệu</span></div>
+            <div class="sb-body">
+                <a href="thu-vien.html" class="lib-item"><span>📸</span> Ảnh tư liệu xóm xưa</a>
+                <a href="https://maps.app.goo.gl/4v2sMNmqP3CVYZBC9?g_st=ac" target="_blank" class="lib-item"><span>🗺️</span> Bản đồ số Ngọc Điền</a>
+                <a href="thu-vien.html" class="lib-item"><span>🎬</span> Video tư liệu làng xóm</a>
+            </div>
+        </div>
+
+        <div class="sb-block">
+            <div class="sb-head"><div class="sb-head-bar" style="background:#0A8F4B;"></div><span class="sb-head-title">📱 Kết nối Zalo xóm</span></div>
+            <div class="sb-body">
+                <div class="zalo-qr" style="padding: 8px;">
+                    <img src="zalo-qr.jpg" alt="Mã QR Zalo" style="width: 100%; max-width: 180px; height: auto; border-radius: 8px; margin: 0 auto; display: block;">
+                </div>
+                <a href="https://zalo.me/g/i8vuebonziplqy2c06ux" target="_blank" class="btn-zalo">Tham gia nhóm Zalo →</a>
+            </div>
+        </div>
+
+    </aside>
 </div>
 
 <div class="footer">
-    <div class="container">
-        <div class="footer-grid">
-            <div class="footer-col"><h4>Giới thiệu</h4><p>Về xóm Ngọc Điền</p><p>Lịch sử</p><p>Ban quản trị</p></div>
-            <div class="footer-col"><h4>Lưu trữ</h4><p>Hương ước 1883</p><p>Tư liệu liệt sỹ</p><p>Bản đồ</p></div>
-            <div class="footer-col"><h4>Kết nối</h4><p>Zalo: XomNgocDien</p><p>Facebook: @ngocdien</p><p>Hotline: 0914 58 75 75</p></div>
-            <div class="footer-col"><h4>Hỗ trợ</h4><p>Hướng dẫn</p><p>Góp ý</p><p>Điều khoản</p></div>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html"><img src="logo-text.png" alt="Xóm Ngọc Điền"></a>
+        <p>Cổng thông tin cộng đồng phi lợi nhuận, lưu giữ ký ức văn hóa và thúc đẩy chuyển đổi số nông thôn vùng Hưng Nguyên – Nghệ An.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Về chúng tôi</h4>
+          <a href="gioi-thieu.html">Giới thiệu xóm</a>
+          <a href="lich-su.html">Lịch sử hình thành</a>
+          <a href="admin/index.html">Ban quản trị</a>
         </div>
-        <div class="copyright">© 2026 Xóm Ngọc Điền - Hưng Nguyên - Nghệ An. Xây dựng bởi ❤️ Thái Lão.</div>
+        <div class="footer-col">
+          <h4>Kho tư liệu</h4>
+          <a href="huong-uoc.html">Hương ước 1883</a>
+          <a href="nguoi-ngoc-dien.html">Tư liệu liệt sỹ</a>
+          <a href="thu-vien.html">Thư viện ảnh</a>
+        </div>
+        <div class="footer-col">
+          <h4>Kết nối</h4>
+          <a href="#">Zalo: XomNgocDien</a>
+          <a href="#">Facebook: @ngocdienque</a>
+        </div>
+      </div>
     </div>
+    <div style="border-top: 1px solid #2D2620; margin-bottom: 20px;"></div>
+    <div style="text-align: center; font-size: 12px; color: #5A4E42;">
+      © 2026 Xóm Ngọc Điền · Nghệ An | Xây dựng bởi ❤️ Thái Lão
+    </div>
+  </div>
 </div>
 
-<script src="js/main.js"></script>
+<script src="js/main.js?v=1"></script>
 <script>
-    let posts = getPostsByCategory('le-hoi');
-    renderPosts('postsContainer', posts, 50);
+    // Cập nhật ngày giờ
+    function updateClock() {
+        var now = new Date();
+        var clockElement = document.getElementById('todayDate');
+        if(clockElement) clockElement.textContent = now.toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' });
+    }
+    updateClock(); setInterval(updateClock, 1000);
 
-    // Tìm kiếm (dùng chung)
-    document.getElementById('searchBtn')?.addEventListener('click', function() {
-        let kw = document.getElementById('searchInput').value.toLowerCase();
-        if (!kw) return;
-        let all = getAllPosts();
-        let res = all.filter(p => p.title.toLowerCase().includes(kw) || p.content.toLowerCase().includes(kw));
-        if (res.length === 0) alert('Không tìm thấy.');
-        else alert(`Tìm thấy ${res.length} bài:\n${res.map(p => p.title).join('\n')}`);
-    });
-    document.getElementById('searchInput')?.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') document.getElementById('searchBtn').click();
+    // THANH NAVBAR CHẠY TỰ ĐỘNG
+    (function initNavAutoScroll() {
+        const navInner = document.getElementById('navInner');
+        const btnLeft = document.getElementById('navBtnLeft');
+        const btnRight = document.getElementById('navBtnRight');
+        let scrollInterval; let isHovered = false; let isManualScrolling = false;
+        function startScroll() {
+            if (scrollInterval) clearInterval(scrollInterval);
+            scrollInterval = setInterval(() => {
+                if (!isHovered && !isManualScrolling && navInner.scrollWidth > navInner.clientWidth) {
+                    navInner.scrollLeft += 1;
+                    if (navInner.scrollLeft >= navInner.scrollWidth - navInner.clientWidth - 1) navInner.scrollLeft = 0;
+                }
+            }, 30); 
+        }
+        navInner.addEventListener('mouseenter', () => isHovered = true);
+        navInner.addEventListener('mouseleave', () => isHovered = false);
+        navInner.addEventListener('touchstart', () => isHovered = true);
+        navInner.addEventListener('touchend', () => { setTimeout(() => isHovered = false, 2000); });
+        btnLeft.addEventListener('click', () => { isManualScrolling = true; navInner.scrollBy({ left: -200, behavior: 'smooth' }); setTimeout(() => isManualScrolling = false, 500); });
+        btnRight.addEventListener('click', () => { isManualScrolling = true; navInner.scrollBy({ left: 200, behavior: 'smooth' }); setTimeout(() => isManualScrolling = false, 500); });
+        startScroll();
+    })();
+
+    // LỆNH HIỂN THỊ BÀI VIẾT LỄ HỘI
+    window.displayPosts = function() {
+        // Lấy danh sách bài thuộc chuyên mục "le-hoi"
+        let posts = typeof getPostsByCategory === 'function' ? getPostsByCategory('le-hoi') : [];
+        
+        // Đưa vào máy in (hàm renderPosts nằm trong main.js)
+        if (typeof renderPosts === 'function') {
+            renderPosts('postsContainer', posts);
+        } else {
+            document.getElementById('postsContainer').innerHTML = "<p>Lỗi hệ thống: Không tìm thấy máy in bài.</p>";
+        }
+    };
+
+    // Đánh thức hệ thống nếu dữ liệu đã tải xong (phòng hờ load trễ)
+    if (typeof getAllPosts === 'function' && getAllPosts().length > 0) {
+        displayPosts();
+    }
+
+    // Logic nút Tìm kiếm
+    document.getElementById('searchBtn')?.addEventListener('click',function(){
+        var kw=document.getElementById('searchInput').value.toLowerCase().trim();
+        if(!kw) return;
+        var posts = typeof getAllPosts === 'function' ? getAllPosts() : [];
+        var res=posts.filter(function(p){return p.title.toLowerCase().includes(kw)||p.content.toLowerCase().includes(kw);});
+        alert(res.length?'Tìm thấy '+res.length+' bài:\n'+res.map(function(p){return p.title;}).join('\n'):'Không tìm thấy kết quả nào.');
     });
 </script>
 </body>
