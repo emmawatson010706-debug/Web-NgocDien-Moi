@@ -679,9 +679,6 @@ img { max-width: 100%; display: block; }
 
 <script src="js/main.js?v=999"></script>
 <script>
-  // 1. DỌN SẠCH RÁC CŨ TRONG BỘ NHỚ MÁY
-  
-
   function updateClock() {
     var now = new Date();
     var optionsDate = { timeZone: 'Asia/Ho_Chi_Minh', weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -691,7 +688,7 @@ img { max-width: 100%; display: block; }
   }
   updateClock(); setInterval(updateClock, 1000);
 
-  // LOGIC NAVBAR CHẠY TỰ ĐỘNG & NÚT GẠT (Chạy ngay không cần đợi Supabase)
+  // LOGIC NAVBAR CHẠY TỰ ĐỘNG & NÚT GẠT
   (function initNavAutoScroll() {
       const navInner = document.getElementById('navInner');
       const btnLeft = document.getElementById('navBtnLeft');
@@ -736,8 +733,7 @@ img { max-width: 100%; display: block; }
       startScroll();
   })();
 
-  // 2. MỞ KHÓA CÁC HÀM VẼ ĐỂ MAIN.JS GỌI KHI SUPABASE ĐÃ SẴN SÀNG
-
+  // CÁC HÀM VẼ ĐƯỢC MAIN.JS GỌI
   window.initDynamicTicker = function() {
       const tickerContainer = document.getElementById('dynamicTickerItems');
       if (!tickerContainer || typeof getPostsByCategory !== 'function') return;
@@ -765,7 +761,6 @@ img { max-width: 100%; display: block; }
           'chuyen-doi-so': 'Chuyển đổi số', 'thu-vien': 'Thư viện', 'ban-do': 'Bản đồ', 'podcast': 'Podcast'
       };
       
-      // Xóa interval cũ nếu main.js gọi lại nhiều lần
       if (window.featuredNewsInterval) clearInterval(window.featuredNewsInterval);
 
       function renderFeaturedNews() {
@@ -879,7 +874,7 @@ img { max-width: 100%; display: block; }
       container.innerHTML = html;
   };
 
-  // LOGIC LẤY THỜI TIẾT HƯNG NGUYÊN THEO THỜI GIAN THỰC (Không cần đợi Supabase)
+  // LOGIC LẤY THỜI TIẾT HƯNG NGUYÊN
   (async function fetchRealtimeWeather() {
       const weatherContainer = document.getElementById('realtimeWeather');
       if (!weatherContainer) return;
@@ -924,37 +919,56 @@ img { max-width: 100%; display: block; }
   });
   document.getElementById('searchInput')?.addEventListener('keypress',function(e){if(e.key==='Enter') document.getElementById('searchBtn').click();});
 
-  // LOGIC GỬI GÓP Ý CHUYỂN THẲNG QUA ZALO CÁ NHÂN
-  document.getElementById('sendFeedbackBtn')?.addEventListener('click', function(e) {
+  // ==========================================
+  // LOGIC GỬI GÓP Ý THẲNG VÀO HÒM THƯ SUPABASE
+  // ==========================================
+  document.getElementById('sendFeedbackBtn')?.addEventListener('click', async function(e) {
       e.preventDefault();
-      var name = document.getElementById('feedbackName').value.trim() || 'Một người dân';
+      var name = document.getElementById('feedbackName').value.trim() || 'Dân làng ẩn danh';
       var msg = document.getElementById('feedbackMsg').value.trim();
-
-      // Link Zalo cá nhân của đại ca
-      var zaloLink = 'https://zalo.me/0914587575';
+      var btn = document.getElementById('sendFeedbackBtn');
 
       if (!msg) { 
-          // Nếu bà con lười gõ trên web mà bấm gửi luôn -> Mở Zalo cho bà con tự chat
-          window.open(zaloLink, '_blank'); 
+          alert("Bà con vui lòng nhập nội dung góp ý trước khi gửi nhé!"); 
           return; 
       }
 
-      // Gom chữ lại cho đẹp
-      var fullMessage = "Góp ý từ " + name + ":\n" + msg;
-      
-      // Tuyệt chiêu: Copy sẵn nội dung bà con vừa gõ vào bộ nhớ máy
-      navigator.clipboard.writeText(fullMessage).then(function() {
-          alert("✅ Đã copy nội dung!\n\nHệ thống sẽ mở Zalo của Admin (0914 58 75 75).\nBà con chỉ cần bấm DÁN (Paste) vào khung chat và GỬI nhé!");
-          window.open(zaloLink, '_blank');
-      }).catch(function() {
-          // Đề phòng điện thoại nào cùi bắp chặn copy thì vẫn mở Zalo
-          alert("Hệ thống sẽ chuyển sang Zalo của Admin.\nBà con vui lòng gõ lại nội dung để gửi cho Ban quản trị nhé!");
-          window.open(zaloLink, '_blank');
-      });
-      
-      // Xóa trắng ô nhập trên web cho gọn gàng
-      document.getElementById('feedbackMsg').value = '';
-      document.getElementById('feedbackName').value = '';
+      let originalText = btn.innerHTML;
+      btn.innerHTML = 'Đang gửi thư...';
+      btn.disabled = true;
+
+      try {
+          const response = await fetch(`${SUPABASE_URL}/rest/v1/hom_thu_cho`, {
+              method: 'POST',
+              headers: {
+                  'apikey': SUPABASE_KEY,
+                  'Authorization': `Bearer ${SUPABASE_KEY}`,
+                  'Content-Type': 'application/json',
+                  'Prefer': 'return=minimal'
+              },
+              body: JSON.stringify({
+                  nguoi_gui: name,
+                  sdt: '', // Form trang chủ chưa có ô SĐT nên để trống
+                  chuyen_muc: 'gop-y', // Đánh dấu đây là thư Góp ý
+                  noi_dung: msg
+              })
+          });
+
+          if (!response.ok) throw new Error("Supabase từ chối nhận thư");
+
+          alert("✅ Cảm ơn bà con! Thư góp ý đã được gửi thẳng vào Hòm thư mật của Admin thành công.");
+          
+          // Gửi xong thì xóa trắng ô chữ cho đẹp
+          document.getElementById('feedbackName').value = '';
+          document.getElementById('feedbackMsg').value = '';
+          
+      } catch (error) {
+          alert("❌ Có lỗi xảy ra, đường truyền lên Đám mây đang nghẽn. Vui lòng thử lại sau.");
+          console.error("Lỗi gửi thư:", error);
+      } finally {
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+      }
   });
 </script>
 </body>
