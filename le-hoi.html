@@ -6,12 +6,168 @@
 <title>Lễ hội truyền thống | Xóm Ngọc Điền</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,600&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+
 <style>
-    /* TRANG TRÍ RIÊNG CHO PHẦN TIÊU ĐỀ TRANG LỄ HỘI */
-    .page-header { background: var(--white); padding: 40px 0; text-align: center; border-bottom: 1px solid var(--border-2); margin-bottom: 40px; }
-    .page-title { font-family: var(--ff-head); font-size: 32px; color: var(--red-deep); margin-bottom: 10px; font-weight: 800; }
-    .page-desc { font-family: var(--ff-serif); color: var(--ink-3); font-style: italic; max-width: 700px; margin: 0 auto; line-height: 1.6; }
+/* ═══════════════════════════════════════
+   DESIGN TOKENS ĐỒNG BỘ TOÀN HỆ THỐNG
+═══════════════════════════════════════ */
+:root {
+  --red:        #C0231A;
+  --red-deep:   #7A1410;
+  --red-pale:   #FAECEA;
+  --gold:       #B8882A;
+  --gold-light: #F9F1E1;
+  --ink:        #181410;
+  --ink-2:      #332A1E;
+  --ink-3:      #5C4F3E;
+  --ink-4:      #8A7B6A;
+  --cream:      #F8F5F0;
+  --white:      #FFFFFF;
+  --border:     #DDD5C8;
+  --border-2:   #EAE4DC;
+
+  --ff-head:    'Playfair Display', Georgia, serif;
+  --ff-serif:   'Lora', Georgia, serif;
+  --ff-sans:    'Be Vietnam Pro', sans-serif;
+  
+  --r-xs: 6px;
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 20px;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body { background: var(--cream); font-family: var(--ff-sans); color: var(--ink); line-height: 1.6; font-size: 15px; }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+.container { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+
+/* HEADER & NAVBAR CHUẨN */
+.topbar { background: var(--ink); padding: 7px 0; font-size: 12px; color: #8A7B6A; }
+.topbar-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
+.topbar-left { display: flex; align-items: center; gap: 16px; }
+.topbar-sep { color: #3D3020; }
+.topbar-right { display: flex; gap: 16px; }
+.topbar a { color: #A09080; transition: color .15s; }
+.topbar a:hover { color: var(--gold); }
+
+.masthead { background: var(--white); border-bottom: 1px solid var(--border-2); padding: 18px 0 14px; }
+.masthead-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+.logo img { height: 58px; width: auto; display: block; }
+.search-box { display: flex; align-items: center; border: 1.5px solid var(--border); border-radius: 40px; overflow: hidden; background: var(--cream); transition: border-color .2s; }
+.search-box:focus-within { border-color: var(--red); }
+.search-box input { padding: 9px 16px; border: none; background: transparent; width: 210px; outline: none; font-size: 13.5px; font-family: var(--ff-sans); }
+.search-box button { background: var(--red); border: none; padding: 0 18px; height: 38px; color: white; font-weight: 600; font-size: 12.5px; cursor: pointer; transition: background .2s; }
+.search-box button:hover { background: var(--red-deep); }
+
+.navbar { background: var(--red); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 12px rgba(192,35,26,.3); }
+.nav-container { max-width: 1280px; margin: 0 auto; display: flex; align-items: stretch; position: relative; }
+.nav-btn { background: rgba(0,0,0,0.15); color: #fff; border: none; font-size: 14px; width: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; flex-shrink: 0; }
+.nav-btn:hover { background: rgba(0,0,0,0.3); }
+.nav-inner { flex: 1; padding: 0 10px; display: flex; align-items: center; overflow-x: auto; white-space: nowrap; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.nav-inner::-webkit-scrollbar { display: none; }
+.nav-inner a { display: inline-block; padding: 13px 14px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,.88); white-space: nowrap; border-bottom: 2.5px solid transparent; transition: color .15s, border-color .15s; }
+.nav-inner a:hover { color: #fff; border-bottom-color: rgba(255,255,255,.5); }
+.nav-inner a.active { color: #fff; border-bottom-color: #fff; }
+.nav-inner a.nav-admin { margin-left: auto; background: rgba(0,0,0,.18); border-radius: var(--r-xs); padding: 8px 14px; margin-top: 5px; margin-bottom: 5px; border: none; color: #fff; }
+
+/* TRANG TRÍ RIÊNG CHO TIÊU ĐỀ TRANG LỄ HỘI */
+.page-header { background: var(--white); padding: 50px 20px; text-align: center; border-bottom: 1px solid var(--border-2); margin-bottom: 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+.page-title { font-family: var(--ff-head); font-size: 36px; color: var(--red-deep); margin-bottom: 12px; font-weight: 800; }
+.page-desc { font-family: var(--ff-serif); color: var(--ink-3); font-style: italic; max-width: 700px; margin: 0 auto; line-height: 1.7; font-size: 16px; }
+
+/* BỐ CỤC CHÍNH (CỘT TRÁI - CỘT PHẢI) */
+.page-layout { display: grid; grid-template-columns: 1fr 340px; gap: 40px; margin-bottom: 60px; align-items: start; }
+
+/* CSS CHO CARD BÀI VIẾT BÊN TRONG CỘT TRÁI */
+.card { background: var(--white); border-radius: var(--r-md); overflow: hidden; border: 1px solid var(--border-2); transition: transform .22s, box-shadow .22s; display: flex; flex-direction: column; position: relative; }
+.card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
+.card-img { height: 220px; background: #E5E7EB; display: flex; align-items: center; justify-content: center; font-size: 48px; border-bottom: 1px solid var(--border-2); }
+.card-content { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+.card-content h3 { font-family: var(--ff-serif); font-size: 20px; font-weight: 700; color: var(--red-deep); margin-bottom: 10px; line-height: 1.4; }
+.card-content h3 a:hover { color: var(--red); }
+.meta { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-size: 12px; color: var(--ink-4); font-style: italic; }
+.read-more { font-weight: 700; color: var(--red); font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; display: inline-flex; align-items: center; gap: 5px; transition: gap .15s; margin-top: auto; }
+.read-more:hover { gap: 8px; color: var(--red-deep); }
+
+/* BỘ NÚT SHARE GÓC PHẢI CARD */
+.share-box { position: absolute; top: 15px; right: 15px; display: flex; gap: 8px; z-index: 10; opacity: 0.85; transition: opacity 0.2s; }
+.card:hover .share-box { opacity: 1; }
+.btn-share { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; box-shadow: 0 3px 8px rgba(0,0,0,0.15); transition: transform 0.2s, box-shadow 0.2s; }
+.btn-share:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 5px 12px rgba(0,0,0,0.25); }
+.btn-share.fb { background: #1877F2; color: white; }
+.btn-share.zl { background: #0068FF; color: white; }
+.btn-share.fb svg { width: 16px; height: 16px; fill: white; }
+.btn-share.zl span { font-family: Arial, sans-serif; font-size: 10px; font-weight: 900; letter-spacing: -0.3px; }
+
+/* SIDEBAR ĐỒNG BỘ */
+.sidebar { display: flex; flex-direction: column; gap: 22px; }
+.sb-block { background: var(--white); border-radius: var(--r-md); border: 1px solid var(--border-2); overflow: hidden; }
+.sb-head { padding: 13px 18px 11px; border-bottom: 1px solid var(--border-2); display: flex; align-items: center; gap: 8px; background: #FCFAF6; }
+.sb-head-bar { width: 3px; height: 16px; background: var(--red); border-radius: 2px; flex-shrink: 0; }
+.sb-head-title { font-family: var(--ff-head); font-size: 14.5px; font-weight: 700; color: var(--ink); text-transform: uppercase; letter-spacing: 0.5px; }
+.sb-body { padding: 16px 18px; }
+.sb-input, .sb-textarea { width: 100%; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: var(--r-sm); margin-bottom: 9px; font-size: 13px; font-family: var(--ff-sans); color: var(--ink); background: var(--cream); outline: none; transition: border-color .2s; }
+.sb-input:focus, .sb-textarea:focus { border-color: var(--red); }
+.sb-textarea { resize: vertical; min-height: 72px; }
+.btn-submit { width: 100%; background: var(--red); color: #fff; border: none; padding: 10px 16px; border-radius: 40px; font-weight: 700; font-size: 13px; cursor: pointer; transition: background .2s, transform .15s; }
+.btn-submit:hover { background: var(--red-deep); transform: translateY(-1px); }
+.admin-phone-bar { margin-top: 12px; background: var(--red-pale); border-radius: 40px; padding: 8px 14px; text-align: center; font-size: 12.5px; font-weight: 700; color: var(--red); }
+
+/* Xem Nhiều Nhất */
+.trend-item { display: flex; gap: 12px; align-items: flex-start; padding: 11px 0; border-bottom: 1px solid var(--border-2); }
+.trend-item:last-child { border-bottom: none; padding-bottom: 0; }
+.trend-num { font-family: var(--ff-head); font-size: 20px; font-weight: 900; color: var(--red); min-width: 26px; line-height: 1.1; opacity: .85; }
+.trend-title { font-size: 13.5px; font-weight: 500; color: var(--ink); line-height: 1.42; }
+.trend-title:hover { color: var(--red); }
+.trend-meta { font-size: 11px; color: var(--ink-4); margin-top: 3px; font-weight: 600; }
+
+/* Các mục icon cột phải */
+.policy-item { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--border-2); }
+.policy-item:last-child { border-bottom: none; padding-bottom: 0; }
+.policy-ico { width: 34px; height: 34px; background: var(--gold-light); border-radius: var(--r-xs); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+.policy-text { font-size: 13.5px; font-weight: 500; color: var(--ink); }
+.policy-text:hover { color: var(--red); }
+.policy-sub { font-size: 11px; color: var(--ink-4); }
+.lib-item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: var(--r-xs); font-size: 13.5px; font-weight: 500; color: var(--ink); transition: background .15s, color .15s; }
+.lib-item:hover { background: var(--red-pale); color: var(--red); }
+.lib-item span { font-size: 16px; }
+
+.zalo-qr { background: var(--cream-2); border-radius: var(--r-sm); padding: 18px; text-align: center; border: 1px dashed var(--border); margin-bottom: 12px; }
+.btn-zalo { display: block; background: #0A8F4B; color: #fff; text-align: center; padding: 10px 16px; border-radius: 40px; font-weight: 700; font-size: 13px; transition: background .2s, transform .15s; }
+.btn-zalo:hover { background: #077A3F; transform: translateY(-1px); }
+
+/* FOOTER */
+.footer { background: var(--ink); color: #7A6E62; padding: 52px 0 28px; font-size: 13px; margin-top: 40px; }
+.footer-top { display: flex; flex-wrap: wrap; gap: 48px; margin-bottom: 40px; }
+.footer-brand { flex: 1.2; min-width: 220px; }
+.footer-brand img { height: 45px; margin-bottom: 12px; }
+.footer-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; flex: 2; }
+.footer-col h4 { font-family: var(--ff-head); font-size: 14px; color: #C8BDB0; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid #2D2620; }
+.footer-col a { display: block; color: #7A6E62; line-height: 2.1; transition: color .15s; }
+.footer-col a:hover { color: var(--gold); }
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+  .page-layout { grid-template-columns: 1fr; }
+  .sidebar { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+}
+@media (max-width: 780px) {
+  .topbar { padding: 8px 0; }
+  .topbar-inner { flex-wrap: nowrap; overflow: hidden; }
+  .topbar-left { display: flex; align-items: center; justify-content: center; width: 100%; gap: 6px; font-size: 10px; white-space: nowrap; overflow: hidden; }
+  .topbar-left span { text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
+  .topbar-right { display: none; }
+  .masthead-inner { flex-direction: column; align-items: center; gap: 14px; }
+  .logo { justify-content: center; }
+  .search-box { width: 100%; max-width: 450px; }
+  .search-box input { width: 100%; flex: 1; }
+  .sidebar { grid-template-columns: 1fr; }
+  .footer-cols { grid-template-columns: repeat(2, 1fr); }
+  .page-title { font-size: 28px; }
+}
+@media (max-width: 480px) { .footer-cols { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -77,7 +233,7 @@
 <div class="container page-layout">
     
     <div id="postsContainer">
-        <div style="text-align: center; padding: 50px 0; color: var(--ink-4); font-style: italic;">
+        <div style="text-align: center; padding: 50px 0; color: var(--ink-4); font-style: italic; grid-column: 1/-1;">
             <div style="font-size: 40px; margin-bottom: 10px;">⏳</div>
             Đang tải dữ liệu Lễ hội từ Đám mây...
         </div>
@@ -167,7 +323,7 @@
   </div>
 </div>
 
-<script src="js/main.js?v=1"></script>
+<script src="js/main.js"></script>
 <script>
     // Cập nhật ngày giờ
     function updateClock() {
@@ -203,10 +359,8 @@
 
     // LỆNH HIỂN THỊ BÀI VIẾT LỄ HỘI
     window.displayPosts = function() {
-        // Lấy danh sách bài thuộc chuyên mục "le-hoi"
         let posts = typeof getPostsByCategory === 'function' ? getPostsByCategory('le-hoi') : [];
         
-        // Đưa vào máy in (hàm renderPosts nằm trong main.js)
         if (typeof renderPosts === 'function') {
             renderPosts('postsContainer', posts);
         } else {
