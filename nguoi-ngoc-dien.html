@@ -197,6 +197,7 @@ img { max-width: 100%; display: block; }
     border-radius: var(--r-md);
     box-shadow: 0 15px 45px rgba(0,0,0,0.05);
     border: 1px solid var(--border-2);
+    position: relative;
 }
 .hero-featured-img {
     width: 320px;
@@ -266,6 +267,30 @@ img { max-width: 100%; display: block; }
     letter-spacing: 2px;
 }
 
+/* ═══════════════════════════════════════
+   CSS NÚT SHARE (CẤY VÀO BÀI TĨNH)
+═══════════════════════════════════════ */
+.share-box {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+.btn-share {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    border: none; cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15); transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-share:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 5px 12px rgba(0,0,0,0.25); }
+.btn-share.fb { background: #1877F2; color: white; }
+.btn-share.zl { background: #0068FF; color: white; }
+.btn-share.fb svg { width: 16px; height: 16px; fill: white; }
+.btn-share.zl span { font-family: Arial, sans-serif; font-size: 10px; font-weight: 900; letter-spacing: -0.3px; }
+
+
 /* FOOTER */
 .footer { background: var(--ink); color: #7A6E62; padding: 40px 0; font-size: 13px; text-align: center; margin-top: 60px; }
 
@@ -277,9 +302,8 @@ img { max-width: 100%; display: block; }
   .party-stele { padding: 30px 20px; }
   .party-list { grid-template-columns: 1fr; gap: 10px; }
   
-  /* Responsive cho Bài báo mới */
   .hero-featured-img { width: 100%; float: none; margin: 0 0 30px 0; }
-  .hero-report-wrap { padding: 30px 20px; }
+  .hero-report-wrap { padding: 40px 20px; }
   .hero-report-title { font-size: 24px; }
   
   .gc-img { height: 200px; }
@@ -311,6 +335,15 @@ img { max-width: 100%; display: block; }
 <div class="container">
     
     <div class="essay-wrap">
+        <div class="share-box">
+            <button class="btn-share fb" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent('https://ngocdien.info.vn/nguoi-ngoc-dien.html'), 'fb-share', 'width=600,height=400')" title="Chia sẻ lên Facebook">
+                <svg viewBox="0 0 320 512"><path d="M275.9 330.7L293 218h-107.9v-73.2c0-31.2 14.8-61.7 64.6-61.7H296V10.1C280.9 6.8 245.6 0 203.2 0 109.1 0 46.9 56.6 46.9 161.7V218H-10v112.7h56.9v272.3h112.7V330.7h96.3z"/></svg>
+            </button>
+            <button class="btn-share zl" onclick="window.open('https://zalo.me/share?url=' + encodeURIComponent('https://ngocdien.info.vn/nguoi-ngoc-dien.html'), 'zalo-share', 'width=600,height=500')" title="Chia sẻ qua Zalo">
+                <span>Zalo</span>
+            </button>
+        </div>
+
         <h1 class="essay-title">TRI ÂN NHỮNG NGƯỜI CON NGỌC ĐIỀN</h1>
         <div class="essay-content">
             <p>Nép mình bên dòng sông Đào hiền hòa uốn lượn, Ngọc Điền không chỉ là một dải đất bồi đắp bởi lớp phù sa nhọc nhằn, mà còn là cái nôi bồi dưỡng những tâm hồn trung kiên, tài hoa, mang đậm cốt cách của con người xứ Nghệ. Lịch sử gần ba thế kỷ của quê ta được viết lên không phải bằng lụa là gấm vóc, mà bằng mồ hôi, nước mắt và cả máu xương của bao thế hệ tiền nhân.</p>
@@ -443,15 +476,22 @@ img { max-width: 100%; display: block; }
         </div>
     </div>
 
-    <div class="sec-title-wrap">
+    <div class="sec-title-wrap" id="muc-cao-luc">
         <h2 class="sec-title">ANH HÙNG LAO ĐỘNG</h2>
     </div>
     
     <div class="hero-report-wrap">
+        <div class="share-box">
+            <button class="btn-share fb" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent('https://ngocdien.info.vn/nguoi-ngoc-dien.html#muc-cao-luc'), 'fb-share', 'width=600,height=400')" title="Chia sẻ lên Facebook">
+                <svg viewBox="0 0 320 512"><path d="M275.9 330.7L293 218h-107.9v-73.2c0-31.2 14.8-61.7 64.6-61.7H296V10.1C280.9 6.8 245.6 0 203.2 0 109.1 0 46.9 56.6 46.9 161.7V218H-10v112.7h56.9v272.3h112.7V330.7h96.3z"/></svg>
+            </button>
+            <button class="btn-share zl" onclick="window.open('https://zalo.me/share?url=' + encodeURIComponent('https://ngocdien.info.vn/nguoi-ngoc-dien.html#muc-cao-luc'), 'zalo-share', 'width=600,height=500')" title="Chia sẻ qua Zalo">
+                <span>Zalo</span>
+            </button>
+        </div>
+
         <img src="image_faa02a.jpg" class="hero-featured-img" alt="Anh hùng Cao Lục">
-        <h1 class="hero-report-title">Huyền thoại về "Anh Chủ nhiệm" Cao Lục:<br><div class="sec-title-wrap" id="muc-cao-luc">
-    <h2 class="sec-title">ANH HÙNG LAO ĐỘNG CAO LỤC</h2>
-</div></h1>
+        <h1 class="hero-report-title">Huyền thoại về "Anh Chủ nhiệm" Cao Lục</h1>
         <p style="color:var(--ink-4); font-size:14px; margin-bottom:20px;">Sinh: 1929 - Mất: 1974 | Danh hiệu: Anh hùng Lao động (1962)</p>
         
         <div class="hero-sapo">
