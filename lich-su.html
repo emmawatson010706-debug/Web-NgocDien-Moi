@@ -33,10 +33,18 @@
         <div class="copyright">© 2026 Xóm Ngọc Điền - Hưng Nguyên - Nghệ An. Xây dựng bởi ❤️ Thái Lão.</div>
     </div>
 </div>
-<script src="js/main.js"></script>
+
+<script src="js/main.js?v=999"></script>
 <script>
-    let posts = getPostsByCategory('lich-su');
-    renderPosts('postsContainer', posts, 50);
+    // BỌC CÔNG TẮC CHỜ Ở ĐÂY (Nó sẽ đợi Supabase báo về mới vẽ)
+    function displayPosts() {
+        let posts = getPostsByCategory('lich-su');
+        renderPosts('postsContainer', posts, 50);
+    }
+    
+    // Gọi thử 1 lần đề phòng mạng nhanh load xong từ trước
+    displayPosts();
+
     document.getElementById('searchBtn')?.addEventListener('click', function() {
         let kw = document.getElementById('searchInput').value.toLowerCase();
         if (!kw) return;
