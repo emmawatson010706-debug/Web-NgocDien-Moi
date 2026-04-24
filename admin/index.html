@@ -6,24 +6,38 @@
     <title>Quản trị website Ngọc Điền</title>
     <link rel="stylesheet" href="../css/style.css">
     <style>
-        body { background: #F5F5F0; padding: 40px 0; }
-        .admin-container { max-width: 800px; margin: 0 auto; background: white; border-radius: 28px; padding: 30px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); margin-bottom: 30px;}
-        .preview-img { max-width: 100%; margin-top: 10px; border-radius: 12px; }
-        .success { background: #E8F5E9; padding: 10px; border-radius: 12px; margin-bottom: 20px; color: #2E7D32; }
+        /* CSS GỐC CHO TRANG ADMIN (KHÔNG SỢ BỊ RỚT GIAO DIỆN) */
+        body { background: #F5F5F0; padding: 40px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; margin: 0;}
+        * { box-sizing: border-box; }
+        
+        .admin-container { max-width: 800px; margin: 0 auto; background: white; border-radius: 20px; padding: 30px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); margin-bottom: 30px;}
+        .preview-img { max-width: 100%; margin-top: 10px; border-radius: 12px; border: 1px solid #eee; }
+        .success { background: #E8F5E9; padding: 12px; border-radius: 8px; margin-bottom: 20px; color: #2E7D32; font-weight: bold; border: 1px solid #C8E6C9;}
+        
         .audio-field { background: #F9FAFB; border: 1px solid #E5E7EB; padding: 15px; border-radius: 12px; margin-bottom: 15px; }
-        .audio-field label { color: #1E3A8A; font-weight: 600; margin-bottom: 8px; display: block; }
+        .audio-field label { color: #1E3A8A !important; font-weight: 600; margin-bottom: 8px; display: block; }
         .audio-note { font-size: 12.5px; color: #D97706; margin-top: 6px; font-style: italic; line-height: 1.5; }
         .audio-note strong { color: #DC2626; }
         select option.sub-cat { font-style: italic; color: #555; }
         
+        /* CSS CHO CÁC Ô NHẬP LIỆU BỊ RÃ */
+        form label { display: block; font-weight: 600; margin: 15px 0 5px; color: #444; font-size: 14px;}
+        form input[type="text"], form input[type="email"], form input[type="password"], form input[type="file"], form textarea, form select {
+            width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-family: inherit; font-size: 14px; background: #fff; transition: border-color 0.2s;
+        }
+        form input:focus, form textarea:focus, form select:focus { border-color: #DA251D; outline: none; }
+        
+        /* CSS NÚT BẤM */
+        button { font-family: inherit; transition: 0.2s; cursor: pointer; }
+        #submitPostBtn { background: #DA251D; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; font-size: 15px; width: 100%; margin-top: 20px; }
+        #submitPostBtn:hover { background: #A01D16; }
+        .btn-logout { background: #332A1E; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; font-size: 13px; }
+        .btn-logout:hover { background: #181410; }
+
         /* CSS CHO FORM ĐĂNG NHẬP */
         .login-box { max-width: 400px; text-align: center; }
-        .login-input { width: 100%; padding: 12px 15px; border: 1.5px solid #DDD5C8; border-radius: 12px; margin-bottom: 15px; font-size: 15px; box-sizing: border-box; }
-        .login-input:focus { border-color: #DA251D; outline: none; }
-        .btn-login { width: 100%; background: #DA251D; color: white; border: none; padding: 14px; border-radius: 12px; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.2s; }
+        .btn-login { width: 100%; background: #DA251D; color: white; border: none; padding: 14px; border-radius: 12px; font-weight: bold; font-size: 16px; margin-top: 10px;}
         .btn-login:hover { background: #A01D16; }
-        .btn-logout { background: #332A1E; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; }
-        .btn-logout:hover { background: #181410; }
 
         /* CSS KHU VỰC HỘP THƯ */
         .mail-item { border: 1px solid #EAE4DC; border-radius: 12px; padding: 15px; margin-bottom: 15px; background: #FCFAF6; }
@@ -31,24 +45,30 @@
         .mail-meta { font-size: 13px; color: #666; }
         .mail-meta strong { color: #DA251D; }
         .mail-content { font-size: 14px; line-height: 1.6; color: #181410; margin-bottom: 15px; white-space: pre-wrap; background: white; padding: 10px; border-radius: 8px; border: 1px solid #EAE4DC;}
-        .btn-duyet { background: #0A8F4B; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: bold; }
+        .btn-duyet { background: #0A8F4B; color: white; border: none; padding: 8px 15px; border-radius: 8px; font-size: 13px; font-weight: bold; }
         .btn-duyet:hover { background: #077A3F; }
+        
+        /* CSS DANH SÁCH BÀI VIẾT */
+        .post-list-item { border-bottom: 1px solid #eee; padding: 15px 0; display: flex; justify-content: space-between; align-items: center; }
+        .post-list-item:last-child { border-bottom: none; }
+        .btn-edit { background:#FF8C00; color:white; border:none; padding:8px 15px; border-radius:8px; font-size:13px; margin-right:5px;}
+        .btn-delete { background:#f44336; color:white; border:none; padding:8px 15px; border-radius:8px; font-size:13px;}
     </style>
 </head>
 <body>
 
 <div id="loginScreen" class="admin-container login-box">
     <div style="font-size: 50px; margin-bottom: 10px;">🔒</div>
-    <h2 style="color:#DA251D; margin-bottom: 25px;">Đăng nhập Quản trị</h2>
+    <h2 style="color:#DA251D; margin-bottom: 15px; margin-top: 0;">Đăng nhập Quản trị</h2>
     <p style="color:#666; font-size:14px; margin-bottom:20px;">Vui lòng xuất trình Thẻ từ (Tài khoản) để vào kho dữ liệu Ngọc Điền.</p>
     
     <form id="loginForm">
-        <input type="email" id="adminEmail" class="login-input" placeholder="Email quản trị viên" required>
-        <input type="password" id="adminPassword" class="login-input" placeholder="Mật khẩu" required>
+        <input type="email" id="adminEmail" placeholder="Email quản trị viên" required>
+        <input type="password" id="adminPassword" placeholder="Mật khẩu" required>
         <button type="submit" class="btn-login" id="loginBtn">MỞ KHÓA KHO</button>
     </form>
     <div id="loginError" style="color: #DA251D; margin-top: 15px; font-size: 13.5px; font-weight: 500;"></div>
-    <div style="margin-top: 30px; font-size: 13px;"><a href="../index.html" style="color:#8A7B6A;">← Quay lại Trang chủ</a></div>
+    <div style="margin-top: 30px; font-size: 13px;"><a href="../index.html" style="color:#8A7B6A; text-decoration: none;">← Quay lại Trang chủ</a></div>
 </div>
 
 <div id="mainAdmin" style="display: none;">
@@ -68,8 +88,8 @@
         </div>
 
         <form id="postForm">
-            <label>Tiêu đề</label>
-            <input type="text" id="title" required>
+            <label>Tiêu đề bài viết</label>
+            <input type="text" id="title" placeholder="Nhập tiêu đề..." required>
 
             <label>Danh mục</label>
             <select id="category" required>
@@ -95,33 +115,39 @@
                 <option value="podcast" style="font-weight: bold; color: #1E3A8A;">🎙️ Đọc truyện đêm khuya (Podcast)</option>
             </select>
 
-            <label>Ảnh đại diện (chọn file ảnh)</label>
-            <input type="file" id="imageFile" accept="image/*">
-            <input type="text" id="imageUrl" placeholder="Hoặc dán link ảnh">
+            <label>Ảnh đại diện (Chọn file hoặc Dán link)</label>
+            <input type="file" id="imageFile" accept="image/*" style="margin-bottom: 8px;">
+            <input type="text" id="imageUrl" placeholder="Hoặc dán link ảnh trực tiếp vào đây">
             <div id="imagePreview"></div>
 
-            <label>Video (nhúng link YouTube)</label>
-            <input type="text" id="videoUrl" placeholder="https://www.youtube.com/embed/...">
+            <label>Video (Nhúng link YouTube - Nếu có)</label>
+            <input type="text" id="videoUrl" placeholder="Ví dụ: https://www.youtube.com/embed/...">
 
             <div class="audio-field">
-                <label>🎧 Âm thanh Podcast</label>
+                <label>🎧 Âm thanh Podcast (Nếu có)</label>
                 <input type="text" id="audioUrl" placeholder="Dán link file .mp3 (Google Drive, Soundcloud...)">
                 <div class="audio-note"><strong>⚠️ LƯU Ý:</strong> Up file MP3 lên Drive/Host ngoài rồi dán link vào đây.</div>
             </div>
 
             <label>Nội dung chi tiết</label>
-            <textarea id="content" rows="8" required></textarea>
+            <textarea id="content" rows="10" placeholder="Viết nội dung bài ở đây... (Có thể dùng HTML cơ bản như <b>in đậm</b>)" required></textarea>
 
-            <label>Tác giả</label>
+            <label>Tác giả / Nguồn</label>
             <input type="text" id="author" value="Ban quản trị">
 
-            <button type="submit" id="submitPostBtn">Đăng bài</button>
+            <button type="submit" id="submitPostBtn">Đăng bài lên Đám mây</button>
         </form>
-        <div id="message"></div>
-        <hr>
-        <h3>📋 Bài viết trên Đám mây</h3>
+        
+        <div id="message" style="margin-top: 15px;"></div>
+        
+        <hr style="border:none; border-top:2px solid #eee; margin: 30px 0;">
+        
+        <h3 style="color: #333; margin-bottom: 15px;">📋 Bài viết đang hiển thị trên Web</h3>
         <div id="postList"></div>
-        <p><a href="../index.html" target="_blank">🔗 Xem trang chủ</a></p>
+        
+        <div style="margin-top: 20px; font-size: 14px;">
+            <a href="../index.html" target="_blank" style="color: #1E3A8A; text-decoration: none;">🔗 Trở về xem Trang chủ</a>
+        </div>
     </div>
 </div>
 
@@ -168,7 +194,7 @@
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('mainAdmin').style.display = 'block';
         displayAdminPosts();
-        loadMailbox(); // Tải hòm thư chờ
+        loadMailbox(); 
     }
 
     window.logoutAdmin = function() {
@@ -217,7 +243,7 @@
                     <div class="mail-content">${escapeHtml(thu.noi_dung)}</div>
                     <div>
                         <button onclick="duyetBai(${thu.id}, '${escapeHtml(thu.chuyen_muc)}')" class="btn-duyet">✅ Duyệt & Đăng bài</button>
-                        <button onclick="xoaThu(${thu.id})" style="background:#f44336; color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; font-size:13px; font-weight:bold; margin-left:10px;">🗑️ Xóa thư</button>
+                        <button onclick="xoaThu(${thu.id})" class="btn-delete" style="margin-left:10px;">🗑️ Xóa thư</button>
                     </div>
                 </div>`;
             });
@@ -227,7 +253,6 @@
         }
     }
 
-    // Hàm chuyển đổi mã danh mục thành tên đẹp
     function getCategoryName(cat) {
         const catNames = {
             'gioi-thieu': 'Giới thiệu', 'lich-su': 'Lịch sử', 'le-hoi': 'Lễ hội', 'tin-tuc': 'Tin tức',
@@ -235,12 +260,11 @@
             'tho': 'Thơ', 'am-che': 'Bên ấm chè', 'giai-thoai': 'Giai thoại', 'kham-pha': 'Khám phá',
             'goc-nhin': 'Góc nhìn', 'huong-uoc': 'Hương ước 1883', 'di-tich': 'Di tích',
             'chinh-sach': 'Chính sách', 'chuyen-doi-so': 'Chuyển đổi số', 'thu-vien': 'Thư viện',
-            'ban-do': 'Bản đồ', 'gop-y': 'Góp ý'
+            'ban-do': 'Bản đồ', 'gop-y': 'Góp ý', 'podcast': 'Podcast'
         };
         return catNames[cat] || 'Chưa phân loại';
     }
 
-    // NÚT XÓA THƯ (Ném vào sọt rác)
     window.xoaThu = async function(id) {
         if (!confirm("Đại ca có chắc chắn muốn xóa bỏ bức thư này không?")) return;
         const tokenHeader = getAuthToken();
@@ -253,22 +277,18 @@
         } catch (error) { alert("Lỗi khi xóa thư!"); }
     };
 
-    // NÚT DUYỆT BÀI (Chuyển thư thành bài đăng)
     window.duyetBai = async function(id, chuyenMuc) {
         const tokenHeader = getAuthToken();
         try {
-            // Bước 1: Kéo nội dung bức thư về
             const res = await fetch(`${SUPABASE_URL}/rest/v1/hom_thu_cho?id=eq.${id}&select=*`, {
                 headers: { 'apikey': SUPABASE_KEY, 'Authorization': tokenHeader }
             });
             const thuData = await res.json();
             const thu = thuData[0];
 
-            // Tự động tạo Tiêu đề từ nội dung (Lấy 8 từ đầu)
             let rawText = thu.noi_dung.replace(/\n/g, " ");
             let autoTitle = rawText.split(" ").slice(0, 8).join(" ") + "...";
 
-            // Bước 2: Bơm sang kho Bài Viết chính
             let newPost = {
                 title: autoTitle,
                 category: chuyenMuc,
@@ -286,15 +306,14 @@
             
             if(!postRes.ok) throw new Error("Lỗi khi đăng lên web");
 
-            // Bước 3: Xóa thư trong hòm chờ đi
             await fetch(`${SUPABASE_URL}/rest/v1/hom_thu_cho?id=eq.${id}`, {
                 method: 'DELETE',
                 headers: { 'apikey': SUPABASE_KEY, 'Authorization': tokenHeader }
             });
 
-            alert("✅ Đã duyệt và đăng bài lên Web thành công! Đại ca có thể chỉnh sửa lại tiêu đề trong phần danh sách bài viết bên dưới.");
-            loadMailbox(); // Tải lại hòm thư
-            displayAdminPosts(); // Tải lại kho bài chính
+            alert("✅ Đã duyệt và đăng bài lên Web thành công! Hãy tải lại trang để thấy bài mới bên dưới.");
+            loadMailbox(); 
+            displayAdminPosts(); 
 
         } catch (error) {
             alert("Lỗi quá trình duyệt bài: " + error.message);
@@ -317,7 +336,7 @@
     });
 
     // ==========================================
-    // 4. LOGIC ĐĂNG BÀI VÀ SỬA BÀI CỦA ADMIN
+    // 4. LOGIC ĐĂNG BÀI VÀ SỬA BÀI
     // ==========================================
     document.getElementById('postForm').addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -325,7 +344,6 @@
         if (!tokenHeader) return;
 
         let btn = document.getElementById('submitPostBtn');
-        let originalText = btn.innerHTML;
         btn.innerHTML = 'Đang đẩy lên Đám mây...';
         btn.disabled = true;
 
@@ -348,9 +366,9 @@
                 });
                 if (!response.ok) throw new Error("Lỗi khi cập nhật");
                 
-                document.getElementById('message').innerHTML = '<div class="success" style="color:#FF8C00;">✅ Đã cập nhật bài viết thành công!</div>';
+                document.getElementById('message').innerHTML = '<div class="success">✅ Đã cập nhật bài viết thành công!</div>';
                 window.currentEditId = null;
-                btn.innerHTML = 'Đăng bài';
+                btn.innerHTML = 'Đăng bài lên Đám mây';
                 btn.style.background = '#DA251D';
             } else {
                 postData.date = new Date().toLocaleDateString('vi-VN');
@@ -361,7 +379,7 @@
                     body: JSON.stringify(postData)
                 });
                 if (!response.ok) throw new Error("Lỗi khi đăng bài mới");
-                document.getElementById('message').innerHTML = '<div class="success">✅ Đã đăng bài lên Đám mây thành công!</div>';
+                document.getElementById('message').innerHTML = '<div class="success">✅ Đã đăng bài mới thành công!</div>';
             }
             
             document.getElementById('postForm').reset();
@@ -371,14 +389,14 @@
         } catch (error) {
             alert("Lỗi: " + error.message);
         } finally {
-            if (!window.currentEditId) btn.innerHTML = 'Đăng bài';
+            if (!window.currentEditId) btn.innerHTML = 'Đăng bài lên Đám mây';
             btn.disabled = false;
         }
         setTimeout(() => document.getElementById('message').innerHTML = '', 4000);
     });
 
     // ==========================================
-    // 5. LẤY DANH SÁCH BÀI VÀ XÓA BÀI
+    // 5. LẤY DANH SÁCH BÀI VÀ XÓA BÀI CỦA ADMIN
     // ==========================================
     async function displayAdminPosts() {
         let container = document.getElementById('postList');
@@ -388,26 +406,26 @@
         
         if (posts.length === 0) { container.innerHTML = '<p>Kho Đám mây chưa có bài nào.</p>'; return; }
         
-        let html = '<ul style="list-style:none; padding:0;">';
-        posts.slice(0, 20).forEach(p => {
+        let html = '<div>';
+        posts.slice(0, 30).forEach(p => {
             let plainContent = p.content ? p.content.replace(/<\/?[^>]+(>|$)/g, "").substring(0,80) : "";
-            html += `<li style="border-bottom:1px solid #eee; padding:15px 0; display:flex; justify-content:space-between; align-items:center;">
+            html += `<div class="post-list-item">
                 <div style="flex: 1; padding-right: 15px;">
-                    <strong>${p.title}</strong> <span style="color:#DA251D">(${p.category})</span> - ${p.date || ''}<br>
-                    <small style="color:#666;">${plainContent}...</small>
+                    <strong style="color: #1A1A1A;">${p.title}</strong> <span style="color:#DA251D; font-size: 13px;">(${getCategoryName(p.category)})</span><br>
+                    <small style="color:#666;">Ngày đăng: ${p.date || ''} | Tác giả: ${p.author || 'Admin'}</small>
                 </div>
                 <div style="min-width: 140px; text-align:right;">
-                    <button type="button" onclick="editPost(${p.id})" style="background:#FF8C00; color:white; border:none; cursor:pointer; padding:8px 15px; border-radius:8px; font-size:13px; width:auto; display:inline-block; margin-right:5px;">Sửa</button>
-                    <button type="button" onclick="deletePostAdmin(${p.id})" style="background:#f44336; color:white; border:none; cursor:pointer; padding:8px 15px; border-radius:8px; font-size:13px; width:auto; display:inline-block;">Xóa</button>
+                    <button type="button" onclick="editPost(${p.id})" class="btn-edit">Sửa</button>
+                    <button type="button" onclick="deletePostAdmin(${p.id})" class="btn-delete">Xóa</button>
                 </div>
-            </li>`;
+            </div>`;
         });
-        html += '</ul>';
+        html += '</div>';
         container.innerHTML = html;
     }
 
     window.deletePostAdmin = async function(id) {
-        if (confirm('Anh có chắc chắn muốn xóa bài viết này khỏi Đám mây không? Hành động này không thể hoàn tác!')) {
+        if (confirm('Anh có chắc chắn muốn xóa bài viết này không?')) {
             const tokenHeader = getAuthToken();
             if (!tokenHeader) return;
             try {
@@ -416,7 +434,6 @@
                     headers: { 'apikey': SUPABASE_KEY, 'Authorization': tokenHeader }
                 });
                 if (!response.ok) throw new Error("Xóa thất bại");
-                alert('Đã xóa bài viết thành công!');
                 displayAdminPosts(); 
             } catch (error) { alert("Lỗi: " + error.message); }
         }
