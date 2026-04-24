@@ -71,7 +71,22 @@ function escapeHtml(str) {
 }
 
 // ==========================================
-// ĐÃ SỬA CHUẨN XÁC TÊN CLASS CSS CỦA ANH
+// MÔ-TƠ CHIA SẺ MẠNG XÃ HỘI (MỚI BỔ SUNG)
+// ==========================================
+window.shareToFB = function(postId) {
+    const domain = "https://ngocdien.info.vn";
+    const shareUrl = `${domain}/api/share?id=${postId}`;
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, 'fb-share', 'width=600,height=400');
+};
+
+window.shareToZalo = function(postId) {
+    const domain = "https://ngocdien.info.vn";
+    const shareUrl = `${domain}/api/share?id=${postId}`;
+    window.open(`https://zalo.me/share?url=${encodeURIComponent(shareUrl)}`, 'zalo-share', 'width=600,height=500');
+};
+
+// ==========================================
+// ĐÃ SỬA CHUẨN XÁC TÊN CLASS CSS CỦA ANH VÀ CẤY NÚT SHARE
 // ==========================================
 function renderNewsGrid(containerId, posts, limit = 6) {
     const container = document.getElementById(containerId);
@@ -92,6 +107,15 @@ function renderNewsGrid(containerId, posts, limit = 6) {
         let plainText = post.content ? post.content.replace(/<\/?[^>]+(>|$)/g, "") : '';
         html += `
         <div class="card">
+            <div class="share-box">
+                <button class="btn-share fb" onclick="shareToFB('${post.id}')" title="Chia sẻ lên Facebook">
+                    <svg viewBox="0 0 320 512"><path d="M275.9 330.7L293 218h-107.9v-73.2c0-31.2 14.8-61.7 64.6-61.7H296V10.1C280.9 6.8 245.6 0 203.2 0 109.1 0 46.9 56.6 46.9 161.7V218H-10v112.7h56.9v272.3h112.7V330.7h96.3z"/></svg>
+                </button>
+                <button class="btn-share zl" onclick="shareToZalo('${post.id}')" title="Chia sẻ qua Zalo">
+                    <span>Zalo</span>
+                </button>
+            </div>
+
             <div class="card-img">
                 ${post.image && post.image.startsWith('data:image') 
                   ? `<img src="${escapeHtml(post.image)}" style="width:100%; height:100%; object-fit:cover;">` 
@@ -150,7 +174,10 @@ window.viewPost = function(id) {
     readingArea.style.display = 'block';
 
     let formattedContent = post.content ? post.content.replace(/\n/g, '<br>') : '';
-    let shareUrl = encodeURIComponent(window.location.href);
+    
+    // Đã thay đổi link share ở chế độ đọc bài (bắn qua Trạm trung chuyển)
+    let domain = "https://ngocdien.info.vn";
+    let shareUrl = encodeURIComponent(`${domain}/api/share?id=${post.id}`);
 
     // Giao diện đã loại bỏ biến màu lạ, sử dụng đúng mã màu chuẩn
     readingArea.innerHTML = `
@@ -161,11 +188,11 @@ window.viewPost = function(id) {
                     <a href="#" onclick="closeArticle(); return false;" style="font-weight: 700; color: #DA251D; display: flex; align-items: center; gap: 6px; text-decoration: none;">✖ Thoát</a>
                 </div>
                 <div style="display: flex; gap: 15px; align-items: center;">
-                    <svg viewBox="0 0 24 24" style="width: 32px; height: 32px; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+shareUrl)">
+                    <svg viewBox="0 0 24 24" style="width: 32px; height: 32px; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+shareUrl, 'fb-share', 'width=600,height=400')">
                         <circle cx="12" cy="12" r="12" fill="#1877F2"/>
                         <path d="M15 12h-2v7h-3v-7H8V9h2V7.6C10 5.5 11.2 4.3 13.3 4.3c.9 0 1.7.1 1.7.1v2h-1c-1 0-1.3.6-1.3 1.3V9h2.3l-.3 3z" fill="white"/>
                     </svg>
-                    <svg viewBox="0 0 24 24" style="width: 32px; height: 32px; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'" onclick="alert('Đã sao chép link! Anh có thể dán vào Zalo để chia sẻ.'); navigator.clipboard.writeText(window.location.href);">
+                    <svg viewBox="0 0 24 24" style="width: 32px; height: 32px; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'" onclick="window.open('https://zalo.me/share?url='+shareUrl, 'zalo-share', 'width=600,height=500')">
                         <circle cx="12" cy="12" r="12" fill="#0068FF"/>
                         <path d="M7 7h10a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z" fill="none" stroke="white" stroke-width="1.5"/>
                         <text x="7.5" y="15" fill="white" font-family="Arial, sans-serif" font-weight="bold" font-size="10">Z</text>
@@ -288,5 +315,3 @@ window.renderHero = function() {
 // ==========================================
 // Gọi hàm kéo dữ liệu ngay khi tải trang
 fetchPostsFromSupabase();
-
-// Đoạn initSampleData đã bị xóa vì giờ chúng ta xài dữ liệu thật từ đám mây
