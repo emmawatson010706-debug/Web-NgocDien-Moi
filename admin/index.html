@@ -10,26 +10,44 @@
         .admin-container { max-width: 800px; margin: 0 auto; background: white; border-radius: 28px; padding: 30px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
         .preview-img { max-width: 100%; margin-top: 10px; border-radius: 12px; }
         .success { background: #E8F5E9; padding: 10px; border-radius: 12px; margin-bottom: 20px; color: #2E7D32; }
-        
-        /* CSS MỚI CHO Ô AUDIO ĐỂ NỔI BẬT HƠN */
-        .audio-field {
-            background: #F9FAFB;
-            border: 1px solid #E5E7EB;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-        }
+        .audio-field { background: #F9FAFB; border: 1px solid #E5E7EB; padding: 15px; border-radius: 12px; margin-bottom: 15px; }
         .audio-field label { color: #1E3A8A; font-weight: 600; margin-bottom: 8px; display: block; }
         .audio-note { font-size: 12.5px; color: #D97706; margin-top: 6px; font-style: italic; line-height: 1.5; }
         .audio-note strong { color: #DC2626; }
-
-        /* Phân biệt rõ các mục con trong select box */
         select option.sub-cat { font-style: italic; color: #555; }
+        
+        /* CSS CHO FORM ĐĂNG NHẬP */
+        .login-box { max-width: 400px; text-align: center; }
+        .login-input { width: 100%; padding: 12px 15px; border: 1.5px solid #DDD5C8; border-radius: 12px; margin-bottom: 15px; font-size: 15px; box-sizing: border-box; }
+        .login-input:focus { border-color: #DA251D; outline: none; }
+        .btn-login { width: 100%; background: #DA251D; color: white; border: none; padding: 14px; border-radius: 12px; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.2s; }
+        .btn-login:hover { background: #A01D16; }
+        .btn-logout { background: #332A1E; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; }
+        .btn-logout:hover { background: #181410; }
     </style>
 </head>
 <body>
-<div class="admin-container">
-    <h1 style="color:#DA251D;">📝 Quản trị nội dung xóm Ngọc Điền</h1>
+
+<div id="loginScreen" class="admin-container login-box">
+    <div style="font-size: 50px; margin-bottom: 10px;">🔒</div>
+    <h2 style="color:#DA251D; margin-bottom: 25px;">Đăng nhập Quản trị</h2>
+    <p style="color:#666; font-size:14px; margin-bottom:20px;">Vui lòng xuất trình Thẻ từ (Tài khoản) để vào kho dữ liệu Ngọc Điền.</p>
+    
+    <form id="loginForm">
+        <input type="email" id="adminEmail" class="login-input" placeholder="Email quản trị viên" required>
+        <input type="password" id="adminPassword" class="login-input" placeholder="Mật khẩu" required>
+        <button type="submit" class="btn-login" id="loginBtn">MỞ KHÓA KHO</button>
+    </form>
+    <div id="loginError" style="color: #DA251D; margin-top: 15px; font-size: 13.5px; font-weight: 500;"></div>
+    <div style="margin-top: 30px; font-size: 13px;"><a href="../index.html" style="color:#8A7B6A;">← Quay lại Trang chủ</a></div>
+</div>
+
+<div id="mainAdmin" class="admin-container" style="display: none;">
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #EAE4DC; padding-bottom: 15px; margin-bottom: 25px;">
+        <h1 style="color:#DA251D; margin: 0; font-size: 24px;">📝 Quản trị xóm Ngọc Điền</h1>
+        <button onclick="logoutAdmin()" class="btn-logout">🚪 Đăng xuất</button>
+    </div>
+
     <form id="postForm">
         <label>Tiêu đề</label>
         <input type="text" id="title" required>
@@ -41,7 +59,6 @@
             <option value="le-hoi">🎉 Lễ hội</option>
             <option value="tin-tuc">📌 Tin tức</option>
             <option value="nguoi-ngoc-dien">🌟 Người Ngọc Điền</option>
-            
             <option value="tieng-lang">📖 Tiếng Làng (Chung)</option>
             <option value="tan-man" class="sub-cat">&nbsp;&nbsp;&nbsp;↳ ✍️ Tản mạn</option>
             <option value="tho" class="sub-cat">&nbsp;&nbsp;&nbsp;↳ 🌸 Thơ</option>
@@ -64,15 +81,13 @@
         <input type="text" id="imageUrl" placeholder="Hoặc dán link ảnh">
         <div id="imagePreview"></div>
 
-        <label>Video (nhúng link YouTube, ví dụ: https://www.youtube.com/embed/...)</label>
+        <label>Video (nhúng link YouTube)</label>
         <input type="text" id="videoUrl" placeholder="https://www.youtube.com/embed/...">
 
         <div class="audio-field">
-            <label>🎧 Âm thanh Podcast (Chỉ dùng khi chọn mục "Đọc truyện đêm khuya")</label>
-            <input type="text" id="audioUrl" placeholder="Dán link file .mp3 (Google Drive, Soundcloud...) vào đây">
-            <div class="audio-note">
-                <strong>⚠️ CẢNH BÁO SẬP WEB:</strong> Không tải trực tiếp file âm thanh/video vào trang này vì bộ nhớ ảo (LocalStorage) chỉ chứa được tối đa 5MB. Vui lòng up file MP3 lên Google Drive hoặc host ngoài, sau đó lấy link dán vào ô trên. Thời lượng bài đọc thoải mái không giới hạn!
-            </div>
+            <label>🎧 Âm thanh Podcast</label>
+            <input type="text" id="audioUrl" placeholder="Dán link file .mp3 (Google Drive, Soundcloud...)">
+            <div class="audio-note"><strong>⚠️ LƯU Ý:</strong> Up file MP3 lên Drive/Host ngoài rồi dán link vào đây.</div>
         </div>
 
         <label>Nội dung chi tiết</label>
@@ -81,17 +96,95 @@
         <label>Tác giả</label>
         <input type="text" id="author" value="Ban quản trị">
 
-        <button type="submit">Đăng bài</button>
+        <button type="submit" id="submitPostBtn">Đăng bài</button>
     </form>
     <div id="message"></div>
     <hr>
-    <h3>📋 Bài viết gần đây (Trên Đám mây)</h3>
+    <h3>📋 Bài viết trên Đám mây</h3>
     <div id="postList"></div>
-    <p><a href="../index.html" target="_blank">🔗 Xem trang chủ</a> | <a href="#" onclick="exportData()">💾 Tải sao lưu</a> | <a href="#" onclick="importData()">📂 Nhập backup</a></p>
+    <p><a href="../index.html" target="_blank">🔗 Xem trang chủ</a> | <a href="#" onclick="exportData()">💾 Tải sao lưu</a></p>
 </div>
 
 <script src="../js/main.js"></script>
 <script>
+    // ==========================================
+    // 1. HỆ THỐNG KIỂM TRA THẺ TỪ (LOGIN)
+    // ==========================================
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        let email = document.getElementById('adminEmail').value;
+        let password = document.getElementById('adminPassword').value;
+        let btn = document.getElementById('loginBtn');
+        let errorMsg = document.getElementById('loginError');
+        
+        btn.innerHTML = 'ĐANG XÁC THỰC...';
+        btn.disabled = true;
+        errorMsg.innerHTML = '';
+
+        try {
+            // Gửi yêu cầu xin cấp Thẻ từ lên Supabase
+            const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+                method: 'POST',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: email, password: password })
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data.error_description || "Sai Email hoặc Mật khẩu. Vui lòng thử lại!");
+            }
+            
+            // Đăng nhập thành công -> Lưu thẻ từ (access_token) vào ví trình duyệt
+            localStorage.setItem('supabase_admin_token', data.access_token);
+            
+            // Chuyển màn hình
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('mainAdmin').style.display = 'block';
+            
+            // Tải danh sách bài viết
+            displayAdminPosts();
+            
+        } catch(err) {
+            errorMsg.innerHTML = '❌ ' + err.message;
+        } finally {
+            btn.innerHTML = 'MỞ KHÓA KHO';
+            btn.disabled = false;
+        }
+    });
+
+    // Hàm kiểm tra khi vừa mở trang (có thẻ từ sẵn chưa?)
+    window.onload = function() {
+        if (localStorage.getItem('supabase_admin_token')) {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('mainAdmin').style.display = 'block';
+            displayAdminPosts();
+        }
+    };
+
+    // Hàm đăng xuất (vứt thẻ từ đi)
+    window.logoutAdmin = function() {
+        localStorage.removeItem('supabase_admin_token');
+        location.reload();
+    };
+
+    // Hàm lấy Thẻ từ để kẹp vào gói hàng
+    function getAuthToken() {
+        const token = localStorage.getItem('supabase_admin_token');
+        if (!token) {
+            alert("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại!");
+            location.reload();
+            return null;
+        }
+        return `Bearer ${token}`;
+    }
+
+    // ==========================================
+    // 2. LOGIC XỬ LÝ ẢNH
+    // ==========================================
     document.getElementById('imageFile').addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (file) {
@@ -105,12 +198,15 @@
     });
 
     // ==========================================
-    // LOGIC ĐĂNG BÀI VÀ SỬA BÀI LÊN SUPABASE
+    // 3. LOGIC ĐĂNG BÀI VÀ SỬA BÀI (Sử dụng Thẻ từ)
     // ==========================================
     document.getElementById('postForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        let btn = document.querySelector('#postForm button[type="submit"]');
+        const tokenHeader = getAuthToken();
+        if (!tokenHeader) return;
+
+        let btn = document.getElementById('submitPostBtn');
         let originalText = btn.innerHTML;
         btn.innerHTML = 'Đang đẩy lên Đám mây...';
         btn.disabled = true;
@@ -123,25 +219,26 @@
         let content = document.getElementById('content').value;
         let author = document.getElementById('author').value;
         
-        if (!title || !content) { alert('Vui lòng nhập đủ tiêu đề và nội dung'); btn.innerHTML = originalText; btn.disabled = false; return; }
-        
         let postData = { title, category, image, video, audioUrl, content, author };
 
         try {
-            // NẾU ĐANG TRONG TRẠNG THÁI SỬA BÀI
             if (window.currentEditId) {
+                // Sửa bài
                 const response = await fetch(`${SUPABASE_URL}/rest/v1/posts?id=eq.${window.currentEditId}`, {
                     method: 'PATCH',
                     headers: {
                         'apikey': SUPABASE_KEY,
-                        'Authorization': `Bearer ${SUPABASE_KEY}`,
+                        'Authorization': tokenHeader, // Kẹp thẻ từ vào đây
                         'Content-Type': 'application/json',
                         'Prefer': 'return=minimal'
                     },
                     body: JSON.stringify(postData)
                 });
 
-                if (!response.ok) throw new Error("Lỗi khi cập nhật");
+                if (!response.ok) {
+                    if(response.status === 401 || response.status === 403) throw new Error("Thẻ từ hết hạn hoặc bị từ chối!");
+                    throw new Error("Lỗi khi cập nhật");
+                }
                 
                 document.getElementById('message').innerHTML = '<div class="success" style="color:#FF8C00;">✅ Đã cập nhật bài viết thành công!</div>';
                 window.currentEditId = null;
@@ -149,7 +246,7 @@
                 btn.style.background = '#DA251D';
 
             } else {
-                // NẾU LÀ ĐĂNG BÀI MỚI (Tự sinh ngày tháng và mặc định 0 views)
+                // Đăng bài mới
                 postData.date = new Date().toLocaleDateString('vi-VN');
                 postData.views = 0;
 
@@ -157,30 +254,28 @@
                     method: 'POST',
                     headers: {
                         'apikey': SUPABASE_KEY,
-                        'Authorization': `Bearer ${SUPABASE_KEY}`,
+                        'Authorization': tokenHeader, // Kẹp thẻ từ vào đây
                         'Content-Type': 'application/json',
                         'Prefer': 'return=minimal'
                     },
                     body: JSON.stringify(postData)
                 });
 
-                if (!response.ok) throw new Error("Lỗi khi đăng bài mới");
+                if (!response.ok) {
+                    if(response.status === 401 || response.status === 403) throw new Error("Bị Supabase từ chối (Access Denied)! Đại ca kiểm tra lại RLS nhé.");
+                    throw new Error("Lỗi khi đăng bài mới");
+                }
                 document.getElementById('message').innerHTML = '<div class="success">✅ Đã đăng bài lên Đám mây thành công!</div>';
             }
             
-            // Xóa trắng form sau khi lưu thành công
             document.getElementById('postForm').reset();
             document.getElementById('imagePreview').innerHTML = '';
-            
-            // Tải lại danh sách bài viết từ Đám mây
             displayAdminPosts();
             
         } catch (error) {
-            alert("Lỗi kết nối Supabase: " + error.message);
+            alert("Lỗi: " + error.message);
         } finally {
-            if (!window.currentEditId) {
-                btn.innerHTML = 'Đăng bài';
-            }
+            if (!window.currentEditId) btn.innerHTML = 'Đăng bài';
             btn.disabled = false;
         }
 
@@ -188,14 +283,13 @@
     });
 
     // ==========================================
-    // LẤY DANH SÁCH BÀI TỪ SUPABASE ĐỂ HIỂN THỊ
+    // 4. LẤY DANH SÁCH BÀI VÀ XÓA BÀI
     // ==========================================
     async function displayAdminPosts() {
         let container = document.getElementById('postList');
         container.innerHTML = '<p>Đang tải dữ liệu từ Đám mây...</p>';
         
-        // Gọi hàm từ main.js để kéo dữ liệu mới nhất
-        let posts = await fetchPostsFromSupabase();
+        let posts = await fetchPostsFromSupabase(); // Hàm này chạy bằng quyền khách đọc (vẫn OK)
         
         if (posts.length === 0) { container.innerHTML = '<p>Kho Đám mây chưa có bài nào.</p>'; return; }
         
@@ -217,32 +311,34 @@
         container.innerHTML = html;
     }
 
-    // Hàm xóa bài viết thiết kế riêng cho Trang Admin
     window.deletePostAdmin = async function(id) {
         if (confirm('Anh có chắc chắn muốn xóa bài viết này khỏi Đám mây không? Hành động này không thể hoàn tác!')) {
+            const tokenHeader = getAuthToken();
+            if (!tokenHeader) return;
+
             try {
                 const response = await fetch(`${SUPABASE_URL}/rest/v1/posts?id=eq.${id}`, {
                     method: 'DELETE',
                     headers: {
                         'apikey': SUPABASE_KEY,
-                        'Authorization': `Bearer ${SUPABASE_KEY}`
+                        'Authorization': tokenHeader // Kẹp thẻ từ vào đây
                     }
                 });
-                if (!response.ok) throw new Error("Xóa thất bại");
+                if (!response.ok) {
+                    if(response.status === 401 || response.status === 403) throw new Error("Không có quyền XÓA (Access Denied)!");
+                    throw new Error("Xóa thất bại");
+                }
                 
                 alert('Đã xóa bài viết thành công!');
-                displayAdminPosts(); // Tải lại danh sách
+                displayAdminPosts(); 
             } catch (error) {
-                alert("Có lỗi khi xóa bài: " + error.message);
+                alert("Lỗi: " + error.message);
             }
         }
     };
 
-    // ==========================================
-    // SAO LƯU DỮ LIỆU
-    // ==========================================
     function exportData() {
-        let posts = getAllPosts(); // Lấy từ bộ nhớ globalPosts của main.js
+        let posts = getAllPosts(); 
         if(posts.length === 0) { alert("Chưa có dữ liệu để tải về."); return; }
         
         let data = JSON.stringify(posts);
@@ -251,17 +347,7 @@
         a.href = URL.createObjectURL(blob);
         a.download = 'ngocdien_backup_cloud.json';
         a.click();
-        alert('Đã tải bản sao lưu từ Đám mây về máy tính thành công.');
     }
-
-    function importData() {
-        alert('Hệ thống hiện đang sử dụng Đám mây Supabase để đảm bảo an toàn. Tính năng nhập file tạm thời khóa để tránh ghi đè dữ liệu trực tuyến của người khác.');
-    }
-
-    // Khi vừa mở trang Quản trị, tự động gọi dữ liệu từ Đám mây về hiển thị
-    window.onload = function() {
-        displayAdminPosts();
-    };
 </script>
 </body>
 </html>
