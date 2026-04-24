@@ -75,7 +75,7 @@ img { max-width: 100%; display: block; }
 .page-wrapper { max-width: 900px; margin: 40px auto; background: var(--white); border-radius: var(--r-lg); box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--border-2); min-height: 600px; padding: 50px 60px; position: relative; }
 .loading-state { text-align: center; padding: 100px 0; color: var(--ink-4); font-style: italic; font-size: 16px; }
 #articleReader { display: none; }
-.article-header { border-bottom: 2px solid var(--border-2); padding-bottom: 24px; margin-bottom: 30px; text-align: center;}
+.article-header { border-bottom: 2px solid var(--border-2); padding-bottom: 24px; margin-bottom: 30px; text-align: center; position: relative;}
 .article-tag { display: inline-block; background: var(--red-pale); color: var(--red); font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 40px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
 .article-title { font-family: var(--ff-head); font-size: 34px; color: var(--ink); line-height: 1.3; font-weight: 800; margin-bottom: 16px; }
 .article-meta { font-size: 13px; color: var(--ink-4); display: flex; align-items: center; justify-content: center; gap: 16px; }
@@ -86,6 +86,26 @@ img { max-width: 100%; display: block; }
 .article-body img { max-width: 100%; border-radius: var(--r-sm); margin: 24px auto; display: block; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
 .article-author-box { margin-top: 40px; padding: 24px; background: #FCFAF6; border: 1px solid var(--border-2); border-left: 4px solid var(--gold); border-radius: var(--r-sm); font-size: 15px; color: var(--ink-3); font-style: italic; display: flex; justify-content: space-between; align-items: center;}
 .article-author-box strong { font-family: var(--ff-head); font-size: 18px; color: var(--red-deep); font-style: normal; display: block; margin-bottom: 4px;}
+
+/* CSS BỘ NÚT CHIA SẺ RIÊNG CHO TRANG ĐỌC BÀI NÀY */
+.article-share-box {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    gap: 8px;
+}
+.btn-share {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    border: none; cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15); transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-share:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 5px 12px rgba(0,0,0,0.25); }
+.btn-share.fb { background: #1877F2; color: white; }
+.btn-share.zl { background: #0068FF; color: white; }
+.btn-share.fb svg { width: 18px; height: 18px; fill: white; }
+.btn-share.zl span { font-family: Arial, sans-serif; font-size: 11px; font-weight: 900; letter-spacing: -0.3px; }
 
 /* FOOTER */
 .footer { background: var(--ink); color: #7A6E62; padding: 52px 0 28px; font-size: 13px; margin-top: 40px; }
@@ -111,6 +131,9 @@ img { max-width: 100%; display: block; }
   .article-body { font-size: 16px; }
   .article-author-box { flex-direction: column; text-align: center; gap: 10px; }
   .footer-cols { grid-template-columns: repeat(2, 1fr); }
+  
+  /* Điều chỉnh nút share trên mobile */
+  .article-share-box { position: static; justify-content: center; margin-bottom: 20px; }
 }
 @media (max-width: 480px) { .footer-cols { grid-template-columns: 1fr; } }
 </style>
@@ -171,7 +194,7 @@ img { max-width: 100%; display: block; }
 <div class="page-wrapper">
     <div id="loadingState" class="loading-state">
         <div style="font-size: 40px; margin-bottom: 10px;">📜</div>
-        Đang hút dữ liệu bài viết...
+        Đang hút dữ liệu từ Đám mây...
     </div>
     <div id="articleReader">
         </div>
@@ -210,7 +233,7 @@ img { max-width: 100%; display: block; }
   </div>
 </div>
 
-<script src="js/main.js"></script>
+<script src="js/main.js?v=999"></script>
 <script>
     // Cập nhật ngày giờ
     function updateClock() {
@@ -245,42 +268,24 @@ img { max-width: 100%; display: block; }
     })();
 
     // ══════════════════════════════════════════════════════════════
-    // MA THUẬT: HÚT BÀI VIẾT TỪ FILE POSTS.JSON BƠM LÊN WEB
+    // MA THUẬT MỚI: CHỜ SUPABASE TRẢ DỮ LIỆU RỒI MỚI VẼ
     // ══════════════════════════════════════════════════════════════
-    document.addEventListener('DOMContentLoaded', async () => {
+    window.displayPosts = function() {
         const loadingState = document.getElementById('loadingState');
         const articleReader = document.getElementById('articleReader');
         
-        let posts = [];
-        
-        // BƯỚC 1: Kiểm tra xem bộ nhớ đệm có bài chưa
-        try {
-            posts = JSON.parse(localStorage.getItem('ngocdien_posts')) || [];
-        } catch(e) {}
+        let posts = typeof getAllPosts === 'function' ? getAllPosts() : [];
+        const introPosts = posts.filter(p => p.category === 'gioi-thieu');
 
-        // BƯỚC 2: NẾU CHƯA CÓ -> TỰ ĐỘNG HÚT TỪ FILE posts.json CỦA ĐẠI CA
-        if (posts.length === 0) {
-            try {
-                const res = await fetch('posts.json');
-                if (res.ok) {
-                    posts = await res.json();
-                    // Lưu luôn vào máy để các trang khác (Trang chủ, Tiếng làng) đều có bài
-                    localStorage.setItem('ngocdien_posts', JSON.stringify(posts));
-                }
-            } catch(e) {
-                console.log("Không tìm thấy file posts.json");
-            }
-        }
-
-        // BƯỚC 3: Tìm bài viết đại ca đã làm
-        const introPost = posts.find(p => p.category === 'gioi-thieu');
-
-        if (introPost) {
+        if (introPosts.length > 0) {
+            // Lấy bài viết đầu tiên của chuyên mục Giới thiệu
+            let introPost = introPosts[0];
+            
             loadingState.style.display = 'none';
             articleReader.style.display = 'block';
 
             // XỬ LÝ LỖI DÍNH CỤC: Phục hồi lại các đoạn Enter xuống dòng của đại ca
-            let formattedContent = introPost.content.replace(/\n/g, '<br><br>');
+            let formattedContent = introPost.content ? introPost.content.replace(/\n/g, '<br><br>') : '';
 
             let videoHtml = '';
             if (introPost.video && introPost.video.includes('youtube.com')) {
@@ -291,17 +296,26 @@ img { max-width: 100%; display: block; }
 
             let heroImgHtml = '';
             if (introPost.image && !videoHtml) { 
-                heroImgHtml = `<img src="${introPost.image}" alt="${introPost.title}" class="article-hero-img">`;
+                heroImgHtml = `<img src="${escapeHtml(introPost.image)}" alt="${escapeHtml(introPost.title)}" class="article-hero-img">`;
             }
 
             let displayViews = (introPost.views || Math.floor(Math.random() * 50) + 1) + 1000;
 
             articleReader.innerHTML = `
                 <div class="article-header">
+                    <div class="article-share-box">
+                        <button class="btn-share fb" onclick="shareToFB('${introPost.id}')" title="Chia sẻ lên Facebook">
+                            <svg viewBox="0 0 320 512"><path d="M275.9 330.7L293 218h-107.9v-73.2c0-31.2 14.8-61.7 64.6-61.7H296V10.1C280.9 6.8 245.6 0 203.2 0 109.1 0 46.9 56.6 46.9 161.7V218H-10v112.7h56.9v272.3h112.7V330.7h96.3z"/></svg>
+                        </button>
+                        <button class="btn-share zl" onclick="shareToZalo('${introPost.id}')" title="Chia sẻ qua Zalo">
+                            <span>Zalo</span>
+                        </button>
+                    </div>
+
                     <span class="article-tag">Giới thiệu xóm</span>
-                    <h1 class="article-title">${introPost.title}</h1>
+                    <h1 class="article-title">${escapeHtml(introPost.title)}</h1>
                     <div class="article-meta">
-                        <span>📅 Cập nhật: ${introPost.date || 'Gần đây'}</span>
+                        <span>📅 Cập nhật: ${escapeHtml(introPost.date) || 'Gần đây'}</span>
                         <span style="color:var(--gold);">🔥 ${displayViews.toLocaleString('vi-VN')} lượt xem</span>
                     </div>
                 </div>
@@ -315,7 +329,7 @@ img { max-width: 100%; display: block; }
 
                 <div class="article-author-box">
                     <div>
-                        <strong>Tác giả: ${introPost.author || 'Ban quản trị'}</strong>
+                        <strong>Tác giả: ${escapeHtml(introPost.author || 'Ban quản trị')}</strong>
                         Tư liệu được đóng góp và xác thực bởi các bậc cao niên trong xóm Ngọc Điền.
                     </div>
                     <div style="font-size:30px; opacity:0.2;">✍️</div>
@@ -328,12 +342,18 @@ img { max-width: 100%; display: block; }
                 <span style="font-size: 14px;">Xin hãy đăng bài "Giới thiệu" trong trang Quản trị.</span>
             `;
         }
-    });
+    };
+
+    // Đánh thức main.js để nó đi lấy bài về
+    if (typeof fetchPostsFromSupabase === 'function') {
+        // Đã gọi tự động trong main.js, nhưng gọi lại cho chắc nếu load trễ
+        setTimeout(() => { if (document.getElementById('loadingState').style.display !== 'none') displayPosts(); }, 1500);
+    }
 
     document.getElementById('searchBtn')?.addEventListener('click',function(){
         var kw=document.getElementById('searchInput').value.toLowerCase().trim();
         if(!kw) return;
-        var posts = JSON.parse(localStorage.getItem('ngocdien_posts')) || [];
+        var posts = typeof getAllPosts === 'function' ? getAllPosts() : [];
         var res=posts.filter(function(p){return p.title.toLowerCase().includes(kw)||p.content.toLowerCase().includes(kw);});
         alert(res.length?'Tìm thấy '+res.length+' bài:\n'+res.map(function(p){return p.title;}).join('\n'):'Không tìm thấy kết quả nào.');
     });
