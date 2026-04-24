@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/style.css">
     <style>
         body { background: #F5F5F0; padding: 40px 0; }
-        .admin-container { max-width: 800px; margin: 0 auto; background: white; border-radius: 28px; padding: 30px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .admin-container { max-width: 800px; margin: 0 auto; background: white; border-radius: 28px; padding: 30px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); margin-bottom: 30px;}
         .preview-img { max-width: 100%; margin-top: 10px; border-radius: 12px; }
         .success { background: #E8F5E9; padding: 10px; border-radius: 12px; margin-bottom: 20px; color: #2E7D32; }
         .audio-field { background: #F9FAFB; border: 1px solid #E5E7EB; padding: 15px; border-radius: 12px; margin-bottom: 15px; }
@@ -24,6 +24,15 @@
         .btn-login:hover { background: #A01D16; }
         .btn-logout { background: #332A1E; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; }
         .btn-logout:hover { background: #181410; }
+
+        /* CSS KHU VỰC HỘP THƯ */
+        .mail-item { border: 1px solid #EAE4DC; border-radius: 12px; padding: 15px; margin-bottom: 15px; background: #FCFAF6; }
+        .mail-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; border-bottom: 1px dashed #DDD5C8; padding-bottom: 10px;}
+        .mail-meta { font-size: 13px; color: #666; }
+        .mail-meta strong { color: #DA251D; }
+        .mail-content { font-size: 14px; line-height: 1.6; color: #181410; margin-bottom: 15px; white-space: pre-wrap; background: white; padding: 10px; border-radius: 8px; border: 1px solid #EAE4DC;}
+        .btn-duyet { background: #0A8F4B; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: bold; }
+        .btn-duyet:hover { background: #077A3F; }
     </style>
 </head>
 <body>
@@ -42,67 +51,78 @@
     <div style="margin-top: 30px; font-size: 13px;"><a href="../index.html" style="color:#8A7B6A;">← Quay lại Trang chủ</a></div>
 </div>
 
-<div id="mainAdmin" class="admin-container" style="display: none;">
-    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #EAE4DC; padding-bottom: 15px; margin-bottom: 25px;">
-        <h1 style="color:#DA251D; margin: 0; font-size: 24px;">📝 Quản trị xóm Ngọc Điền</h1>
-        <button onclick="logoutAdmin()" class="btn-logout">🚪 Đăng xuất</button>
+<div id="mainAdmin" style="display: none;">
+    
+    <div class="admin-container" style="border: 2px solid #B8882A;">
+        <h2 style="color:#B8882A; margin-top: 0;">📬 Hộp thư chờ duyệt (Từ dân làng)</h2>
+        <p style="font-size: 13px; color: #666; margin-bottom: 20px;">Bài viết được duyệt sẽ tự động đăng lên website theo đúng danh mục.</p>
+        <div id="mailboxList">
+            <p>Đang kiểm tra hòm thư...</p>
+        </div>
     </div>
 
-    <form id="postForm">
-        <label>Tiêu đề</label>
-        <input type="text" id="title" required>
-
-        <label>Danh mục</label>
-        <select id="category" required>
-            <option value="gioi-thieu">📄 Giới thiệu</option>
-            <option value="lich-su">📜 Lịch sử</option>
-            <option value="le-hoi">🎉 Lễ hội</option>
-            <option value="tin-tuc">📌 Tin tức</option>
-            <option value="nguoi-ngoc-dien">🌟 Người Ngọc Điền</option>
-            <option value="tieng-lang">📖 Tiếng Làng (Chung)</option>
-            <option value="tan-man" class="sub-cat">&nbsp;&nbsp;&nbsp;↳ ✍️ Tản mạn</option>
-            <option value="tho" class="sub-cat">&nbsp;&nbsp;&nbsp;↳ 🌸 Thơ</option>
-            <option value="am-che" class="sub-cat">&nbsp;&nbsp;&nbsp;↳ 🍵 Bên ấm chè</option>
-            <option value="giai-thoai" class="sub-cat">&nbsp;&nbsp;&nbsp;↳ 📖 Giai thoại</option>
-            <option value="kham-pha" class="sub-cat">&nbsp;&nbsp;&nbsp;↳ 🔍 Khám phá</option>
-            <option value="goc-nhin" class="sub-cat">&nbsp;&nbsp;&nbsp;↳ 💡 Góc nhìn</option>
-            <option value="huong-uoc">📜 Hương ước 1883</option>
-            <option value="di-tich">🏛️ Di tích</option>
-            <option value="chinh-sach">⚖️ Chính sách</option>
-            <option value="chuyen-doi-so">💻 Chuyển đổi số</option>
-            <option value="thu-vien">📚 Thư viện</option>
-            <option value="ban-do">🗺️ Bản đồ</option>
-            <option value="gop-y">💬 Góp ý</option>
-            <option value="podcast" style="font-weight: bold; color: #1E3A8A;">🎙️ Đọc truyện đêm khuya (Podcast)</option>
-        </select>
-
-        <label>Ảnh đại diện (chọn file ảnh)</label>
-        <input type="file" id="imageFile" accept="image/*">
-        <input type="text" id="imageUrl" placeholder="Hoặc dán link ảnh">
-        <div id="imagePreview"></div>
-
-        <label>Video (nhúng link YouTube)</label>
-        <input type="text" id="videoUrl" placeholder="https://www.youtube.com/embed/...">
-
-        <div class="audio-field">
-            <label>🎧 Âm thanh Podcast</label>
-            <input type="text" id="audioUrl" placeholder="Dán link file .mp3 (Google Drive, Soundcloud...)">
-            <div class="audio-note"><strong>⚠️ LƯU Ý:</strong> Up file MP3 lên Drive/Host ngoài rồi dán link vào đây.</div>
+    <div class="admin-container">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #EAE4DC; padding-bottom: 15px; margin-bottom: 25px;">
+            <h1 style="color:#DA251D; margin: 0; font-size: 24px;">📝 Quản trị xóm Ngọc Điền</h1>
+            <button onclick="logoutAdmin()" class="btn-logout">🚪 Đăng xuất</button>
         </div>
 
-        <label>Nội dung chi tiết</label>
-        <textarea id="content" rows="8" required></textarea>
+        <form id="postForm">
+            <label>Tiêu đề</label>
+            <input type="text" id="title" required>
 
-        <label>Tác giả</label>
-        <input type="text" id="author" value="Ban quản trị">
+            <label>Danh mục</label>
+            <select id="category" required>
+                <option value="gioi-thieu">📄 Giới thiệu</option>
+                <option value="lich-su">📜 Lịch sử</option>
+                <option value="le-hoi">🎉 Lễ hội</option>
+                <option value="tin-tuc">📌 Tin tức</option>
+                <option value="nguoi-ngoc-dien">🌟 Người Ngọc Điền</option>
+                <option value="tieng-lang">📖 Tiếng Làng (Chung)</option>
+                <option value="tan-man" class="sub-cat">&nbsp;&nbsp;&nbsp;↳ ✍️ Tản mạn</option>
+                <option value="tho" class="sub-cat">&nbsp;&nbsp;&nbsp;↳ 🌸 Thơ</option>
+                <option value="am-che" class="sub-cat">&nbsp;&nbsp;&nbsp;↳ 🍵 Bên ấm chè</option>
+                <option value="giai-thoai" class="sub-cat">&nbsp;&nbsp;&nbsp;↳ 📖 Giai thoại</option>
+                <option value="kham-pha" class="sub-cat">&nbsp;&nbsp;&nbsp;↳ 🔍 Khám phá</option>
+                <option value="goc-nhin" class="sub-cat">&nbsp;&nbsp;&nbsp;↳ 💡 Góc nhìn</option>
+                <option value="huong-uoc">📜 Hương ước 1883</option>
+                <option value="di-tich">🏛️ Di tích</option>
+                <option value="chinh-sach">⚖️ Chính sách</option>
+                <option value="chuyen-doi-so">💻 Chuyển đổi số</option>
+                <option value="thu-vien">📚 Thư viện</option>
+                <option value="ban-do">🗺️ Bản đồ</option>
+                <option value="gop-y">💬 Góp ý</option>
+                <option value="podcast" style="font-weight: bold; color: #1E3A8A;">🎙️ Đọc truyện đêm khuya (Podcast)</option>
+            </select>
 
-        <button type="submit" id="submitPostBtn">Đăng bài</button>
-    </form>
-    <div id="message"></div>
-    <hr>
-    <h3>📋 Bài viết trên Đám mây</h3>
-    <div id="postList"></div>
-    <p><a href="../index.html" target="_blank">🔗 Xem trang chủ</a> | <a href="#" onclick="exportData()">💾 Tải sao lưu</a></p>
+            <label>Ảnh đại diện (chọn file ảnh)</label>
+            <input type="file" id="imageFile" accept="image/*">
+            <input type="text" id="imageUrl" placeholder="Hoặc dán link ảnh">
+            <div id="imagePreview"></div>
+
+            <label>Video (nhúng link YouTube)</label>
+            <input type="text" id="videoUrl" placeholder="https://www.youtube.com/embed/...">
+
+            <div class="audio-field">
+                <label>🎧 Âm thanh Podcast</label>
+                <input type="text" id="audioUrl" placeholder="Dán link file .mp3 (Google Drive, Soundcloud...)">
+                <div class="audio-note"><strong>⚠️ LƯU Ý:</strong> Up file MP3 lên Drive/Host ngoài rồi dán link vào đây.</div>
+            </div>
+
+            <label>Nội dung chi tiết</label>
+            <textarea id="content" rows="8" required></textarea>
+
+            <label>Tác giả</label>
+            <input type="text" id="author" value="Ban quản trị">
+
+            <button type="submit" id="submitPostBtn">Đăng bài</button>
+        </form>
+        <div id="message"></div>
+        <hr>
+        <h3>📋 Bài viết trên Đám mây</h3>
+        <div id="postList"></div>
+        <p><a href="../index.html" target="_blank">🔗 Xem trang chủ</a></p>
+    </div>
 </div>
 
 <script src="../js/main.js"></script>
@@ -122,32 +142,16 @@
         errorMsg.innerHTML = '';
 
         try {
-            // Gửi yêu cầu xin cấp Thẻ từ lên Supabase
             const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
                 method: 'POST',
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'apikey': SUPABASE_KEY, 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: email, password: password })
             });
-
             const data = await res.json();
-
-            if (!res.ok) {
-                throw new Error(data.error_description || "Sai Email hoặc Mật khẩu. Vui lòng thử lại!");
-            }
+            if (!res.ok) throw new Error(data.error_description || "Sai Email hoặc Mật khẩu!");
             
-            // Đăng nhập thành công -> Lưu thẻ từ (access_token) vào ví trình duyệt
             localStorage.setItem('supabase_admin_token', data.access_token);
-            
-            // Chuyển màn hình
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('mainAdmin').style.display = 'block';
-            
-            // Tải danh sách bài viết
-            displayAdminPosts();
-            
+            showMainAdmin();
         } catch(err) {
             errorMsg.innerHTML = '❌ ' + err.message;
         } finally {
@@ -156,34 +160,149 @@
         }
     });
 
-    // Hàm kiểm tra khi vừa mở trang (có thẻ từ sẵn chưa?)
     window.onload = function() {
-        if (localStorage.getItem('supabase_admin_token')) {
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('mainAdmin').style.display = 'block';
-            displayAdminPosts();
-        }
+        if (localStorage.getItem('supabase_admin_token')) showMainAdmin();
     };
 
-    // Hàm đăng xuất (vứt thẻ từ đi)
+    function showMainAdmin() {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('mainAdmin').style.display = 'block';
+        displayAdminPosts();
+        loadMailbox(); // Tải hòm thư chờ
+    }
+
     window.logoutAdmin = function() {
         localStorage.removeItem('supabase_admin_token');
         location.reload();
     };
 
-    // Hàm lấy Thẻ từ để kẹp vào gói hàng
     function getAuthToken() {
         const token = localStorage.getItem('supabase_admin_token');
-        if (!token) {
-            alert("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại!");
-            location.reload();
-            return null;
-        }
+        if (!token) { alert("Phiên đăng nhập đã hết hạn."); location.reload(); return null; }
         return `Bearer ${token}`;
     }
 
     // ==========================================
-    // 2. LOGIC XỬ LÝ ẢNH
+    // 2. KHU VỰC HỘP THƯ CHỜ DUYỆT
+    // ==========================================
+    async function loadMailbox() {
+        const tokenHeader = getAuthToken();
+        if (!tokenHeader) return;
+        let container = document.getElementById('mailboxList');
+
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/hom_thu_cho?select=*&order=created_at.desc`, {
+                method: 'GET',
+                headers: { 'apikey': SUPABASE_KEY, 'Authorization': tokenHeader }
+            });
+            if (!response.ok) throw new Error("Không mở được hòm thư");
+            const thuCho = await response.json();
+
+            if (thuCho.length === 0) {
+                container.innerHTML = '<p style="color:#2E7D32;">✨ Hòm thư sạch sẽ, chưa có bài mới nào.</p>';
+                return;
+            }
+
+            let html = '';
+            thuCho.forEach(thu => {
+                let tenChuyenMuc = getCategoryName(thu.chuyen_muc);
+                html += `
+                <div class="mail-item" id="mail-${thu.id}">
+                    <div class="mail-header">
+                        <div class="mail-meta">
+                            <div><strong>Người gửi:</strong> ${escapeHtml(thu.nguoi_gui)} (SĐT: ${escapeHtml(thu.sdt || 'Không có')})</div>
+                            <div><strong>Chuyên mục:</strong> ${tenChuyenMuc} | <strong>Ngày gửi:</strong> ${new Date(thu.created_at).toLocaleString('vi-VN')}</div>
+                        </div>
+                    </div>
+                    <div class="mail-content">${escapeHtml(thu.noi_dung)}</div>
+                    <div>
+                        <button onclick="duyetBai(${thu.id}, '${escapeHtml(thu.chuyen_muc)}')" class="btn-duyet">✅ Duyệt & Đăng bài</button>
+                        <button onclick="xoaThu(${thu.id})" style="background:#f44336; color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; font-size:13px; font-weight:bold; margin-left:10px;">🗑️ Xóa thư</button>
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = html;
+        } catch (error) {
+            container.innerHTML = `<p style="color:red;">Lỗi hòm thư: ${error.message}</p>`;
+        }
+    }
+
+    // Hàm chuyển đổi mã danh mục thành tên đẹp
+    function getCategoryName(cat) {
+        const catNames = {
+            'gioi-thieu': 'Giới thiệu', 'lich-su': 'Lịch sử', 'le-hoi': 'Lễ hội', 'tin-tuc': 'Tin tức',
+            'nguoi-ngoc-dien': 'Người Ngọc Điền', 'tieng-lang': 'Tiếng Làng', 'tan-man': 'Tản mạn',
+            'tho': 'Thơ', 'am-che': 'Bên ấm chè', 'giai-thoai': 'Giai thoại', 'kham-pha': 'Khám phá',
+            'goc-nhin': 'Góc nhìn', 'huong-uoc': 'Hương ước 1883', 'di-tich': 'Di tích',
+            'chinh-sach': 'Chính sách', 'chuyen-doi-so': 'Chuyển đổi số', 'thu-vien': 'Thư viện',
+            'ban-do': 'Bản đồ', 'gop-y': 'Góp ý'
+        };
+        return catNames[cat] || 'Chưa phân loại';
+    }
+
+    // NÚT XÓA THƯ (Ném vào sọt rác)
+    window.xoaThu = async function(id) {
+        if (!confirm("Đại ca có chắc chắn muốn xóa bỏ bức thư này không?")) return;
+        const tokenHeader = getAuthToken();
+        try {
+            await fetch(`${SUPABASE_URL}/rest/v1/hom_thu_cho?id=eq.${id}`, {
+                method: 'DELETE',
+                headers: { 'apikey': SUPABASE_KEY, 'Authorization': tokenHeader }
+            });
+            document.getElementById(`mail-${id}`).remove();
+        } catch (error) { alert("Lỗi khi xóa thư!"); }
+    };
+
+    // NÚT DUYỆT BÀI (Chuyển thư thành bài đăng)
+    window.duyetBai = async function(id, chuyenMuc) {
+        const tokenHeader = getAuthToken();
+        try {
+            // Bước 1: Kéo nội dung bức thư về
+            const res = await fetch(`${SUPABASE_URL}/rest/v1/hom_thu_cho?id=eq.${id}&select=*`, {
+                headers: { 'apikey': SUPABASE_KEY, 'Authorization': tokenHeader }
+            });
+            const thuData = await res.json();
+            const thu = thuData[0];
+
+            // Tự động tạo Tiêu đề từ nội dung (Lấy 8 từ đầu)
+            let rawText = thu.noi_dung.replace(/\n/g, " ");
+            let autoTitle = rawText.split(" ").slice(0, 8).join(" ") + "...";
+
+            // Bước 2: Bơm sang kho Bài Viết chính
+            let newPost = {
+                title: autoTitle,
+                category: chuyenMuc,
+                content: thu.noi_dung,
+                author: thu.nguoi_gui,
+                date: new Date().toLocaleDateString('vi-VN'),
+                views: 0
+            };
+            
+            const postRes = await fetch(`${SUPABASE_URL}/rest/v1/posts`, {
+                method: 'POST',
+                headers: { 'apikey': SUPABASE_KEY, 'Authorization': tokenHeader, 'Content-Type': 'application/json' },
+                body: JSON.stringify(newPost)
+            });
+            
+            if(!postRes.ok) throw new Error("Lỗi khi đăng lên web");
+
+            // Bước 3: Xóa thư trong hòm chờ đi
+            await fetch(`${SUPABASE_URL}/rest/v1/hom_thu_cho?id=eq.${id}`, {
+                method: 'DELETE',
+                headers: { 'apikey': SUPABASE_KEY, 'Authorization': tokenHeader }
+            });
+
+            alert("✅ Đã duyệt và đăng bài lên Web thành công! Đại ca có thể chỉnh sửa lại tiêu đề trong phần danh sách bài viết bên dưới.");
+            loadMailbox(); // Tải lại hòm thư
+            displayAdminPosts(); // Tải lại kho bài chính
+
+        } catch (error) {
+            alert("Lỗi quá trình duyệt bài: " + error.message);
+        }
+    };
+
+    // ==========================================
+    // 3. LOGIC XỬ LÝ ẢNH
     // ==========================================
     document.getElementById('imageFile').addEventListener('change', function(e) {
         const file = e.target.files[0];
@@ -198,11 +317,10 @@
     });
 
     // ==========================================
-    // 3. LOGIC ĐĂNG BÀI VÀ SỬA BÀI (Sử dụng Thẻ từ)
+    // 4. LOGIC ĐĂNG BÀI VÀ SỬA BÀI CỦA ADMIN
     // ==========================================
     document.getElementById('postForm').addEventListener('submit', async function(e) {
         e.preventDefault();
-        
         const tokenHeader = getAuthToken();
         if (!tokenHeader) return;
 
@@ -223,48 +341,26 @@
 
         try {
             if (window.currentEditId) {
-                // Sửa bài
                 const response = await fetch(`${SUPABASE_URL}/rest/v1/posts?id=eq.${window.currentEditId}`, {
                     method: 'PATCH',
-                    headers: {
-                        'apikey': SUPABASE_KEY,
-                        'Authorization': tokenHeader, // Kẹp thẻ từ vào đây
-                        'Content-Type': 'application/json',
-                        'Prefer': 'return=minimal'
-                    },
+                    headers: { 'apikey': SUPABASE_KEY, 'Authorization': tokenHeader, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
                     body: JSON.stringify(postData)
                 });
-
-                if (!response.ok) {
-                    if(response.status === 401 || response.status === 403) throw new Error("Thẻ từ hết hạn hoặc bị từ chối!");
-                    throw new Error("Lỗi khi cập nhật");
-                }
+                if (!response.ok) throw new Error("Lỗi khi cập nhật");
                 
                 document.getElementById('message').innerHTML = '<div class="success" style="color:#FF8C00;">✅ Đã cập nhật bài viết thành công!</div>';
                 window.currentEditId = null;
                 btn.innerHTML = 'Đăng bài';
                 btn.style.background = '#DA251D';
-
             } else {
-                // Đăng bài mới
                 postData.date = new Date().toLocaleDateString('vi-VN');
                 postData.views = 0;
-
                 const response = await fetch(`${SUPABASE_URL}/rest/v1/posts`, {
                     method: 'POST',
-                    headers: {
-                        'apikey': SUPABASE_KEY,
-                        'Authorization': tokenHeader, // Kẹp thẻ từ vào đây
-                        'Content-Type': 'application/json',
-                        'Prefer': 'return=minimal'
-                    },
+                    headers: { 'apikey': SUPABASE_KEY, 'Authorization': tokenHeader, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
                     body: JSON.stringify(postData)
                 });
-
-                if (!response.ok) {
-                    if(response.status === 401 || response.status === 403) throw new Error("Bị Supabase từ chối (Access Denied)! Đại ca kiểm tra lại RLS nhé.");
-                    throw new Error("Lỗi khi đăng bài mới");
-                }
+                if (!response.ok) throw new Error("Lỗi khi đăng bài mới");
                 document.getElementById('message').innerHTML = '<div class="success">✅ Đã đăng bài lên Đám mây thành công!</div>';
             }
             
@@ -278,18 +374,17 @@
             if (!window.currentEditId) btn.innerHTML = 'Đăng bài';
             btn.disabled = false;
         }
-
         setTimeout(() => document.getElementById('message').innerHTML = '', 4000);
     });
 
     // ==========================================
-    // 4. LẤY DANH SÁCH BÀI VÀ XÓA BÀI
+    // 5. LẤY DANH SÁCH BÀI VÀ XÓA BÀI
     // ==========================================
     async function displayAdminPosts() {
         let container = document.getElementById('postList');
         container.innerHTML = '<p>Đang tải dữ liệu từ Đám mây...</p>';
         
-        let posts = await fetchPostsFromSupabase(); // Hàm này chạy bằng quyền khách đọc (vẫn OK)
+        let posts = await fetchPostsFromSupabase(); 
         
         if (posts.length === 0) { container.innerHTML = '<p>Kho Đám mây chưa có bài nào.</p>'; return; }
         
@@ -315,39 +410,17 @@
         if (confirm('Anh có chắc chắn muốn xóa bài viết này khỏi Đám mây không? Hành động này không thể hoàn tác!')) {
             const tokenHeader = getAuthToken();
             if (!tokenHeader) return;
-
             try {
                 const response = await fetch(`${SUPABASE_URL}/rest/v1/posts?id=eq.${id}`, {
                     method: 'DELETE',
-                    headers: {
-                        'apikey': SUPABASE_KEY,
-                        'Authorization': tokenHeader // Kẹp thẻ từ vào đây
-                    }
+                    headers: { 'apikey': SUPABASE_KEY, 'Authorization': tokenHeader }
                 });
-                if (!response.ok) {
-                    if(response.status === 401 || response.status === 403) throw new Error("Không có quyền XÓA (Access Denied)!");
-                    throw new Error("Xóa thất bại");
-                }
-                
+                if (!response.ok) throw new Error("Xóa thất bại");
                 alert('Đã xóa bài viết thành công!');
                 displayAdminPosts(); 
-            } catch (error) {
-                alert("Lỗi: " + error.message);
-            }
+            } catch (error) { alert("Lỗi: " + error.message); }
         }
     };
-
-    function exportData() {
-        let posts = getAllPosts(); 
-        if(posts.length === 0) { alert("Chưa có dữ liệu để tải về."); return; }
-        
-        let data = JSON.stringify(posts);
-        let blob = new Blob([data], {type: 'application/json'});
-        let a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'ngocdien_backup_cloud.json';
-        a.click();
-    }
 </script>
 </body>
 </html>
