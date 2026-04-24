@@ -1,311 +1,309 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-body {
-    background-color: #F5F5F0;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    color: #1A1A1A;
-    line-height: 1.5;
-}
-.container {
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-.header {
-    background: #FFFFFF;
-    border-bottom: 3px solid #DA251D;
-    padding: 20px 0;
-    margin-bottom: 30px;
-}
-.header-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-.logo h1 {
-    font-family: 'Times New Roman', serif;
-    font-size: 32px;
-    color: #DA251D;
-}
-.logo p {
-    font-size: 14px;
-    color: #666;
-}
-.search-box {
-    display: flex;
-    border: 1px solid #E0E0E0;
-    border-radius: 30px;
-    overflow: hidden;
-    background: white;
-}
-.search-box input {
-    padding: 10px 15px;
-    border: none;
-    width: 220px;
-    outline: none;
-}
-.search-box button {
-    background: #DA251D;
-    border: none;
-    padding: 0 20px;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-}
-.menu-wrapper {
-    background: white;
-    border-radius: 12px;
-    margin-bottom: 32px;
-    border: 1px solid #EAEAEA;
-    overflow-x: auto;
-    white-space: nowrap;
-}
-.main-menu {
-    display: inline-flex;
-}
-.main-menu a {
-    display: inline-block;
-    padding: 14px 20px;
-    text-decoration: none;
-    font-weight: 600;
-    color: #1A1A1A;
-    font-size: 14px;
-    border-bottom: 3px solid transparent;
-}
-.main-menu a:hover {
-    color: #DA251D;
-    border-bottom-color: #DA251D;
-}
-.grid-main {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 32px;
-    margin-bottom: 48px;
-}
-.card {
-    background: white;
-    border-radius: 20px;
-    border: 1px solid #EAEAEA;
-    overflow: hidden;
-    margin-bottom: 24px;
-    transition: 0.2s;
-}
-.card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-}
-.card-img {
-    height: 200px;
-    background: #E5E7EB;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 48px;
-}
-.card-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.card-content {
-    padding: 20px;
-}
-.card-content h3 {
-    font-size: 20px;
-    margin-bottom: 10px;
-}
-.meta {
-    font-size: 12px;
-    color: #9CA3AF;
-    margin-bottom: 12px;
-}
-.read-more {
-    color: #DA251D;
-    font-weight: 600;
-    text-decoration: none;
-    display: inline-flex;
-    gap: 6px;
-}
-.sidebar-block {
-    background: white;
-    border-radius: 20px;
-    padding: 20px;
-    border: 1px solid #EAEAEA;
-    margin-bottom: 28px;
-}
-.block-title {
-    font-size: 20px;
-    font-weight: 700;
-    border-bottom: 2px solid #F0F0F0;
-    padding-bottom: 8px;
-    margin-bottom: 16px;
-}
-.admin-phone {
-    background: #FEF2F2;
-    padding: 12px;
-    border-radius: 40px;
-    text-align: center;
-    margin-top: 16px;
-}
-input, textarea, select {
-    width: 100%;
-    padding: 12px;
-    border-radius: 16px;
-    border: 1px solid #E5E7EB;
-    margin-bottom: 12px;
-}
-button {
-    background: #DA251D;
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 40px;
-    font-weight: 600;
-    cursor: pointer;
-    width: 100%;
-}
-.footer {
-    background: #1F2937;
-    color: #9CA3AF;
-    margin-top: 60px;
-    padding: 48px 0 24px;
-}
-.footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 40px;
-    margin-bottom: 32px;
-}
-.footer-col h4 {
-    color: white;
-    margin-bottom: 16px;
-}
-.copyright {
-    text-align: center;
-    border-top: 1px solid #374151;
-    padding-top: 24px;
-}
-@media (max-width: 900px) {
-    .grid-main {
-        grid-template-columns: 1fr;
+// ==========================================
+// THIẾT LẬP KẾT NỐI SUPABASE
+// ==========================================
+const SUPABASE_URL = "https://twsmdblbrgvsctzsavni.supabase.co"; 
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR3c21kYmxicmd2c2N0enNhdm5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5Njc1NDEsImV4cCI6MjA5MjU0MzU0MX0.pjrtm6g5e3z4XwffhANES55G0JNtcBXiLkA0_ZyeHC0";
+
+// Biến lưu trữ bài viết sau khi kéo từ Supabase về
+let globalPosts = [];
+
+// Hàm nòng cốt: Kéo dữ liệu từ kho Supabase về web
+async function fetchPostsFromSupabase() {
+    try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/posts?select=*&order=id.desc`, {
+            method: 'GET',
+            headers: {
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`,
+                'Content-Type': 'application/json',
+                'Prefer': 'return=representation'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        globalPosts = data; // Lưu vào bộ nhớ tạm để các hàm khác dùng
+        console.log("Đã tải dữ liệu từ Supabase thành công!", globalPosts.length, "bài viết.");
+        
+        // Sau khi tải xong dữ liệu, tự động chạy các hàm vẽ giao diện trên toàn trang
+        if(typeof renderHero==='function') renderHero();
+        if(typeof initDynamicTicker==='function') initDynamicTicker();
+        if(typeof initAutoFeaturedNews==='function') initAutoFeaturedNews();
+        if(typeof initDynamicPodcast==='function') initDynamicPodcast();
+        if(typeof initTrendingPosts==='function') initTrendingPosts();
+        
+        // Bung bài ở trang danh mục và trang tĩnh (Lịch sử, Giới thiệu, Tiếng làng...)
+        if (typeof displayPosts === 'function') {
+            displayPosts();
+        }
+
+        return data;
+    } catch (error) {
+        console.error("Lỗi khi tải dữ liệu từ Supabase:", error);
+        return [];
     }
 }
 
-/* ========================================== */
-/* PHẦN THÊM MỚI BÊN DƯỚI (KHÔNG CHẠM VÀO CODE TRÊN) */
-/* ========================================== */
-
-/* 1. Ẩn thanh cuộn ngang cho thanh menu (vuốt vẫn mượt mà) */
-.menu-wrapper {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-.menu-wrapper::-webkit-scrollbar {
-    display: none;
+// Thay thế hàm getAllPosts cũ bằng hàm đọc từ biến globalPosts
+function getAllPosts() {
+    return globalPosts;
 }
 
-/* 2. Cân chỉnh lại giao diện riêng cho Màn hình điện thoại */
-@media (max-width: 900px) {
-    /* Ép thanh tìm kiếm dãn đầy 100% chiều ngang màn hình */
-    .search-box {
-        width: 100%;
-        display: flex;
-    }
-    .search-box input {
-        flex: 1;
-        width: auto;
-    }
-    .search-box button {
-        padding: 0 25px;
-    }
+// Hàm lấy bài theo danh mục
+function getPostsByCategory(category) {
+    let posts = getAllPosts();
+    return posts.filter(p => p.category === category);
+}
 
-    /* Căn giữa Logo (Hình tròn đỏ) và cụm chữ theo chiều dọc */
-    .logo {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        width: 100%;
-    }
+function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    });
+}
+
+// ==========================================
+// MÔ-TƠ CHIA SẺ MẠNG XÃ HỘI (Chuẩn bị cho Trạm Trung Chuyển)
+// ==========================================
+window.shareToFB = function(postId) {
+    const domain = "https://ngocdien.info.vn";
+    const shareUrl = `${domain}/api/share?id=${postId}`;
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, 'fb-share', 'width=600,height=400');
+};
+
+window.shareToZalo = function(postId) {
+    const domain = "https://ngocdien.info.vn";
+    const shareUrl = `${domain}/api/share?id=${postId}`;
+    window.open(`https://zalo.me/share?url=${encodeURIComponent(shareUrl)}`, 'zalo-share', 'width=600,height=500');
+};
+
+// ==========================================
+// CÔNG CỤ VẼ BÀI VIẾT (CẤY SẴN NÚT SHARE)
+// ==========================================
+function renderNewsGrid(containerId, posts, limit = 6) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
     
-    /* Gộp chữ Xóm Ngọc Điền thành một khối để không bị xô lệch */
-    .logo > div {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+    container.style.display = "grid";
+    container.style.gridTemplateColumns = "repeat(auto-fill, minmax(300px, 1fr))";
+    container.style.gap = "24px";
+
+    if (posts.length === 0) {
+        container.innerHTML = '<p style="color:#9CA3AF; grid-column: 1/-1;">Chưa có bài viết nào.</p>';
+        return;
     }
+    let html = '';
+    posts.slice(0, limit).forEach(post => {
+        let plainText = post.content ? post.content.replace(/<\/?[^>]+(>|$)/g, "") : '';
+        html += `
+        <div class="card">
+            <div class="share-box">
+                <button class="btn-share fb" onclick="shareToFB('${post.id}')" title="Chia sẻ lên Facebook">
+                    <svg viewBox="0 0 320 512"><path d="M275.9 330.7L293 218h-107.9v-73.2c0-31.2 14.8-61.7 64.6-61.7H296V10.1C280.9 6.8 245.6 0 203.2 0 109.1 0 46.9 56.6 46.9 161.7V218H-10v112.7h56.9v272.3h112.7V330.7h96.3z"/></svg>
+                </button>
+                <button class="btn-share zl" onclick="shareToZalo('${post.id}')" title="Chia sẻ qua Zalo">
+                    <span>Zalo</span>
+                </button>
+            </div>
+
+            <div class="card-img">
+                ${post.image && post.image.startsWith('data:image') 
+                  ? `<img src="${escapeHtml(post.image)}" style="width:100%; height:100%; object-fit:cover;">` 
+                  : escapeHtml(post.image || '📄')}
+            </div>
+            <div class="card-content">
+                <h3><a href="#" onclick="viewPost('${post.id}'); return false;" style="color: inherit; text-decoration: none;">${escapeHtml(post.title)}</a></h3>
+                <div class="meta">📁 ${escapeHtml(post.category)} &nbsp;|&nbsp; 📅 ${escapeHtml(post.date)}</div>
+                <p style="margin-bottom: 15px; color: #666; font-size: 14px;">${escapeHtml(plainText.substring(0, 110))}...</p>
+                <a href="#" class="read-more" onclick="viewPost('${post.id}'); return false;">Đọc tiếp →</a>
+            </div>
+        </div>`;
+    });
+    container.innerHTML = html;
 }
 
-/* ========================================== */
-/* BƯỚC 1: CSS CHO MODAL ĐỌC BÀI VIẾT (MỚI THÊM) */
-/* ========================================== */
-
-/* 3. CSS cho Modal Đọc Bài Viết (Chuẩn báo chí Việt Nam) */
-.modal-overlay {
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.7);
-    display: flex; justify-content: center; align-items: center;
-    z-index: 9999; padding: 20px;
-}
-.modal-content {
-    background: white;
-    width: 100%; max-width: 800px; max-height: 90vh;
-    border-radius: 12px; padding: 40px;
-    overflow-y: auto; position: relative;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-.close-btn {
-    position: absolute; top: 15px; right: 25px;
-    font-size: 32px; font-weight: bold; color: #DA251D;
-    cursor: pointer; transition: 0.2s;
-}
-.close-btn:hover { color: #000; }
-.modal-title {
-    font-family: 'Times New Roman', serif; font-size: 28px; 
-    color: #DA251D; margin-bottom: 15px; padding-right: 30px;
-}
-.modal-meta {
-    font-size: 14px; color: #666; margin-bottom: 25px;
-    border-bottom: 1px solid #EEE; padding-bottom: 15px;
-}
-.modal-img {
-    width: 100%; max-height: 450px; object-fit: contain;
-    border-radius: 8px; margin-bottom: 25px; background: #f9f9f9;
-}
-/* THIẾT LẬP CĂN ĐỀU 2 BÊN VÀ KHOẢNG CÁCH DÒNG */
-.modal-body {
-    font-size: 17px; 
-    line-height: 1.7; /* Khoảng cách dòng chuẩn dễ đọc */
-    color: #222;
-    text-align: justify; /* Lệnh căn đều 2 lề theo chuẩn VN */
-    font-family: 'Inter', sans-serif;
+function renderPosts(containerId, posts, limit = 50) {
+    renderNewsGrid(containerId, posts, limit);
 }
 
-/* ========================================== */
-/* BỘ NÚT CHIA SẺ (SHARE) ÁP DỤNG TOÀN WEB   */
-/* ========================================== */
-.vintage-card, .card { position: relative; }
+// ==========================================
+// KHUNG ĐỌC BÀI CHUYÊN NGHIỆP TRÊN TRANG
+// ==========================================
+window.viewPost = function(id) {
+    let posts = getAllPosts();
+    let post = posts.find(p => p.id == id);
+    if (!post) {
+        alert('Bài viết không tồn tại hoặc chưa tải xong. Vui lòng thử lại.'); return;
+    }
 
-.share-box {
-    position: absolute; top: 15px; right: 15px;
-    display: flex; gap: 8px; z-index: 10;
-    opacity: 0.85; transition: opacity 0.2s;
-}
-.vintage-card:hover .share-box, .card:hover .share-box { opacity: 1; }
+    const hero = document.getElementById('heroDynamic'); 
+    const pageLayout = document.querySelector('.page-layout'); 
+    const postsContainer = document.getElementById('postsContainer'); 
+    const pageTitle = document.querySelector('h1[style*="DA251D"]'); 
+    const menuWrapper = document.querySelector('.menu-wrapper');
 
-.btn-share {
-    width: 32px; height: 32px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    border: none; cursor: pointer;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.15); transition: transform 0.2s, box-shadow 0.2s;
-}
-.btn-share:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 5px 12px rgba(0,0,0,0.25); }
+    let readingArea = document.getElementById('readingArea');
+    if (!readingArea) {
+        readingArea = document.createElement('div');
+        readingArea.id = 'readingArea';
+        const mainContainer = document.querySelector('.container:has(.page-layout), .container:has(#postsContainer)');
+        if(mainContainer) {
+            mainContainer.prepend(readingArea);
+        } else {
+            document.body.appendChild(readingArea);
+        }
+    }
 
-.btn-share.fb { background: #1877F2; color: white; }
-.btn-share.zl { background: #0068FF; color: white; }
-.btn-share.fb svg { width: 16px; height: 16px; fill: white; }
-.btn-share.zl span { font-family: Arial, sans-serif; font-size: 10px; font-weight: 900; letter-spacing: -0.3px; }
+    if (hero) hero.style.display = 'none';
+    if (pageLayout) pageLayout.style.display = 'none';
+    if (postsContainer) postsContainer.style.display = 'none';
+    if (pageTitle) pageTitle.style.display = 'none';
+    if (menuWrapper) menuWrapper.style.display = 'none';
+    
+    readingArea.style.display = 'block';
+
+    let formattedContent = post.content ? post.content.replace(/\n/g, '<br>') : '';
+    
+    let domain = "https://ngocdien.info.vn";
+    let shareUrl = encodeURIComponent(`${domain}/api/share?id=${post.id}`);
+
+    readingArea.innerHTML = `
+        <div style="max-width: 850px; margin: 0 auto; padding: 10px 0 60px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #EAEAEA; margin-bottom: 30px;">
+                <div style="display: flex; gap: 20px;">
+                    <a href="index.html" style="font-weight: 600; color: #666; display: flex; align-items: center; gap: 6px; text-decoration: none;">🏠 Trang chủ</a>
+                    <a href="#" onclick="closeArticle(); return false;" style="font-weight: 700; color: #DA251D; display: flex; align-items: center; gap: 6px; text-decoration: none;">✖ Thoát</a>
+                </div>
+                <div style="display: flex; gap: 15px; align-items: center;">
+                    <svg viewBox="0 0 24 24" style="width: 32px; height: 32px; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+shareUrl, 'fb-share', 'width=600,height=400')">
+                        <circle cx="12" cy="12" r="12" fill="#1877F2"/>
+                        <path d="M15 12h-2v7h-3v-7H8V9h2V7.6C10 5.5 11.2 4.3 13.3 4.3c.9 0 1.7.1 1.7.1v2h-1c-1 0-1.3.6-1.3 1.3V9h2.3l-.3 3z" fill="white"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" style="width: 32px; height: 32px; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'" onclick="window.open('https://zalo.me/share?url='+shareUrl, 'zalo-share', 'width=600,height=500')">
+                        <circle cx="12" cy="12" r="12" fill="#0068FF"/>
+                        <path d="M7 7h10a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z" fill="none" stroke="white" stroke-width="1.5"/>
+                        <text x="7.5" y="15" fill="white" font-family="Arial, sans-serif" font-weight="bold" font-size="10">Z</text>
+                    </svg>
+                </div>
+            </div>
+            
+            <h2 style="font-family: 'Times New Roman', serif; font-size: 34px; color: #DA251D; margin-bottom: 15px; line-height: 1.3;">${escapeHtml(post.title)}</h2>
+            <div style="font-size: 13px; color: #9CA3AF; margin-bottom: 25px; border-bottom: 1px solid #EAEAEA; padding-bottom: 15px;">📅 ${escapeHtml(post.date)} &nbsp;|&nbsp; 👤 ${escapeHtml(post.author || 'Ban quản trị')}</div>
+            
+            ${post.image && post.image.startsWith('data:image') ? `<img src="${escapeHtml(post.image)}" style="width: 100%; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">` : ''}
+            
+            <div style="font-size: 17px; line-height: 1.8; text-align: justify; color: #1A1A1A;">${formattedContent}</div>
+        </div>
+    `;
+    window.scrollTo(0, 0);
+
+    // Xử lý tăng View ngầm đẩy lên Supabase
+    if (post.id) {
+        fetch(`${SUPABASE_URL}/rest/v1/posts?id=eq.${post.id}`, {
+            method: 'PATCH',
+            headers: {
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`,
+                'Content-Type': 'application/json',
+                'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify({ views: (post.views || 0) + 1 })
+        }).catch(e => console.log("Không tăng được view", e));
+    }
+};
+
+window.closeArticle = function() {
+    const readingArea = document.getElementById('readingArea');
+    const hero = document.getElementById('heroDynamic');
+    const pageLayout = document.querySelector('.page-layout');
+    const postsContainer = document.getElementById('postsContainer');
+    const pageTitle = document.querySelector('h1[style*="DA251D"]');
+    const menuWrapper = document.querySelector('.menu-wrapper');
+
+    if (readingArea) readingArea.style.display = 'none';
+    
+    if (hero) hero.style.display = 'flex'; 
+    if (pageLayout) pageLayout.style.display = 'grid'; 
+    if (postsContainer) postsContainer.style.display = 'grid'; 
+    if (pageTitle) pageTitle.style.display = 'block';
+    if (menuWrapper) menuWrapper.style.display = 'block';
+    
+    window.scrollTo(0, 0);
+};
+
+// ==========================================
+// CHỨC NĂNG SỬA/XÓA CỦA ADMIN BẰNG SUPABASE
+// ==========================================
+window.deletePost = async function(id) {
+    if (confirm('Anh có chắc chắn muốn xóa bài viết này không?')) {
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/posts?id=eq.${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+
+            if (!response.ok) throw new Error("Xóa thất bại");
+            
+            alert('Đã xóa bài viết thành công!');
+            await fetchPostsFromSupabase(); // Cập nhật lại danh sách ngay lập tức
+            
+        } catch (error) {
+            alert("Có lỗi khi xóa bài: " + error.message);
+        }
+    }
+};
+
+window.currentEditId = null; 
+window.editPost = function(id) {
+    let posts = getAllPosts();
+    let post = posts.find(p => p.id == id);
+    if (post) {
+        document.getElementById('title').value = post.title || '';
+        document.getElementById('category').value = post.category || '';
+        document.getElementById('content').value = post.content || '';
+        document.getElementById('author').value = post.author || '';
+        document.getElementById('imageUrl').value = post.image || '';
+        
+        if (post.image && post.image.startsWith('data:image')) {
+            document.getElementById('imagePreview').innerHTML = `<img src="${post.image}" class="preview-img">`;
+        } else {
+            document.getElementById('imagePreview').innerHTML = '';
+        }
+        
+        window.currentEditId = post.id;
+        let btn = document.querySelector('#postForm button[type="submit"]');
+        if (btn) {
+            btn.innerHTML = 'Cập nhật bài viết lên Đám Mây';
+            btn.style.background = '#FF8C00'; 
+        }
+        window.scrollTo(0, 0); 
+    }
+};
+
+window.renderHero = function() {
+    let posts = getPostsByCategory('gioi-thieu');
+    if (posts.length > 0) {
+        let post = posts[0];
+        let heroTitle = document.querySelector('#heroDynamic .hero-title');
+        let heroLead = document.querySelector('#heroDynamic .hero-lead');
+        if (heroTitle) heroTitle.innerHTML = escapeHtml(post.title);
+        if (heroLead) {
+            let plainText = post.content ? post.content.replace(/<\/?[^>]+(>|$)/g, "") : "";
+            heroLead.innerHTML = escapeHtml(plainText.substring(0, 180)) + '...';
+        }
+    }
+};
+
+// ==========================================
+// KHỞI ĐỘNG HỆ THỐNG (TỰ KÉO DATA KHI VÀO WEB)
+// ==========================================
+fetchPostsFromSupabase();
