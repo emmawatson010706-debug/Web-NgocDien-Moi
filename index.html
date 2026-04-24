@@ -677,8 +677,11 @@ img { max-width: 100%; display: block; }
   </div>
 </div>
 
-<script src="js/main.js"></script>
+<script src="js/main.js?v=999"></script>
 <script>
+  // 1. DỌN SẠCH RÁC CŨ TRONG BỘ NHỚ MÁY
+  localStorage.removeItem('ngocdien_posts');
+
   function updateClock() {
     var now = new Date();
     var optionsDate = { timeZone: 'Asia/Ho_Chi_Minh', weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -688,7 +691,7 @@ img { max-width: 100%; display: block; }
   }
   updateClock(); setInterval(updateClock, 1000);
 
-  // LOGIC NAVBAR CHẠY TỰ ĐỘNG & NÚT GẠT (AUTO-SCROLL)
+  // LOGIC NAVBAR CHẠY TỰ ĐỘNG & NÚT GẠT (Chạy ngay không cần đợi Supabase)
   (function initNavAutoScroll() {
       const navInner = document.getElementById('navInner');
       const btnLeft = document.getElementById('navBtnLeft');
@@ -733,8 +736,9 @@ img { max-width: 100%; display: block; }
       startScroll();
   })();
 
-  // LOGIC THANH CUỘN VÀNG
-  (function initDynamicTicker() {
+  // 2. MỞ KHÓA CÁC HÀM VẼ ĐỂ MAIN.JS GỌI KHI SUPABASE ĐÃ SẴN SÀNG
+
+  window.initDynamicTicker = function() {
       const tickerContainer = document.getElementById('dynamicTickerItems');
       if (!tickerContainer || typeof getPostsByCategory !== 'function') return;
       const tinTucPosts = getPostsByCategory('tin-tuc');
@@ -743,10 +747,9 @@ img { max-width: 100%; display: block; }
           `<span style="cursor:pointer; transition: color 0.15s;" onmouseenter="this.style.color='var(--red)'" onmouseleave="this.style.color='var(--ink)'" onclick="if(typeof viewPost==='function') viewPost('${post.id}')">${post.title}</span>`
       ).join('');
       tickerContainer.innerHTML = spansHtml + spansHtml;
-  })();
+  };
 
-  // LỌC SẠCH BÀI KHỎI MỤC TIN TỨC NỔI BẬT
-  (function initAutoFeaturedNews() {
+  window.initAutoFeaturedNews = function() {
       const container = document.getElementById('autoFeaturedNewsContainer');
       if (!container || typeof getAllPosts !== 'function') return;
       
@@ -761,6 +764,10 @@ img { max-width: 100%; display: block; }
           'huong-uoc': 'Hương ước', 'chinh-sach': 'Chính sách',
           'chuyen-doi-so': 'Chuyển đổi số', 'thu-vien': 'Thư viện', 'ban-do': 'Bản đồ', 'podcast': 'Podcast'
       };
+      
+      // Xóa interval cũ nếu main.js gọi lại nhiều lần
+      if (window.featuredNewsInterval) clearInterval(window.featuredNewsInterval);
+
       function renderFeaturedNews() {
           if(latest5Posts.length === 0) return;
           const heroPost = latest5Posts[currentIndex];
@@ -772,7 +779,7 @@ img { max-width: 100%; display: block; }
               <div class="card-body">
                   <div class="card-meta"><span class="tag">${heroCatName}</span><span class="card-date">${heroPost.date || ''}</span></div>
                   <div class="card-title"><a href="#" onclick="if(typeof viewPost==='function') viewPost('${heroPost.id}'); return false;">${heroPost.title}</a></div>
-                  <div class="card-excerpt">${heroPost.content.replace(/<[^>]*>?/gm, '').substring(0, 150)}...</div>
+                  <div class="card-excerpt">${(heroPost.content || '').replace(/<[^>]*>?/gm, '').substring(0, 150)}...</div>
                   <div class="card-footer"><a href="#" onclick="if(typeof viewPost==='function') viewPost('${heroPost.id}'); return false;" class="read-link">Đọc tiếp →</a></div>
               </div>
           </div>
@@ -799,12 +806,11 @@ img { max-width: 100%; display: block; }
       }
       renderFeaturedNews();
       if(latest5Posts.length > 1) {
-          setInterval(() => { currentIndex = (currentIndex + 1) % latest5Posts.length; renderFeaturedNews(); }, 60000);
+          window.featuredNewsInterval = setInterval(() => { currentIndex = (currentIndex + 1) % latest5Posts.length; renderFeaturedNews(); }, 60000);
       }
-  })();
+  };
 
-  // LOGIC BƠM PODCAST VÀO CỘT PHẢI
-  (function initDynamicPodcast() {
+  window.initDynamicPodcast = function() {
       const container = document.getElementById('dynamicPodcastSidebar');
       if (!container || typeof getPostsByCategory !== 'function') return;
 
@@ -838,10 +844,9 @@ img { max-width: 100%; display: block; }
           });
       }
       container.innerHTML = html;
-  })();
+  };
 
-  // LOGIC TỰ ĐỘNG LẤY XEM NHIỀU NHẤT + 1000 LƯỢT XEM MARKETING
-  (function initTrendingPosts() {
+  window.initTrendingPosts = function() {
       const container = document.getElementById('dynamicTrendingPosts');
       if (!container || typeof getAllPosts !== 'function') return;
       let posts = getAllPosts();
@@ -872,9 +877,9 @@ img { max-width: 100%; display: block; }
           </div>`;
       });
       container.innerHTML = html;
-  })();
+  };
 
-  // LOGIC LẤY THỜI TIẾT HƯNG NGUYÊN THEO THỜI GIAN THỰC
+  // LOGIC LẤY THỜI TIẾT HƯNG NGUYÊN THEO THỜI GIAN THỰC (Không cần đợi Supabase)
   (async function fetchRealtimeWeather() {
       const weatherContainer = document.getElementById('realtimeWeather');
       if (!weatherContainer) return;
@@ -907,14 +912,6 @@ img { max-width: 100%; display: block; }
       } catch (e) {
           weatherContainer.innerHTML = `<div style="font-size:12px; color:var(--ink-4); text-align:center; padding: 10px 0;">Đang bảo trì vệ tinh...</div>`;
       }
-  })();
-
-  (function(){
-    if(typeof initSampleData==='function') initSampleData();
-    if(typeof renderHero==='function') renderHero();
-    if(typeof renderTiengLang==='function') renderTiengLang();
-    if(typeof renderLatest==='function') renderLatest();
-    if(typeof renderMost==='function') renderMost();
   })();
 
   document.getElementById('searchBtn')?.addEventListener('click',function(){
