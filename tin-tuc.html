@@ -35,8 +35,15 @@
 </div>
 <script src="js/main.js"></script>
 <script>
-    let posts = getPostsByCategory('tin-tuc');
-    renderPosts('postsContainer', posts, 50);
+    // BỌC CÔNG TẮC CHỜ Ở ĐÂY ĐẠI CA NHÉ
+    function displayPosts() {
+        let posts = getPostsByCategory('tin-tuc');
+        renderPosts('postsContainer', posts, 50);
+    }
+    
+    // Gọi thử 1 lần đề phòng mạng nhanh load xong từ trước
+    displayPosts();
+
     document.getElementById('searchBtn')?.addEventListener('click', function() {
         let kw = document.getElementById('searchInput').value.toLowerCase();
         if (!kw) return;
