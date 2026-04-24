@@ -1,17 +1,60 @@
 // main.js
-function savePost(post) {
-    let posts = JSON.parse(localStorage.getItem('ngocdien_posts')) || [];
-    post.id = Date.now();
-    post.date = new Date().toLocaleDateString('vi-VN');
-    posts.unshift(post);
-    localStorage.setItem('ngocdien_posts', JSON.stringify(posts));
-    return true;
+
+// ==========================================
+// THIẾT LẬP KẾT NỐI SUPABASE
+// ==========================================
+const SUPABASE_URL = "https://twsmdblbrgvsctzsavni.supabase.co"; // Đường link đại ca vừa lấy
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR3c21kYmxicmd2c2N0enNhdm5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5Njc1NDEsImV4cCI6MjA5MjU0MzU0MX0.pjrtm6g5e3z4XwffhANES55G0JNtcBXiLkA0_ZyeHC0"; // Mã bí mật đại ca vừa lấy
+
+// Biến lưu trữ bài viết sau khi kéo từ Supabase về
+let globalPosts = [];
+
+// Hàm nòng cốt: Kéo dữ liệu từ kho Supabase về web
+async function fetchPostsFromSupabase() {
+    try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/posts?select=*&order=id.desc`, {
+            method: 'GET',
+            headers: {
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`,
+                'Content-Type': 'application/json',
+                'Prefer': 'return=representation'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        globalPosts = data; // Lưu vào bộ nhớ tạm để các hàm khác dùng
+        console.log("Đã tải dữ liệu từ Supabase thành công!", globalPosts.length, "bài viết.");
+        
+        // Sau khi tải xong dữ liệu, tự động chạy các hàm vẽ giao diện
+        if(typeof renderHero==='function') renderHero();
+        if(typeof initDynamicTicker==='function') initDynamicTicker();
+        if(typeof initAutoFeaturedNews==='function') initAutoFeaturedNews();
+        if(typeof initDynamicPodcast==='function') initDynamicPodcast();
+        if(typeof initTrendingPosts==='function') initTrendingPosts();
+        
+        // Nếu đang ở các trang danh mục (tin tức, người ngọc điền...), gọi hàm hiển thị
+        if (document.getElementById('postsContainer') && typeof displayPosts === 'function') {
+            displayPosts();
+        }
+
+        return data;
+    } catch (error) {
+        console.error("Lỗi khi tải dữ liệu từ Supabase:", error);
+        return [];
+    }
 }
 
+// Thay thế hàm getAllPosts cũ bằng hàm đọc từ biến globalPosts
 function getAllPosts() {
-    return JSON.parse(localStorage.getItem('ngocdien_posts')) || [];
+    return globalPosts;
 }
 
+// Hàm lấy bài theo danh mục
 function getPostsByCategory(category) {
     let posts = getAllPosts();
     return posts.filter(p => p.category === category);
@@ -46,19 +89,19 @@ function renderNewsGrid(containerId, posts, limit = 6) {
     let html = '';
     posts.slice(0, limit).forEach(post => {
         // Lọc bỏ HTML (thẻ in đậm, đổi màu) để lấy tóm tắt sạch
-        let plainText = post.content.replace(/<\/?[^>]+(>|$)/g, "");
+        let plainText = post.content ? post.content.replace(/<\/?[^>]+(>|$)/g, "") : '';
         html += `
         <div class="card">
             <div class="card-img">
                 ${post.image && post.image.startsWith('data:image') 
-                    ? `<img src="${escapeHtml(post.image)}" style="width:100%; height:100%; object-fit:cover;">` 
-                    : escapeHtml(post.image || '📄')}
+                  ? `<img src="${escapeHtml(post.image)}" style="width:100%; height:100%; object-fit:cover;">` 
+                  : escapeHtml(post.image || '📄')}
             </div>
             <div class="card-content">
-                <h3><a href="#" onclick="viewPost(${post.id}); return false;" style="color: inherit; text-decoration: none;">${escapeHtml(post.title)}</a></h3>
-                <div class="meta">📁 ${post.category} &nbsp;|&nbsp; 📅 ${post.date}</div>
+                <h3><a href="#" onclick="viewPost('${post.id}'); return false;" style="color: inherit; text-decoration: none;">${escapeHtml(post.title)}</a></h3>
+                <div class="meta">📁 ${escapeHtml(post.category)} &nbsp;|&nbsp; 📅 ${escapeHtml(post.date)}</div>
                 <p style="margin-bottom: 15px; color: #666; font-size: 14px;">${escapeHtml(plainText.substring(0, 110))}...</p>
-                <a href="#" class="read-more" onclick="viewPost(${post.id}); return false;">Đọc tiếp →</a>
+                <a href="#" class="read-more" onclick="viewPost('${post.id}'); return false;">Đọc tiếp →</a>
             </div>
         </div>`;
     });
@@ -74,9 +117,10 @@ function renderPosts(containerId, posts, limit = 50) {
 // ==========================================
 window.viewPost = function(id) {
     let posts = getAllPosts();
+    // Chú ý: Cần đổi == thành === và so sánh String nếu UUID của Supabase
     let post = posts.find(p => p.id == id);
     if (!post) {
-        alert('Bài viết không tồn tại.'); return;
+        alert('Bài viết không tồn tại hoặc chưa tải xong. Vui lòng thử lại.'); return;
     }
 
     const hero = document.getElementById('heroDynamic'); 
@@ -105,7 +149,7 @@ window.viewPost = function(id) {
     
     readingArea.style.display = 'block';
 
-    let formattedContent = post.content.replace(/\n/g, '<br>');
+    let formattedContent = post.content ? post.content.replace(/\n/g, '<br>') : '';
     let shareUrl = encodeURIComponent(window.location.href);
 
     // Giao diện đã loại bỏ biến màu lạ, sử dụng đúng mã màu chuẩn
@@ -130,7 +174,7 @@ window.viewPost = function(id) {
             </div>
             
             <h2 style="font-family: 'Times New Roman', serif; font-size: 34px; color: #DA251D; margin-bottom: 15px; line-height: 1.3;">${escapeHtml(post.title)}</h2>
-            <div style="font-size: 13px; color: #9CA3AF; margin-bottom: 25px; border-bottom: 1px solid #EAEAEA; padding-bottom: 15px;">📅 ${post.date} &nbsp;|&nbsp; 👤 ${escapeHtml(post.author || 'Ban quản trị')}</div>
+            <div style="font-size: 13px; color: #9CA3AF; margin-bottom: 25px; border-bottom: 1px solid #EAEAEA; padding-bottom: 15px;">📅 ${escapeHtml(post.date)} &nbsp;|&nbsp; 👤 ${escapeHtml(post.author || 'Ban quản trị')}</div>
             
             ${post.image && post.image.startsWith('data:image') ? `<img src="${escapeHtml(post.image)}" style="width: 100%; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">` : ''}
             
@@ -138,6 +182,20 @@ window.viewPost = function(id) {
         </div>
     `;
     window.scrollTo(0, 0);
+
+    // Xử lý tăng View ngầm đẩy lên Supabase (không bắt buộc thành công)
+    if (post.id) {
+        fetch(`${SUPABASE_URL}/rest/v1/posts?id=eq.${post.id}`, {
+            method: 'PATCH',
+            headers: {
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`,
+                'Content-Type': 'application/json',
+                'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify({ views: (post.views || 0) + 1 })
+        }).catch(e => console.log("Không tăng được view", e));
+    }
 };
 
 window.closeArticle = function() {
@@ -160,15 +218,27 @@ window.closeArticle = function() {
 };
 
 // ==========================================
-// CHỨC NĂNG SỬA/XÓA VÀ KẾT NỐI BANNER
+// CHỨC NĂNG SỬA/XÓA CỦA ADMIN BẰNG SUPABASE
 // ==========================================
-window.deletePost = function(id) {
+window.deletePost = async function(id) {
     if (confirm('Anh có chắc chắn muốn xóa bài viết này không?')) {
-        let posts = getAllPosts();
-        posts = posts.filter(p => p.id != id);
-        localStorage.setItem('ngocdien_posts', JSON.stringify(posts));
-        if (typeof displayPosts === "function") displayPosts(); 
-        alert('Đã xóa thành công!');
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/posts?id=eq.${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+
+            if (!response.ok) throw new Error("Xóa thất bại");
+            
+            alert('Đã xóa bài viết thành công!');
+            await fetchPostsFromSupabase(); // Cập nhật lại danh sách ngay lập tức
+            
+        } catch (error) {
+            alert("Có lỗi khi xóa bài: " + error.message);
+        }
     }
 };
 
@@ -177,10 +247,10 @@ window.editPost = function(id) {
     let posts = getAllPosts();
     let post = posts.find(p => p.id == id);
     if (post) {
-        document.getElementById('title').value = post.title;
-        document.getElementById('category').value = post.category;
-        document.getElementById('content').value = post.content;
-        document.getElementById('author').value = post.author;
+        document.getElementById('title').value = post.title || '';
+        document.getElementById('category').value = post.category || '';
+        document.getElementById('content').value = post.content || '';
+        document.getElementById('author').value = post.author || '';
         document.getElementById('imageUrl').value = post.image || '';
         
         if (post.image && post.image.startsWith('data:image')) {
@@ -192,43 +262,12 @@ window.editPost = function(id) {
         window.currentEditId = post.id;
         let btn = document.querySelector('#postForm button[type="submit"]');
         if (btn) {
-            btn.innerHTML = 'Cập nhật bài viết';
+            btn.innerHTML = 'Cập nhật bài viết lên Đám Mây';
             btn.style.background = '#FF8C00'; 
         }
         window.scrollTo(0, 0); 
     }
 };
-
-function initSampleData() {
-    let posts = getAllPosts();
-    if (posts.length === 0) {
-        let samples = [
-            { title: "Khánh thành nhà văn hóa xóm Ngọc Điền", category: "tin-tuc", content: "Công trình mới khang trang, đáp ứng nhu cầu sinh hoạt cộng đồng.", image: "🏠", author: "Ban quản trị" },
-            { title: "Lễ hội cầu mùa năm 2026", category: "tin-tuc", content: "Phục dựng nghi lễ truyền thống, thu hút đông đảo bà con.", image: "🌾", author: "Ban lễ hội" },
-            { title: "Ra mắt website lưu trữ số", category: "tin-tuc", content: "Chính thức đưa vào hoạt động kho tư liệu trực tuyến.", image: "💻", author: "Admin" },
-            { title: "Liệt sỹ Nguyễn Văn A – Anh hùng tuổi 20", category: "nguoi-ngoc-dien", content: "Hy sinh tại chiến trường Quảng Trị.", image: "🎖️", author: "Ban liệt sỹ" },
-            { title: "Mẹ Việt Nam Anh hùng Trần Thị B", category: "nguoi-ngoc-dien", content: "Mẹ có hai con là liệt sỹ.", image: "💐", author: "Hội phụ nữ" },
-            { title: "Giáo sư Lê Văn C – Nhà khoa học", category: "nguoi-ngoc-dien", content: "Người con thành danh của xóm.", image: "👨‍🎓", author: "Hội khuyến học" },
-            { title: "Đình làng Ngọc Điền", category: "di-tich", content: "Di tích cấp tỉnh, thờ thành hoàng làng.", image: "⛩️", author: "Ban di tích" },
-            { title: "Hương ước 1883 – Bản gốc", category: "huong-uoc", content: "Quy định về hội họp, canh nông.", image: "📜", author: "Lưu trữ" },
-            { title: "Những cơn mưa quê", category: "tan-man", content: "Bài viết tản mạn về mưa quê hương.", image: "🌧️", author: "Nguyễn Văn A" },
-            { title: "Vầng trăng xóm vãi", category: "tho", content: "Bài thơ về trăng và tình làng.", image: "🌕", author: "Lê Thị B" },
-            { title: "Chuyện bà Tám", category: "che-xanh", content: "Kỷ niệm đáng nhớ trong xóm.", image: "🍵", author: "Trần Văn C" },
-            { title: "Đình làng Ngọc Điền - Giai thoại", category: "giai-thoai", content: "Câu chuyện kể về đình làng.", image: "📖", author: "Cao niên" },
-            { title: "Họ Nguyễn xưa", category: "kham-pha", content: "Nghiên cứu về nguồn gốc họ Nguyễn.", image: "🔍", author: "Nhóm nghiên cứu" },
-            { title: "Xây dựng nếp sống mới", category: "goc-nhin", content: "Góc nhìn về xây dựng xóm văn minh.", image: "🌱", author: "Mặt trận" }
-        ];
-        samples.forEach(p => {
-            let post = { ...p, id: Date.now() + Math.random(), date: new Date().toLocaleDateString('vi-VN') };
-            posts.push(post);
-        });
-        localStorage.setItem('ngocdien_posts', JSON.stringify(posts));
-    }
-}
-
-if (getAllPosts().length === 0) {
-    initSampleData();
-}
 
 window.renderHero = function() {
     let posts = getPostsByCategory('gioi-thieu');
@@ -238,8 +277,16 @@ window.renderHero = function() {
         let heroLead = document.querySelector('#heroDynamic .hero-lead');
         if (heroTitle) heroTitle.innerHTML = escapeHtml(post.title);
         if (heroLead) {
-            let plainText = post.content.replace(/<\/?[^>]+(>|$)/g, "");
+            let plainText = post.content ? post.content.replace(/<\/?[^>]+(>|$)/g, "") : "";
             heroLead.innerHTML = escapeHtml(plainText.substring(0, 180)) + '...';
         }
     }
 };
+
+// ==========================================
+// KHỞI ĐỘNG HỆ THỐNG (TỰ KÉO DATA KHI VÀO WEB)
+// ==========================================
+// Gọi hàm kéo dữ liệu ngay khi tải trang
+fetchPostsFromSupabase();
+
+// Đoạn initSampleData đã bị xóa vì giờ chúng ta xài dữ liệu thật từ đám mây
