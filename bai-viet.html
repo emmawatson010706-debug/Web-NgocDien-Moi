@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Đọc bài viết – Ngọc Điền</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,600&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* Đảm bảo ảnh và video trong bài viết hiển thị đẹp, không bị tràn viền */
+#postDetail img { max-width: 100%; height: auto; border-radius: 8px; margin: 15px 0; }
+#postDetail iframe { max-width: 100%; border-radius: 8px; margin: 15px 0; }
+</style>
+</head>
+<body style="background: #F8F5F0;">
+
+<div class="topbar">
+  <div class="container topbar-inner">
+    <div class="topbar-left">
+      <span id="todayDate">Đang cập nhật...</span>
+      <span class="topbar-sep">|</span>
+      <span>📍 Hưng Nguyên – Nghệ An</span>
+    </div>
+    <div class="topbar-right">
+      <a href="admin/index.html">⚙ Quản trị</a>
+      <a href="gop-y.html">✉ Góp ý</a>
+    </div>
+  </div>
+</div>
+
+<div class="masthead">
+  <div class="container masthead-inner">
+    <a href="index.html" class="logo" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:15px;">
+      <img src="logo-seal.png" alt="Ngọc Điền" class="logo-seal" style="width:58px; height:58px; border-radius:50%;" onerror="this.src='logo-text.png'">
+      <div class="logo-text">
+        <h1 style="font-family:'Times New Roman', serif; font-size:32px; color:#DA251D; margin:0; line-height:1;">Ngọc Điền</h1>
+        <div class="tagline" style="font-size:14px; color:#666;">Hồn quê trong dòng chảy số</div>
+      </div>
+    </a>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Tìm bài viết, tư liệu...">
+      <button id="searchBtn">🔍 Tìm kiếm</button>
+    </div>
+  </div>
+</div>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <button class="nav-btn" id="navBtnLeft">❮</button>
+    <div class="nav-inner" id="navInner">
+      <a href="index.html">Trang chủ</a>
+      <a href="gioi-thieu.html">Giới thiệu</a>
+      <a href="nguoi-ngoc-dien.html">Người Ngọc Điền</a>
+      <a href="lich-su.html">Lịch sử</a>
+      <a href="tin-tuc.html">Tin tức</a>
+      <a href="le-hoi.html">Lễ hội</a>
+      <a href="van-chuong.html">Tiếng làng</a>
+      <a href="huong-uoc.html">Hương ước 1883</a>
+      <a href="di-tich.html">Di tích</a>
+      <a href="admin/index.html" class="nav-admin">⚙ Quản trị</a>
+    </div>
+    <button class="nav-btn" id="navBtnRight">❯</button>
+  </div>
+</nav>
+
+<div class="container" style="margin-top: 40px;">
+  <div class="page-layout" style="display:grid; grid-template-columns:1fr 340px; gap:40px; margin-bottom:60px; align-items:start;">
+    
+    <div style="background: #fff; padding: 40px; border-radius: 16px; border: 1px solid var(--border-2); box-shadow: 0 4px 20px rgba(0,0,0,0.03);">
+      
+      <div id="postDetail" style="display:none;">
+        <div style="padding:24px; text-align:center; color:var(--ink-4); font-size:13px;">
+          Đang mở bài viết...
+        </div>
+      </div>
+
+      <div id="postNotFound" style="display:none; text-align:center; padding:40px 20px;">
+        <div style="font-size:64px; margin-bottom:16px;">🔍</div>
+        <h2 style="font-family:var(--ff-head); font-size:22px; color:var(--ink); margin-bottom:8px;">Không tìm thấy bài viết</h2>
+        <p style="color:var(--ink-4); font-size:14px; margin-bottom:20px;">Bài viết này có thể đã bị xóa hoặc đường dẫn không đúng.</p>
+        <a href="index.html" style="display:inline-flex; background:var(--red); color:#fff; padding:10px 20px; border-radius:40px; text-decoration:none; font-weight:700;">← Về Trang chủ</a>
+      </div>
+
+    </div>
+
+    <aside class="sidebar">
+      <div class="sb-block" style="background:#fff; border-radius:14px; border:1px solid var(--border-2); overflow:hidden; margin-bottom:22px;">
+        <div class="sb-head" style="padding:13px 18px; border-bottom:1px solid var(--border-2); display:flex; align-items:center; gap:8px; background:#FCFAF6;">
+            <div style="width:3px; height:16px; background:var(--red); border-radius:2px;"></div>
+            <span style="font-family:var(--ff-head); font-size:14.5px; font-weight:700; text-transform:uppercase;">📈 Đang được quan tâm</span>
+        </div>
+        <div class="sb-body" id="dynamicTrendingPosts" style="padding:16px 18px;">
+          <div style="font-size:12px; color:var(--ink-4); text-align:center;">Đang tải...</div>
+        </div>
+      </div>
+
+      <div class="sb-block" style="background:#fff; border-radius:14px; border:1px solid var(--border-2); overflow:hidden; margin-bottom:22px;">
+        <div class="sb-head" style="padding:13px 18px; border-bottom:1px solid var(--border-2); display:flex; align-items:center; gap:8px; background:#FCFAF6;">
+            <div style="width:3px; height:16px; background:#0A8F4B; border-radius:2px;"></div>
+            <span style="font-family:var(--ff-head); font-size:14.5px; font-weight:700; text-transform:uppercase;">📱 Kết nối Zalo xóm</span>
+        </div>
+        <div class="sb-body" style="padding:16px 18px;">
+          <div style="background:var(--cream-2); border-radius:10px; padding:18px; text-align:center; border:1px dashed var(--border); margin-bottom:12px;">
+              <img src="zalo-qr.jpg" alt="Mã QR Zalo Xóm Ngọc Điền" style="width:100%; max-width:180px; border-radius:8px;">
+          </div>
+          <a href="https://zalo.me/g/i8vuebonziplqy2c06ux" target="_blank" style="display:block; background:#0A8F4B; color:#fff; text-align:center; padding:10px; border-radius:40px; font-weight:700; text-decoration:none;">Tham gia nhóm Zalo →</a>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</div>
+
+<div class="footer" style="background:var(--ink); color:#7A6E62; padding:52px 0 28px; font-size:13px; margin-top:40px;">
+  <div class="container">
+    <div style="display:flex; flex-wrap:wrap; gap:48px; margin-bottom:40px;">
+      <div style="flex:1.2; min-width:220px;">
+        <a href="index.html"><img src="logo-text.png" alt="Xóm Ngọc Điền" style="height:45px; margin-bottom:12px;"></a>
+        <p>Cổng thông tin cộng đồng phi lợi nhuận, lưu giữ ký ức văn hóa và thúc đẩy chuyển đổi số nông thôn vùng Hưng Nguyên – Nghệ An.</p>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:32px; flex:2;">
+        <div>
+          <h4 style="color:#C8BDB0; margin-bottom:14px;">Về chúng tôi</h4>
+          <a href="gioi-thieu.html" style="display:block; color:#7A6E62; text-decoration:none; margin-bottom:8px;">Giới thiệu xóm</a>
+          <a href="admin/index.html" style="display:block; color:#7A6E62; text-decoration:none;">Ban quản trị</a>
+        </div>
+        <div>
+          <h4 style="color:#C8BDB0; margin-bottom:14px;">Kho tư liệu</h4>
+          <a href="huong-uoc.html" style="display:block; color:#7A6E62; text-decoration:none; margin-bottom:8px;">Hương ước 1883</a>
+          <a href="thu-vien.html" style="display:block; color:#7A6E62; text-decoration:none;">Thư viện ảnh</a>
+        </div>
+        <div>
+          <h4 style="color:#C8BDB0; margin-bottom:14px;">Kết nối</h4>
+          <p style="margin-bottom:8px;">Zalo: XomNgocDien</p>
+          <p>Hotline: 0914 58 75 75</p>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid #2D2620; margin-bottom:20px;"></div>
+    <div style="text-align:center;">© 2026 Xóm Ngọc Điền · Nghệ An | Xây dựng bởi ❤️ Thái Lão</div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+<script>
+  function updateClock() {
+    var now = new Date();
+    var clockElement = document.getElementById('todayDate');
+    if(clockElement) clockElement.textContent = now.toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' }) + ' - ' + now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', hour12: false });
+  }
+  updateClock(); setInterval(updateClock, 1000);
+
+  // Logic nút Tìm kiếm
+  document.getElementById('searchBtn')?.addEventListener('click',function(){
+      var kw=document.getElementById('searchInput').value.toLowerCase().trim();
+      if(!kw) return;
+      var posts = typeof getAllPosts === 'function' ? getAllPosts() : [];
+      var res=posts.filter(function(p){return p.title.toLowerCase().includes(kw)||p.content.toLowerCase().includes(kw);});
+      alert(res.length?'Tìm thấy '+res.length+' bài:\n'+res.map(function(p){return p.title;}).join('\n'):'Không tìm thấy kết quả nào.');
+  });
+</script>
+</body>
+</html>
