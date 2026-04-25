@@ -6,327 +6,14 @@
 <title>Ngọc Điền – Không gian lưu giữ hồn quê | Hưng Nguyên – Nghệ An</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,600&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-<style>
-/* ═══════════════════════════════════════
-   DESIGN TOKENS
-═══════════════════════════════════════ */
-:root {
-  --red:        #C0231A;
-  --red-deep:   #7A1410;
-  --red-mid:    #A01D16;
-  --red-pale:   #FAECEA;
-  --gold:       #B8882A;
-  --gold-light: #F9F1E1;
-  --ink:        #181410;
-  --ink-2:      #332A1E;
-  --ink-3:      #5C4F3E;
-  --ink-4:      #8A7B6A;
-  --cream:      #F8F5F0;
-  --cream-2:    #F0EBE3;
-  --white:      #FFFFFF;
-  --border:     #DDD5C8;
-  --border-2:   #EAE4DC;
-
-  --ff-head:    'Playfair Display', Georgia, serif;
-  --ff-serif:   'Lora', Georgia, serif;
-  --ff-sans:    'Be Vietnam Pro', sans-serif;
-
-  --r-xs: 6px;
-  --r-sm: 10px;
-  --r-md: 14px;
-  --r-lg: 20px;
-  --r-xl: 28px;
-
-  --sh-sm: 0 2px 8px rgba(24,20,16,.06);
-  --sh-md: 0 6px 24px rgba(24,20,16,.10);
-  --sh-lg: 0 16px 48px rgba(24,20,16,.14);
-}
-
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-
-html { scroll-behavior: smooth; overflow-x: hidden; }
-body {
-  background: var(--cream);
-  font-family: var(--ff-sans);
-  color: var(--ink);
-  line-height: 1.6;
-  font-size: 15px;
-  overflow-x: hidden;
-  width: 100%;
-  position: relative;
-}
-
-a { color: inherit; text-decoration: none; }
-img { max-width: 100%; display: block; }
-.container { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
-
-/* TOP BAR */
-.topbar { background: var(--ink); padding: 7px 0; font-size: 12px; color: #8A7B6A; }
-.topbar-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
-.topbar-left { display: flex; align-items: center; gap: 16px; }
-.topbar-sep { color: #3D3020; }
-.topbar-right { display: flex; gap: 16px; }
-.topbar a { color: #A09080; transition: color .15s; }
-.topbar a:hover { color: var(--gold); }
-.topbar .date { color: #A09080; }
-
-/* MASTHEAD */
-.masthead { background: var(--white); border-bottom: 1px solid var(--border-2); padding: 18px 0 14px; }
-.masthead-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
-.logo { display: flex; align-items: center; gap: 16px; }
-.logo-seal { width: 58px; height: 58px; flex-shrink: 0; }
-.logo-text h1 { font-family: var(--ff-head); font-size: 30px; color: var(--red); font-weight: 700; line-height: 1; letter-spacing: -.3px; }
-.logo-text .tagline { font-family: var(--ff-serif); font-size: 13px; color: var(--ink-3); font-style: italic; margin-top: 4px; }
-.logo-text .edition { font-size: 11px; color: var(--ink-4); margin-top: 2px; letter-spacing: .3px; }
-.search-box { display: flex; align-items: center; border: 1.5px solid var(--border); border-radius: 40px; overflow: hidden; background: var(--cream); transition: border-color .2s, box-shadow .2s; }
-.search-box:focus-within { border-color: var(--red); box-shadow: 0 0 0 3px rgba(192,35,26,.1); }
-.search-box input { padding: 9px 16px; border: none; background: transparent; width: 210px; outline: none; font-size: 13.5px; font-family: var(--ff-sans); color: var(--ink); }
-.search-box button { background: var(--red); border: none; padding: 0 18px; height: 38px; color: white; font-weight: 600; font-size: 12.5px; cursor: pointer; font-family: var(--ff-sans); transition: background .2s; width: auto; border-radius: 0; letter-spacing: .3px; }
-.search-box button:hover { background: var(--red-deep); }
-
-/* NAVBAR & THANH CUỘN THÔNG MINH */
-.navbar { background: var(--red); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 12px rgba(192,35,26,.3); }
-.nav-container { max-width: 1280px; margin: 0 auto; display: flex; align-items: stretch; position: relative; }
-.nav-btn { background: rgba(0,0,0,0.15); color: #fff; border: none; font-size: 14px; width: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; flex-shrink: 0; }
-.nav-btn:hover { background: rgba(0,0,0,0.3); }
-.nav-inner { flex: 1; padding: 0 10px; display: flex; align-items: center; overflow-x: auto; white-space: nowrap; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-.nav-inner::-webkit-scrollbar { display: none; }
-.nav-inner a { display: inline-block; padding: 13px 14px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,.88); white-space: nowrap; border-bottom: 2.5px solid transparent; transition: color .15s, border-color .15s; letter-spacing: .2px; }
-.nav-inner a:hover { color: #fff; border-bottom-color: rgba(255,255,255,.5); }
-.nav-inner a.active { color: #fff; border-bottom-color: #fff; }
-.nav-inner a.nav-admin { margin-left: auto; background: rgba(0,0,0,.18); border-radius: var(--r-xs); padding: 8px 14px; margin-top: 5px; margin-bottom: 5px; color: rgba(255,255,255,.9); border-bottom: none; }
-.nav-inner a.nav-admin:hover { background: rgba(0,0,0,.3); color: #fff; }
-
-/* TICKER */
-.ticker-bar { background: var(--gold); padding: 8px 0; overflow: hidden; }
-.ticker-inner { display: flex; align-items: center; }
-.ticker-label { background: var(--red); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: 1px; padding: 4px 14px; white-space: nowrap; flex-shrink: 0; margin-right: 16px; border-radius: 0 var(--r-xs) var(--r-xs) 0; }
-.ticker-track { overflow: hidden; flex: 1; }
-.ticker-items { display: flex; gap: 48px; animation: ticker 28s linear infinite; width: max-content; }
-.ticker-items span { font-size: 13px; font-weight: 600; color: var(--ink); white-space: nowrap; }
-.ticker-items span::before { content: '◆'; margin-right: 8px; color: var(--red); font-size: 8px; }
-@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-/* HERO */
-.hero { position: relative; background: linear-gradient(150deg, var(--red-deep) 0%, var(--red-mid) 45%, var(--red) 100%); border-radius: var(--r-xl); overflow: hidden; margin: 28px 0 0; min-height: 400px; display: flex; align-items: center; }
-.hero-drum-bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
-.hero-drum-bg .drum-main { position: absolute; right: -60px; top: 50%; transform: translateY(-50%); width: 460px; height: 460px; opacity: .10; }
-.hero-drum-bg .drum-accent { position: absolute; left: -80px; top: -80px; width: 300px; height: 300px; opacity: .06; }
-.hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(122,20,16,.65) 0%, rgba(122,20,16,.35) 55%, transparent 100%); pointer-events: none; }
-.hero-body { position: relative; z-index: 2; padding: 44px 52px; max-width: 680px; }
-.hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.22); backdrop-filter: blur(6px); color: rgba(255,255,255,.92); font-size: 11px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; padding: 5px 14px; border-radius: 40px; margin-bottom: 20px; }
-.hero-eyebrow-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: pulse 2s infinite; }
-@keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.5; transform:scale(1.3); } }
-.hero-title { font-family: var(--ff-head); font-size: clamp(26px, 3.5vw, 40px); color: #fff; line-height: 1.22; margin-bottom: 18px; font-weight: 700; }
-.hero-title em { color: #F5D48A; font-style: normal; }
-.hero-lead { font-family: var(--ff-serif); font-size: 16px; color: rgba(255,255,255,.82); line-height: 1.75; margin-bottom: 28px; font-style: italic; }
-.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 36px; }
-.btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: var(--ink); font-weight: 700; font-size: 13.5px; padding: 12px 24px; border-radius: 40px; transition: all .2s; box-shadow: 0 4px 16px rgba(184,136,42,.4); }
-.btn-primary:hover { background: #C89A35; transform: translateY(-2px); }
-.btn-ghost { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.1); border: 1.5px solid rgba(255,255,255,.3); color: rgba(255,255,255,.9); font-weight: 600; font-size: 13.5px; padding: 11px 22px; border-radius: 40px; transition: all .2s; }
-.btn-ghost:hover { background: rgba(255,255,255,.18); color: #fff; }
-.hero-stats { display: flex; gap: 0; border-top: 1px solid rgba(255,255,255,.15); padding-top: 24px; flex-wrap: wrap; }
-.hero-stat { padding-right: 28px; margin-right: 28px; border-right: 1px solid rgba(255,255,255,.12); }
-.hero-stat:last-child { border-right: none; margin-right: 0; padding-right: 0; }
-.hero-stat-n { font-family: var(--ff-head); font-size: 30px; font-weight: 900; color: var(--gold); line-height: 1; }
-.hero-stat-l { font-size: 11px; color: rgba(255,255,255,.6); margin-top: 3px; }
-
-/* SECTION HEAD */
-.sec-head { display: flex; align-items: center; gap: 12px; margin: 36px 0 20px; }
-.sec-head-label { display: flex; align-items: center; gap: 8px; }
-.sec-head-bar { width: 4px; height: 22px; background: var(--red); border-radius: 2px; flex-shrink: 0; }
-.sec-head-title { font-family: var(--ff-head); font-size: 19px; font-weight: 700; color: var(--ink); white-space: nowrap; }
-.sec-head-line { flex: 1; height: 1px; background: var(--border-2); }
-.sec-head-more { font-size: 12.5px; font-weight: 700; color: var(--red); white-space: nowrap; display: inline-flex; align-items: center; gap: 4px; transition: gap .15s; }
-.sec-head-more:hover { gap: 8px; }
-
-/* FEATURED ROW & CARDS */
-.featured-row { display: grid; grid-template-columns: 1.7fr 1fr; gap: 18px; margin-bottom: 8px; }
-.card-featured .card-thumb { height: 220px; font-size: 56px; position: relative; background-size: cover; background-position: center; border-bottom: 1px solid var(--border-2); }
-.card-featured .card-title { font-size: 20px; }
-.card-featured .card-excerpt { -webkit-line-clamp: 3; }
-.featured-side { display: flex; flex-direction: column; gap: 14px; }
-.card-list { background: var(--white); border: 1px solid var(--border-2); border-radius: var(--r-md); padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start; transition: box-shadow .2s; }
-.card-list:hover { box-shadow: var(--sh-sm); }
-.card-list-icon { width: 44px; height: 44px; background: var(--cream-2); border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; background-size: cover; background-position: center; overflow: hidden; }
-.card-list-title { font-family: var(--ff-head); font-size: 14px; font-weight: 600; line-height: 1.38; color: var(--ink); margin-bottom: 4px; }
-.card-list-title a { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.card-list-title:hover { color: var(--red); }
-.card-list-meta { font-size: 11px; color: var(--ink-4); }
-
-.card { background: var(--white); border-radius: var(--r-md); overflow: hidden; border: 1px solid var(--border-2); transition: transform .22s, box-shadow .22s; display: flex; flex-direction: column; }
-.card:hover { transform: translateY(-4px); box-shadow: var(--sh-md); }
-.card-body { padding: 16px; flex: 1; display: flex; flex-direction: column; }
-.card-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
-.tag { background: var(--red-pale); color: var(--red); font-size: 10px; font-weight: 700; letter-spacing: .5px; padding: 2px 9px; border-radius: 20px; text-transform: uppercase; }
-.card-date { font-size: 11px; color: var(--ink-4); }
-.card-excerpt { font-size: 13px; color: var(--ink-3); line-height: 1.55; margin-bottom: 14px; flex: 1; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-2); padding-top: 10px; margin-top: auto; }
-.read-link { font-size: 12.5px; font-weight: 700; color: var(--red); display: inline-flex; align-items: center; gap: 5px; transition: gap .15s; }
-.read-link:hover { gap: 9px; }
-
-/* KHỐI TIẾNG LÀNG MỚI (DARK MODE) */
-.tieng-lang-section { position: relative; background-color: #12100E; border-radius: var(--r-xl); padding: 50px 60px; margin: 40px 0; overflow: hidden; border: 1px solid #2A241D; }
-.tieng-lang-bg { position: absolute; inset: 0; background-image: url('loa-xom.jpg'); background-size: cover; background-position: center; opacity: 0.12; pointer-events: none; mix-blend-mode: luminosity; }
-.tieng-lang-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 50px; align-items: center; }
-.tl-left-title { font-size: 13px; font-weight: 800; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; margin-bottom: 20px; }
-.tl-poem-meta { color: #A09080; font-size: 13px; margin-bottom: 20px; font-style: italic; border-left: 2px solid var(--gold); padding-left: 12px; }
-.tl-poem-meta strong { color: #C8BDB0; font-family: var(--ff-head); font-size: 17px; font-style: normal; }
-.tl-poem-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; font-family: var(--ff-serif); font-size: 14px; color: rgba(255,255,255,0.85); line-height: 1.85; font-style: italic; }
-.tl-right-menu { display: flex; flex-direction: column; gap: 10px; }
-.tl-menu-btn { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 14px 20px; border-radius: var(--r-sm); color: rgba(255,255,255,0.8); font-size: 14.5px; font-weight: 600; transition: all 0.25s; text-decoration: none; }
-.tl-menu-btn:hover { background: rgba(184, 136, 42, 0.1); border-color: rgba(184, 136, 42, 0.4); color: var(--gold); transform: translateX(5px); }
-.tl-menu-ico { font-size: 18px; opacity: 0.8; }
-.poem-quote-mark { font-family: var(--ff-head); font-size: 80px; color: rgba(184,136,42,.25); line-height: .8; position: absolute; top: 30px; left: 30px; z-index: 0; }
-
-/* LAYOUT & SIDEBAR */
-.page-layout { display: grid; grid-template-columns: 1fr 340px; gap: 32px; margin-bottom: 60px; align-items: start; }
-.sidebar { display: flex; flex-direction: column; gap: 22px; }
-.sb-block { background: var(--white); border-radius: var(--r-md); border: 1px solid var(--border-2); overflow: hidden; }
-.sb-head { padding: 13px 18px 11px; border-bottom: 1px solid var(--border-2); display: flex; align-items: center; gap: 8px; background: #FCFAF6; }
-.sb-head-bar { width: 3px; height: 16px; background: var(--red); border-radius: 2px; flex-shrink: 0; }
-.sb-head-title { font-family: var(--ff-head); font-size: 14.5px; font-weight: 700; color: var(--ink); text-transform: uppercase; letter-spacing: 0.5px; }
-.sb-body { padding: 16px 18px; }
-.sb-input, .sb-textarea { width: 100%; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: var(--r-sm); margin-bottom: 9px; font-size: 13px; font-family: var(--ff-sans); color: var(--ink); background: var(--cream); outline: none; transition: border-color .2s; }
-.sb-input:focus, .sb-textarea:focus { border-color: var(--red); }
-.sb-textarea { resize: vertical; min-height: 72px; }
-.btn-submit { width: 100%; background: var(--red); color: #fff; border: none; padding: 10px 16px; border-radius: 40px; font-weight: 700; font-size: 13px; cursor: pointer; font-family: var(--ff-sans); transition: background .2s, transform .15s; }
-.btn-submit:hover { background: var(--red-deep); transform: translateY(-1px); }
-.admin-phone-bar { margin-top: 12px; background: var(--red-pale); border-radius: 40px; padding: 8px 14px; text-align: center; font-size: 12.5px; font-weight: 700; color: var(--red); }
-
-/* Xem Nhiều Nhất */
-.trend-item { display: flex; gap: 12px; align-items: flex-start; padding: 11px 0; border-bottom: 1px solid var(--border-2); }
-.trend-item:last-child { border-bottom: none; padding-bottom: 0; }
-.trend-num { font-family: var(--ff-head); font-size: 20px; font-weight: 900; color: var(--red); min-width: 26px; line-height: 1.1; opacity: .85; }
-.trend-title { font-size: 13.5px; font-weight: 500; color: var(--ink); line-height: 1.42; }
-.trend-title:hover { color: var(--red); }
-.trend-meta { font-size: 11px; color: var(--ink-4); margin-top: 3px; font-weight: 600; }
-
-/* Các mục icon cột phải */
-.policy-item { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--border-2); }
-.policy-item:last-child { border-bottom: none; padding-bottom: 0; }
-.policy-ico { width: 34px; height: 34px; background: var(--gold-light); border-radius: var(--r-xs); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
-.policy-text { font-size: 13.5px; font-weight: 500; color: var(--ink); }
-.policy-text:hover { color: var(--red); }
-.policy-sub { font-size: 11px; color: var(--ink-4); }
-.lib-item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: var(--r-xs); font-size: 13.5px; font-weight: 500; color: var(--ink); transition: background .15s, color .15s; }
-.lib-item:hover { background: var(--red-pale); color: var(--red); }
-.lib-item span { font-size: 16px; }
-
-/* Kết nối & Podcast */
-.zalo-qr { background: var(--cream-2); border-radius: var(--r-sm); padding: 18px; text-align: center; color: var(--ink-4); font-size: 13px; margin-bottom: 12px; border: 1px dashed var(--border); min-height: 90px; display: flex; align-items: center; justify-content: center; }
-.btn-zalo { display: block; background: #0A8F4B; color: #fff; text-align: center; padding: 10px 16px; border-radius: 40px; font-weight: 700; font-size: 13px; transition: background .2s, transform .15s; }
-.btn-zalo:hover { background: #077A3F; transform: translateY(-1px); }
-
-.podcast-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px dashed var(--border-2); }
-.podcast-item:last-child { border-bottom: none; padding-bottom: 0; }
-.podcast-thumb { width: 50px; height: 50px; border-radius: var(--r-xs); flex-shrink: 0; background-size: cover; background-position: center; position: relative; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.1);}
-.podcast-thumb::after { content: '▶'; position: absolute; inset: 0; background: rgba(0,0,0,0.4); color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; opacity: 0; transition: opacity 0.2s; }
-.podcast-item:hover .podcast-thumb::after { opacity: 1; }
-.podcast-info { flex: 1; }
-.podcast-title { font-size: 13.5px; font-weight: 600; color: var(--ink); line-height: 1.4; margin-bottom: 4px; transition: color 0.15s;}
-.podcast-item:hover .podcast-title { color: var(--red); }
-
-/* Thời tiết */
-.weather-row { display: flex; align-items: center; gap: 16px; justify-content: center; }
-.weather-ico { font-size: 42px; line-height: 1; }
-.weather-temp { font-family: var(--ff-head); font-size: 34px; font-weight: 700; color: var(--ink); line-height: 1; }
-.weather-info { font-size: 12px; color: var(--ink-3); line-height: 1.7; }
-
-/* FOOTER */
-.footer { background: var(--ink); color: #7A6E62; padding: 52px 0 28px; font-size: 13px; margin-top: 40px; }
-.footer-top { display: flex; flex-wrap: wrap; gap: 48px; margin-bottom: 40px; }
-.footer-brand { flex: 1.2; min-width: 220px; }
-.footer-brand img { height: 45px; margin-bottom: 12px; }
-.footer-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; flex: 2; }
-.footer-col h4 { font-family: var(--ff-head); font-size: 14px; color: #C8BDB0; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid #2D2620; }
-.footer-col a, .footer-col p { display: block; color: #7A6E62; line-height: 2.1; transition: color .15s; }
-.footer-col a:hover { color: var(--gold); }
-.footer-divider { border: none; border-top: 1px solid #2D2620; margin-bottom: 22px; }
-.footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-.copyright { font-size: 12px; color: #5A4E42; line-height: 1.7; }
-.copyright a { color: var(--gold); }
-.footer-social { display: flex; gap: 10px; }
-.social-btn { width: 32px; height: 32px; background: #2A2018; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; transition: background .15s; }
-.social-btn:hover { background: var(--red); }
-
-/* ANIMATIONS */
-@keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
-.hero, .card { animation: fadeUp .5s ease both; }
-
-/* ═══════════════════════════════════════
-   RESPONSIVE & MOBILE FIXES (PHẪU THUẬT MỚI)
-═══════════════════════════════════════ */
-@media (max-width: 1100px) {
-  .page-layout { grid-template-columns: 1fr; }
-  .sidebar { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
-  .tieng-lang-inner { grid-template-columns: 1fr; gap: 40px; }
-}
-
-@media (max-width: 780px) {
-  /* 1. SỬA LỖI TOPBAR RỚT DÒNG TRÊN ĐIỆN THOẠI */
-  .topbar { padding: 8px 0; }
-  .topbar-inner { flex-wrap: nowrap; overflow: hidden; }
-  .topbar-left { 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      width: 100%; 
-      gap: 6px; 
-      font-size: 10px; /* Thu nhỏ chữ */
-      white-space: nowrap; /* Ép 1 dòng */
-      overflow: hidden;
-  }
-  .topbar-left span { text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
-  .topbar-right { display: none; }
-
-  /* Điều chỉnh masthead */
-  .masthead-inner { flex-direction: column; align-items: center; gap: 14px; }
-  .logo { justify-content: center; }
-  .search-box { width: 100%; max-width: 450px; }
-  .search-box input { width: 100%; flex: 1; }
-  
-  .hero-body { padding: 28px 24px; }
-
-  /* 2. SỬA LỖI ẢNH VUÔNG & CHỮ XUỐNG DÒNG MỤC TIN NỔI BẬT */
-  .featured-row { grid-template-columns: 1fr; }
-  .card-featured .card-thumb { 
-      height: auto !important; 
-      aspect-ratio: 16 / 9; /* Dàn ảnh hình chữ nhật ngang */
-  }
-  .card-list { align-items: center; }
-  .card-list-title a { 
-      white-space: nowrap; /* Ép 1 dòng */
-      overflow: hidden; 
-      text-overflow: ellipsis; /* Dư chữ biến thành 3 chấm */
-      display: block; 
-      -webkit-line-clamp: unset; 
-  }
-
-  .sidebar { grid-template-columns: 1fr; }
-  .footer-top { flex-direction: column; gap: 28px; }
-  .footer-cols { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 560px) {
-  .container { padding: 0 15px; }
-  .hero-drum-bg .drum-main { width: 260px; height: 260px; right: -40px; }
-  .footer-cols { grid-template-columns: 1fr; }
-  .tieng-lang-section { padding: 30px 20px; }
-  .tl-poem-cols { grid-template-columns: 1fr; gap: 15px; }
-  .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.15); }
-  .hero-stat { border-right: none; margin-right: 0; padding-right: 0; text-align: center; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px 5px; }
-  .hero-stat-n { font-size: 26px; }
-}
-</style>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <div class="topbar">
   <div class="container topbar-inner">
     <div class="topbar-left">
-      <span class="date" id="todayDate"></span>
+      <span id="todayDate">Đang cập nhật...</span>
       <span class="topbar-sep">|</span>
       <span>📍 Hưng Nguyên – Nghệ An</span>
     </div>
@@ -339,11 +26,14 @@ img { max-width: 100%; display: block; }
 
 <div class="masthead">
   <div class="container masthead-inner">
-    <div class="logo">
-      <a href="index.html" style="display: block; text-decoration: none; line-height: 0;">
-        <img src="logo-text.png" alt="Xóm Ngọc Điền" style="height: 58px; width: auto; display: block;">
-      </a>
-    </div>
+    <a href="index.html" class="logo" style="text-decoration:none; color:inherit;">
+      <img src="logo-seal.png" alt="Ngọc Điền" class="logo-seal" style="width:58px; height:58px; border-radius:50%;" onerror="this.src='logo-text.png'">
+      <div class="logo-text">
+        <h1>Ngọc Điền</h1>
+        <div class="tagline">Hồn quê trong dòng chảy số</div>
+        <div class="edition">CỔNG THÔNG TIN CỘNG ĐỒNG</div>
+      </div>
+    </a>
     <div class="search-box">
       <input type="text" id="searchInput" placeholder="Tìm bài viết, tư liệu...">
       <button id="searchBtn">🔍 Tìm kiếm</button>
@@ -354,7 +44,6 @@ img { max-width: 100%; display: block; }
 <nav class="navbar">
   <div class="nav-container">
     <button class="nav-btn" id="navBtnLeft">❮</button>
-    
     <div class="nav-inner" id="navInner">
       <a href="index.html" class="active">Trang chủ</a>
       <a href="gioi-thieu.html">Giới thiệu</a>
@@ -371,7 +60,6 @@ img { max-width: 100%; display: block; }
       <a href="ban-do.html">Bản đồ</a>
       <a href="admin/index.html" class="nav-admin">⚙ Quản trị</a>
     </div>
-    
     <button class="nav-btn" id="navBtnRight">❯</button>
   </div>
 </nav>
@@ -380,8 +68,7 @@ img { max-width: 100%; display: block; }
   <div class="container ticker-inner">
     <div class="ticker-label">TIN MỚI</div>
     <div class="ticker-track">
-      <div class="ticker-items" id="dynamicTickerItems">
-      </div>
+      <div class="ticker-items" id="dynamicTickerItems"></div>
     </div>
   </div>
 </div>
@@ -484,7 +171,9 @@ img { max-width: 100%; display: block; }
     </div>
   </div>
 
-  <div class="page-layout">
+  <div id="readingArea" style="display:none; background: #fff; border-radius: 20px; padding: 40px 20px; margin: 40px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--border-2);"></div>
+
+  <div class="page-layout" id="mainLayout">
     <div>
 
       <div class="sec-head">
@@ -492,20 +181,13 @@ img { max-width: 100%; display: block; }
         <div class="sec-head-line"></div>
         <a href="tin-tuc.html" class="sec-head-more">Xem tất cả →</a>
       </div>
-      
       <div class="featured-row" id="autoFeaturedNewsContainer">
-      </div>
-
-      <div style="display: none !important; visibility: hidden; height: 0; overflow: hidden;">
-          <div id="nguoiNgocDienGrid"></div>
-          <div id="diTichGrid"></div>
-          <div id="tiengLangGrid"></div>
+        <div style="grid-column:1/-1; text-align:center; padding:24px; color:var(--ink-4); font-size:13px;">Đang tải tin tức...</div>
       </div>
 
       <div class="tieng-lang-section">
           <div class="tieng-lang-bg"></div>
           <div class="poem-quote-mark">"</div>
-          
           <div class="tieng-lang-inner">
               <div class="tl-left">
                   <div class="tl-left-title">✦ TIẾNG LÀNG</div>
@@ -513,41 +195,15 @@ img { max-width: 100%; display: block; }
                       <strong>Quê Hương Ngọc Điền</strong><br>
                       Tác giả: Nhà nho Hán nôm Cao Tuyển (Sáng tác: 1938)
                   </div>
-                  
                   <div class="tl-poem-cols">
                       <div>
-                          Ngọc Điền phong cảnh tốt tươi<br>
-                          Cảnh xinh như vẽ, nét người như hoa<br>
-                          Tranh treo vẻ gấm sơn hà<br>
-                          Mũi Dê, Cổ Hạc lọng sa triều về<br>
-                          Dồi dào sơn thủy, sơn khê<br>
-                          Non Giang, Thừa, Bút tứ bề rồng bay<br>
-                          Khôn trường nối gót thăng mây<br>
-                          Con đường hoạn lộ, cầu bày đường quan<br>
-                          Trên Mũi Nốc, dưới Mũi Đèn<br>
-                          Buồm giăng mấy chiếc, tàu buôn tân trào<br>
-                          Đủ ăn, thừa để biết bao<br>
-                          Bướm dờn xanh lá, trăng cười với hoa<br>
-                          Trông sang Phúc Khánh am già
+                          Ngọc Điền phong cảnh tốt tươi<br>Cảnh xinh như vẽ, nét người như hoa<br>Tranh treo vẻ gấm sơn hà<br>Mũi Dê, Cổ Hạc lọng sa triều về<br>Dồi dào sơn thủy, sơn khê<br>Non Giang, Thừa, Bút tứ bề rồng bay<br>Khôn trường nối gót thăng mây<br>Con đường hoạn lộ, cầu bày đường quan<br>Trên Mũi Nốc, dưới Mũi Đèn<br>Buồm giăng mấy chiếc, tàu buôn tân trào<br>Đủ ăn, thừa để biết bao<br>Bướm dờn xanh lá, trăng cười với hoa<br>Trông sang Phúc Khánh am già
                       </div>
                       <div>
-                          Trên ao Tam Bảo cờ ngà đu tiên<br>
-                          Phong sương một vẻ thiên nhiên<br>
-                          Dạo xem phong cảnh càng nhìn càng tươi<br>
-                          Phong tình thú vị trên người<br>
-                          Thông reo lá thắm liễu cười nhành tơ<br>
-                          Thuyền tình ngân dọng đò đưa<br>
-                          Lắng tai nghe tiếng chuông chùa càn Sơn<br>
-                          “Dập dìu tài tử giai nhân<br>
-                          Ngựa xe như nước áo quần như nêm”<br>
-                          Hưởng hoa đình lễ phật tiên<br>
-                          Trống qui điểm kệ, mõ tiền kêu kinh<br>
-                          Bốn mùa túc cảnh thanh bình<br>
-                          Hoa đua vẽ gấm như hình cảnh tiên.
+                          Trên ao Tam Bảo cờ ngà đu tiên<br>Phong sương một vẻ thiên nhiên<br>Dạo xem phong cảnh càng nhìn càng tươi<br>Phong tình thú vị trên người<br>Thông reo lá thắm liễu cười nhành tơ<br>Thuyền tình ngân dọng đò đưa<br>Lắng tai nghe tiếng chuông chùa càn Sơn<br>“Dập dìu tài tử giai nhân<br>Ngựa xe như nước áo quần như nêm”<br>Hưởng hoa đình lễ phật tiên<br>Trống qui điểm kệ, mõ tiền kêu kinh<br>Bốn mùa túc cảnh thanh bình<br>Hoa đua vẽ gấm như hình cảnh tiên.
                       </div>
                   </div>
               </div>
-              
               <div class="tl-right-menu">
                   <a href="van-chuong.html#tan-man" class="tl-menu-btn"><span class="tl-menu-ico">✍️</span> Tản mạn</a>
                   <a href="van-chuong.html#tho" class="tl-menu-btn"><span class="tl-menu-ico">🌸</span> Thơ</a>
@@ -559,10 +215,9 @@ img { max-width: 100%; display: block; }
           </div>
       </div>
 
-    </div> 
+    </div>
 
     <aside class="sidebar">
-
       <div class="sb-block">
         <div class="sb-head"><div class="sb-head-bar"></div><span class="sb-head-title">💬 Góp ý & Phản ánh</span></div>
         <div class="sb-body">
@@ -575,7 +230,7 @@ img { max-width: 100%; display: block; }
 
       <div class="sb-block">
         <div class="sb-head"><div class="sb-head-bar" style="background:var(--red);"></div><span class="sb-head-title">📈 Xem nhiều nhất</span></div>
-        <div class="sb-body" id="dynamicTrendingPosts" style="padding-top: 5px;">
+        <div class="sb-body" id="dynamicTrendingPosts" style="padding-top:5px;">
           <div style="font-size:12px; color:var(--ink-4); text-align:center;">Đang tải...</div>
         </div>
       </div>
@@ -614,8 +269,7 @@ img { max-width: 100%; display: block; }
                 <a href="podcast.html" style="font-size:11px; color:var(--red); font-weight:600;">Xem tất cả →</a>
             </span>
         </div>
-        <div class="sb-body" id="dynamicPodcastSidebar">
-            </div>
+        <div class="sb-body" id="dynamicPodcastSidebar"></div>
       </div>
 
       <div class="sb-block">
@@ -627,7 +281,6 @@ img { max-width: 100%; display: block; }
           <a href="https://zalo.me/g/i8vuebonziplqy2c06ux" target="_blank" rel="noopener noreferrer" class="btn-zalo">Tham gia nhóm Zalo →</a>
         </div>
       </div>
-
     </aside>
   </div>
 </div>
@@ -677,18 +330,79 @@ img { max-width: 100%; display: block; }
   </div>
 </div>
 
-<script src="js/main.js?v=999"></script>
+<script src="js/main.js"></script>
 <script>
+  // Chức năng đọc bài ngay trên trang (dành cho các trang cũ chưa chuyển sang bai-viet.html)
+  window.viewPost = function(id) {
+      let posts = typeof getAllPosts === 'function' ? getAllPosts() : [];
+      let post = posts.find(p => p.id == id);
+      if (!post) {
+          // Fallback: Chuyển hướng sang bai-viet.html nếu không tìm thấy trên bộ nhớ tạm
+          window.location.href = `bai-viet.html?id=${id}`;
+          return;
+      }
+
+      const hero = document.getElementById('heroDynamic'); 
+      const mainLayout = document.getElementById('mainLayout');
+      let readingArea = document.getElementById('readingArea');
+      
+      if (hero) hero.style.display = 'none';
+      if (mainLayout) mainLayout.style.display = 'none';
+      if (readingArea) {
+          readingArea.style.display = 'block';
+          
+          let formattedContent = post.content ? post.content.replace(/\n/g, '<br>') : '';
+          let imgHtml = '';
+          if (post.image && post.image.startsWith('data:image')) {
+              imgHtml = `<img src="${escapeHtml(post.image)}" style="width: 100%; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">`;
+          } else if (post.image && post.image.startsWith('http')) {
+              imgHtml = `<img src="${escapeHtml(post.image)}" style="width: 100%; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">`;
+          }
+
+          let domain = "https://ngocdien.info.vn";
+          let shareUrl = encodeURIComponent(`${domain}/bai-viet.html?id=${post.id}`);
+
+          readingArea.innerHTML = `
+              <div style="max-width: 850px; margin: 0 auto; padding: 10px 0 60px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border-2); margin-bottom: 30px;">
+                      <div style="display: flex; gap: 20px;">
+                          <a href="index.html" style="font-weight: 600; color: #666; display: flex; align-items: center; gap: 6px; text-decoration: none;">🏠 Trang chủ</a>
+                          <a href="#" onclick="closeArticle(); return false;" style="font-weight: 700; color: var(--red); display: flex; align-items: center; gap: 6px; text-decoration: none;">✖ Thoát</a>
+                      </div>
+                      <div style="display: flex; gap: 15px; align-items: center;">
+                          <a href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}" target="_blank" title="Chia sẻ Facebook" style="width:32px;height:32px;background:#1877F2;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;text-decoration:none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">f</a>
+                          <a href="https://zalo.me/share?url=${shareUrl}" target="_blank" title="Chia sẻ Zalo" style="width:32px;height:32px;background:#0068FF;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700;text-decoration:none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">Z</a>
+                      </div>
+                  </div>
+                  <h2 style="font-family: var(--ff-head); font-size: 34px; color: var(--red); margin-bottom: 15px; line-height: 1.3;">${escapeHtml(post.title)}</h2>
+                  <div style="font-size: 13px; color: var(--ink-4); margin-bottom: 25px; border-bottom: 1px solid var(--border-2); padding-bottom: 15px;">📅 ${escapeHtml(post.date)} &nbsp;|&nbsp; 👤 ${escapeHtml(post.author || 'Ban quản trị')}</div>
+                  ${imgHtml}
+                  <div style="font-size: 17px; line-height: 1.8; text-align: justify; color: var(--ink);">${formattedContent}</div>
+              </div>
+          `;
+          window.scrollTo(0, 0);
+      }
+  };
+
+  window.closeArticle = function() {
+      const readingArea = document.getElementById('readingArea');
+      const hero = document.getElementById('heroDynamic');
+      const mainLayout = document.getElementById('mainLayout');
+
+      if (readingArea) readingArea.style.display = 'none';
+      if (hero) hero.style.display = 'flex'; 
+      if (mainLayout) mainLayout.style.display = 'grid'; 
+      
+      window.scrollTo(0, 0);
+  };
+
   function updateClock() {
     var now = new Date();
-    var optionsDate = { timeZone: 'Asia/Ho_Chi_Minh', weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' };
-    var optionsTime = { timeZone: 'Asia/Ho_Chi_Minh', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
     var clockElement = document.getElementById('todayDate');
-    if(clockElement) clockElement.textContent = now.toLocaleDateString('vi-VN', optionsDate) + ' - ' + now.toLocaleTimeString('vi-VN', optionsTime);
+    if(clockElement) clockElement.textContent = now.toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' }) + ' - ' + now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', hour12: false });
   }
   updateClock(); setInterval(updateClock, 1000);
 
-  // LOGIC NAVBAR CHẠY TỰ ĐỘNG & NÚT GẠT
   (function initNavAutoScroll() {
       const navInner = document.getElementById('navInner');
       const btnLeft = document.getElementById('navBtnLeft');
@@ -696,279 +410,30 @@ img { max-width: 100%; display: block; }
       let scrollInterval;
       let isHovered = false;
       let isManualScrolling = false;
-
       function startScroll() {
           if (scrollInterval) clearInterval(scrollInterval);
           scrollInterval = setInterval(() => {
               if (!isHovered && !isManualScrolling && navInner.scrollWidth > navInner.clientWidth) {
                   navInner.scrollLeft += 1;
-                  if (navInner.scrollLeft >= navInner.scrollWidth - navInner.clientWidth - 1) {
-                      navInner.scrollLeft = 0;
-                  }
+                  if (navInner.scrollLeft >= navInner.scrollWidth - navInner.clientWidth - 1) { navInner.scrollLeft = 0; }
               }
-          }, 30); 
+          }, 30);
       }
-
       navInner.addEventListener('mouseenter', () => isHovered = true);
       navInner.addEventListener('mouseleave', () => isHovered = false);
       navInner.addEventListener('touchstart', () => isHovered = true);
       navInner.addEventListener('touchend', () => { setTimeout(() => isHovered = false, 2000); });
-
-      btnLeft.addEventListener('mouseenter', () => isHovered = true);
-      btnLeft.addEventListener('mouseleave', () => isHovered = false);
-      btnRight.addEventListener('mouseenter', () => isHovered = true);
-      btnRight.addEventListener('mouseleave', () => isHovered = false);
-
-      btnLeft.addEventListener('click', () => {
-          isManualScrolling = true;
-          navInner.scrollBy({ left: -200, behavior: 'smooth' });
-          setTimeout(() => isManualScrolling = false, 500);
-      });
-      btnRight.addEventListener('click', () => {
-          isManualScrolling = true;
-          navInner.scrollBy({ left: 200, behavior: 'smooth' });
-          setTimeout(() => isManualScrolling = false, 500);
-      });
-
+      btnLeft.addEventListener('click', () => { isManualScrolling = true; navInner.scrollBy({ left: -200, behavior: 'smooth' }); setTimeout(() => isManualScrolling = false, 500); });
+      btnRight.addEventListener('click', () => { isManualScrolling = true; navInner.scrollBy({ left: 200, behavior: 'smooth' }); setTimeout(() => isManualScrolling = false, 500); });
       startScroll();
   })();
 
-  // CÁC HÀM VẼ ĐƯỢC MAIN.JS GỌI
-  window.initDynamicTicker = function() {
-      const tickerContainer = document.getElementById('dynamicTickerItems');
-      if (!tickerContainer || typeof getPostsByCategory !== 'function') return;
-      const tinTucPosts = getPostsByCategory('tin-tuc');
-      if (tinTucPosts.length === 0) return;
-      let spansHtml = tinTucPosts.slice(0, 5).reverse().map(post => 
-          `<span style="cursor:pointer; transition: color 0.15s;" onmouseenter="this.style.color='var(--red)'" onmouseleave="this.style.color='var(--ink)'" onclick="if(typeof viewPost==='function') viewPost('${post.id}')">${post.title}</span>`
-      ).join('');
-      tickerContainer.innerHTML = spansHtml + spansHtml;
-  };
-
-  window.initAutoFeaturedNews = function() {
-      const container = document.getElementById('autoFeaturedNewsContainer');
-      if (!container || typeof getAllPosts !== 'function') return;
-      
-      const allPosts = getAllPosts().filter(post => post.category !== 'nguoi-ngoc-dien' && post.category !== 'di-tich');
-      
-      if (allPosts.length === 0) return;
-      const latest5Posts = allPosts.slice(0, 5);
-      let currentIndex = 0;
-      const catNames = {
-          'gioi-thieu': 'Giới thiệu', 'lich-su': 'Lịch sử', 'le-hoi': 'Lễ hội',
-          'tin-tuc': 'Tin tức', 'van-chuong': 'Tiếng làng',
-          'huong-uoc': 'Hương ước', 'chinh-sach': 'Chính sách',
-          'chuyen-doi-so': 'Chuyển đổi số', 'thu-vien': 'Thư viện', 'ban-do': 'Bản đồ', 'podcast': 'Podcast'
-      };
-      
-      if (window.featuredNewsInterval) clearInterval(window.featuredNewsInterval);
-
-      function renderFeaturedNews() {
-          if(latest5Posts.length === 0) return;
-          const heroPost = latest5Posts[currentIndex];
-          const heroCatName = catNames[heroPost.category] || 'Sự kiện';
-          const heroImg = heroPost.image || 'https://via.placeholder.com/800x600?text=No+Image';
-          let html = `
-          <div class="card card-featured">
-              <div class="card-thumb" style="background-image: url('${heroImg}');"></div>
-              <div class="card-body">
-                  <div class="card-meta"><span class="tag">${heroCatName}</span><span class="card-date">${heroPost.date || ''}</span></div>
-                  <div class="card-title"><a href="#" onclick="if(typeof viewPost==='function') viewPost('${heroPost.id}'); return false;">${heroPost.title}</a></div>
-                  <div class="card-excerpt">${(heroPost.content || '').replace(/<[^>]*>?/gm, '').substring(0, 150)}...</div>
-                  <div class="card-footer"><a href="#" onclick="if(typeof viewPost==='function') viewPost('${heroPost.id}'); return false;" class="read-link">Đọc tiếp →</a></div>
-              </div>
-          </div>
-          <div class="featured-side">`;
-          for (let i = 0; i < latest5Posts.length; i++) {
-              if (i === currentIndex) continue;
-              const sidePost = latest5Posts[i];
-              const sideCatName = catNames[sidePost.category] || 'Tin tức';
-              const sideImg = sidePost.image || '';
-              const iconHtml = sideImg 
-                  ? `<div class="card-list-icon" style="background-image: url('${sideImg}');"></div>` 
-                  : `<div class="card-list-icon">📰</div>`;
-              html += `
-              <div class="card-list">
-                  ${iconHtml}
-                  <div style="flex:1; overflow:hidden;">
-                      <div class="card-list-title"><a href="#" onclick="if(typeof viewPost==='function') viewPost('${sidePost.id}'); return false;">${sidePost.title}</a></div>
-                      <div class="card-list-meta"><span class="tag" style="font-size:9px; background:var(--gold-light); color:var(--gold);">${sideCatName}</span> ${sidePost.date || ''}</div>
-                  </div>
-              </div>`;
-          }
-          html += `</div>`;
-          container.innerHTML = html;
-      }
-      renderFeaturedNews();
-      if(latest5Posts.length > 1) {
-          window.featuredNewsInterval = setInterval(() => { currentIndex = (currentIndex + 1) % latest5Posts.length; renderFeaturedNews(); }, 60000);
-      }
-  };
-
-  window.initDynamicPodcast = function() {
-      const container = document.getElementById('dynamicPodcastSidebar');
-      if (!container || typeof getPostsByCategory !== 'function') return;
-
-      const podcastPosts = getPostsByCategory('podcast'); 
-      
-      let html = `<div class="podcast-intro">"Mời bà con nghe những bài viết về quê nhà qua giọng đọc Ngọc Điền"</div>`;
-
-      if (podcastPosts.length === 0) {
-          html += `
-          <a href="podcast.html" class="podcast-item">
-              <div class="podcast-thumb" style="background-image: url('https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=150&q=80');"></div>
-              <div class="podcast-info">
-                  <div class="podcast-title">Đêm Kinh Dịch - Bài thơ hoài niệm một thời gian khó</div>
-                  <div class="podcast-btn">▶ Nghe ngay</div>
-              </div>
-          </a>
-          <div style="text-align:center; font-size:12px; color:var(--ink-4); margin-top:10px;">(Đang đợi Admin xuất bản bản thu đầu tiên...)</div>
-          `;
-      } else {
-          const top4 = podcastPosts.slice(0, 4);
-          top4.forEach(post => {
-              const img = post.image || 'https://images.unsplash.com/photo-1516280440502-a2f267793ce5?auto=format&fit=crop&w=150&q=80';
-              html += `
-              <a href="podcast.html?id=${post.id}" class="podcast-item">
-                  <div class="podcast-thumb" style="background-image: url('${img}');"></div>
-                  <div class="podcast-info">
-                      <div class="podcast-title">${post.title}</div>
-                      <div class="podcast-btn">▶ Nghe ngay</div>
-                  </div>
-              </a>`;
-          });
-      }
-      container.innerHTML = html;
-  };
-
-  window.initTrendingPosts = function() {
-      const container = document.getElementById('dynamicTrendingPosts');
-      if (!container || typeof getAllPosts !== 'function') return;
-      let posts = getAllPosts();
-      
-      if(posts.length === 0) {
-          container.innerHTML = '<div style="font-size:12px; color:var(--ink-4); padding:10px 0;">Đang cập nhật dữ liệu...</div>';
-          return;
-      }
-
-      posts = posts.map(p => {
-          p.views = p.views || Math.floor(Math.random() * 50) + 1;
-          return p;
-      });
-
-      posts.sort((a, b) => b.views - a.views);
-      const top3 = posts.slice(0, 3);
-      let html = '';
-      
-      top3.forEach((p, index) => {
-          const displayViews = p.views + 1000;
-          html += `
-          <div class="trend-item">
-              <span class="trend-num">${index + 1}</span>
-              <div>
-                  <a href="#" onclick="if(typeof viewPost==='function') viewPost('${p.id}'); return false;" class="trend-title">${p.title}</a>
-                  <div class="trend-meta" style="color: var(--red); font-weight: 600;">🔥 ${displayViews.toLocaleString('vi-VN')} lượt xem</div>
-              </div>
-          </div>`;
-      });
-      container.innerHTML = html;
-  };
-
-  // LOGIC LẤY THỜI TIẾT HƯNG NGUYÊN
-  (async function fetchRealtimeWeather() {
-      const weatherContainer = document.getElementById('realtimeWeather');
-      if (!weatherContainer) return;
-      
-      try {
-          const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=18.6439&longitude=105.6569&current_weather=true');
-          const data = await res.json();
-          
-          const temp = Math.round(data.current_weather.temperature);
-          const code = data.current_weather.weathercode;
-          
-          let icon = '🌤️'; let desc = 'Có mây';
-          if (code === 0) { icon = '☀️'; desc = 'Trời quang đãng'; }
-          else if (code >= 1 && code <= 3) { icon = '⛅'; desc = 'Trời nhiều mây'; }
-          else if (code >= 45 && code <= 48) { icon = '🌫️'; desc = 'Sương mù'; }
-          else if (code >= 51 && code <= 67) { icon = '🌧️'; desc = 'Trời có mưa nhỏ'; }
-          else if (code >= 71 && code <= 82) { icon = '⛈️'; desc = 'Có mưa rào'; }
-          else if (code >= 95) { icon = '🌩️'; desc = 'Mưa dông sấm sét'; }
-
-          weatherContainer.innerHTML = `
-              <div class="weather-row" style="padding: 10px 0;">
-                  <div class="weather-ico">${icon}</div>
-                  <div>
-                      <div class="weather-temp" style="color: var(--red-deep);">${temp}°C</div>
-                      <div class="weather-info" style="font-weight: 500;">${desc}</div>
-                      <div style="font-size: 10.5px; color: var(--ink-4); margin-top:2px;">(Cập nhật thời gian thực)</div>
-                  </div>
-              </div>
-          `;
-      } catch (e) {
-          weatherContainer.innerHTML = `<div style="font-size:12px; color:var(--ink-4); text-align:center; padding: 10px 0;">Đang bảo trì vệ tinh...</div>`;
-      }
-  })();
-
   document.getElementById('searchBtn')?.addEventListener('click',function(){
-    var kw=document.getElementById('searchInput').value.toLowerCase().trim();
-    if(!kw) return;
-    if(typeof getAllPosts==='function'){
-      var res=getAllPosts().filter(function(p){return p.title.toLowerCase().includes(kw)||p.content.toLowerCase().includes(kw);});
+      var kw=document.getElementById('searchInput').value.toLowerCase().trim();
+      if(!kw) return;
+      var posts = typeof getAllPosts === 'function' ? getAllPosts() : [];
+      var res=posts.filter(function(p){return p.title.toLowerCase().includes(kw)||p.content.toLowerCase().includes(kw);});
       alert(res.length?'Tìm thấy '+res.length+' bài:\n'+res.map(function(p){return p.title;}).join('\n'):'Không tìm thấy kết quả nào.');
-    }
-  });
-  document.getElementById('searchInput')?.addEventListener('keypress',function(e){if(e.key==='Enter') document.getElementById('searchBtn').click();});
-
-  // ==========================================
-  // LOGIC GỬI GÓP Ý THẲNG VÀO HÒM THƯ SUPABASE
-  // ==========================================
-  document.getElementById('sendFeedbackBtn')?.addEventListener('click', async function(e) {
-      e.preventDefault();
-      var name = document.getElementById('feedbackName').value.trim() || 'Dân làng ẩn danh';
-      var msg = document.getElementById('feedbackMsg').value.trim();
-      var btn = document.getElementById('sendFeedbackBtn');
-
-      if (!msg) { 
-          alert("Bà con vui lòng nhập nội dung góp ý trước khi gửi nhé!"); 
-          return; 
-      }
-
-      let originalText = btn.innerHTML;
-      btn.innerHTML = 'Đang gửi thư...';
-      btn.disabled = true;
-
-      try {
-          const response = await fetch(`${SUPABASE_URL}/rest/v1/hom_thu_cho`, {
-              method: 'POST',
-              headers: {
-                  'apikey': SUPABASE_KEY,
-                  'Authorization': `Bearer ${SUPABASE_KEY}`,
-                  'Content-Type': 'application/json',
-                  'Prefer': 'return=minimal'
-              },
-              body: JSON.stringify({
-                  nguoi_gui: name,
-                  sdt: '', // Form trang chủ chưa có ô SĐT nên để trống
-                  chuyen_muc: 'gop-y', // Đánh dấu đây là thư Góp ý
-                  noi_dung: msg
-              })
-          });
-
-          if (!response.ok) throw new Error("Supabase từ chối nhận thư");
-
-          alert("✅ Cảm ơn bà con! Thư góp ý đã được gửi thẳng vào Hòm thư mật của Admin thành công.");
-          
-          // Gửi xong thì xóa trắng ô chữ cho đẹp
-          document.getElementById('feedbackName').value = '';
-          document.getElementById('feedbackMsg').value = '';
-          
-      } catch (error) {
-          alert("❌ Có lỗi xảy ra, đường truyền lên Đám mây đang nghẽn. Vui lòng thử lại sau.");
-          console.error("Lỗi gửi thư:", error);
-      } finally {
-          btn.innerHTML = originalText;
-          btn.disabled = false;
-      }
   });
 </script>
 </body>
